@@ -137,6 +137,72 @@ elif st.session_state.page == "home":
         unsafe_allow_html=True
     )
 
+# ==================================
+# STORY SCREEN
+# ==================================
+
+elif st.session_state.page == "story":
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    st.title("THE STORY")
+
+    st.markdown("---")
+
+    st.markdown("""
+    You stayed late at school to finish your work.
+
+    After spending hours solving problems, you finally
+    decided it was time to go home.
+
+    But when you reached the classroom door...
+
+    **It was locked.**
+
+    You tried opening it, but it wouldn't budge.
+    You looked around and noticed something strange.
+
+    The classroom was divided into four different areas.
+    Each area contained puzzles, locked compartments,
+    and mysterious challenges.
+
+    A note on the teacher's desk caught your attention:
+
+    *"To escape this classroom, you must prove your
+    knowledge. Solve the challenges, collect the keys,
+    and unlock the final exit."*
+
+    You realized that the only way out was through
+    Differential Calculus.
+
+    The clock is ticking.
+
+    **Can you solve all the challenges and escape
+    before time runs out?**
+    """)
+
+    st.markdown("---")
+
+    st.info(
+        "Four rooms. Twelve challenges. One way out."
+    )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # START GAME BUTTON
+
+    if st.button("🔒 START GAME", use_container_width=True):
+
+        st.session_state.page = "room1"
+        st.rerun()
+
+    # BACK BUTTON
+
+    if st.button("⬅ BACK TO MAIN MENU", use_container_width=True):
+
+        st.session_state.page = "home"
+        st.rerun()
+
 
 # ==================================
 # HOW TO PLAY SCREEN
