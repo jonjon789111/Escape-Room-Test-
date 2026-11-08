@@ -87,6 +87,58 @@ if "page" not in st.session_state:
     st.session_state.page = "home"
 
 # ==================================
+# MAIN MENU SCREEN
+# ==================================
+
+elif st.session_state.page == "home":
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    st.title("THE LOCKED CLASSROOM")
+
+    st.markdown(
+        "<p>Four rooms. Twelve challenges. One way out.</p>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    st.info(
+        "Solve every Differential Calculus challenge "
+        "and unlock the classroom exit before time runs out."
+    )
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    # PLAY BUTTON
+
+    if st.button("▶ PLAY", use_container_width=True):
+
+        st.session_state.page = "story"
+        st.rerun()
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # HOW TO PLAY BUTTON
+
+    if st.button("📖 HOW TO PLAY", use_container_width=True):
+
+        st.session_state.page = "instructions"
+        st.rerun()
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    # FOOTER
+
+    st.markdown(
+        "<p style='color:#7D879B; font-size:12px;'>"
+        "A DIFFERENTIAL CALCULUS ESCAPE GAME"
+        "</p>",
+        unsafe_allow_html=True
+    )
+
+
+# ==================================
 # HOW TO PLAY SCREEN
 # ==================================
 
