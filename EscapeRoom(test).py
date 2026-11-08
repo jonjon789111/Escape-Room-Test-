@@ -78,3 +78,10 @@ p {
 
 </style>
 """, unsafe_allow_html=True)
+
+# ==================================
+# PAGE NAVIGATION
+# ==================================
+
+if "page" not in st.session_state:
+    st.session_state.page = "home"
