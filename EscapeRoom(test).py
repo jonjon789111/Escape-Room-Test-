@@ -85,3 +85,109 @@ p {
 
 if "page" not in st.session_state:
     st.session_state.page = "home"
+
+# ==================================
+# HOW TO PLAY SCREEN
+# ==================================
+
+if st.session_state.page == "instructions":
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    st.title("HOW TO PLAY")
+
+    st.markdown(
+        "<p>Learn the rules before entering the classroom!</p>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown("---")
+
+    # OBJECTIVE
+
+    st.subheader("🎯 OBJECTIVE")
+
+    st.write(
+        "Escape the locked classroom by completing "
+        "all 12 Differential Calculus challenges "
+        "across four rooms."
+    )
+
+    st.markdown("---")
+
+    # GAME PROGRESSION
+
+    st.subheader("🔑 GAME PROGRESSION")
+
+    st.write("""
+    1. Start in Room 1 and solve its three challenges.
+    2. Complete all three challenges to earn a key.
+    3. Use the key to unlock the next room.
+    4. Complete all four rooms to escape.
+    """)
+
+    st.markdown("---")
+
+    # LIVES
+
+    st.subheader("❤️ LIVES")
+
+    st.write("""
+    - You start with 3 lives.
+    - Every incorrect answer costs 1 life.
+    - Lose all 3 lives and the game ends.
+    """)
+
+    st.markdown("---")
+
+    # TIMER
+
+    st.subheader("⏱️ TIMER")
+
+    st.write("""
+    - You have 10 minutes to escape.
+    - Every incorrect answer deducts 5 seconds.
+    - If the timer reaches zero, the game ends.
+    """)
+
+    st.markdown("---")
+
+    # HINTS
+
+    st.subheader("💡 HINTS")
+
+    st.write("""
+    - You have 2 hints for the entire game.
+    - Each hint reveals one step toward the solution.
+    - Hints will not reveal the final answer.
+    """)
+
+    st.markdown("---")
+
+    # IMPORTANT RULES
+
+    st.subheader("📌 IMPORTANT RULES")
+
+    st.write("""
+    - Complete challenges in the correct order.
+    - Correct answers allow you to proceed.
+    - Incorrect answers cost a life and 5 seconds.
+    - You can retry a question after an incorrect answer.
+    - Your lives, timer, and hints carry over between rooms.
+    """)
+
+    st.markdown("---")
+
+    st.success(
+        "YOUR MISSION: Solve all 12 challenges, "
+        "collect all 3 keys, and escape before time runs out!"
+    )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # BACK BUTTON
+
+    if st.button("⬅ BACK TO MAIN MENU", use_container_width=True):
+
+        st.session_state.page = "home"
+        st.rerun()
