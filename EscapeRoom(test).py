@@ -123,7 +123,7 @@ def reset_game():
 
 
 # ==========================================
-# START GAME TIMER
+# START GAME
 # ==========================================
 
 def start_game():
@@ -176,23 +176,23 @@ def live_timer():
 
 
 # ==========================================
-# WRONG ANSWER PENALTY
+# WRONG ANSWER
 # ==========================================
 
 def wrong_answer():
 
     st.session_state.lives -= 1
 
-    # Add 5 seconds to the elapsed time.
-    # This effectively removes 5 seconds
-    # from the remaining countdown.
+    # Deduct 5 seconds safely
 
-    st.session_state.start_time += 5
+    if st.session_state.start_time is not None:
+        st.session_state.start_time += 5
 
-    st.session_state.feedback = "Incorrect answer! You lost 1 life and 5 seconds."
+    st.session_state.feedback = (
+        "Incorrect answer! You lost 1 life and 5 seconds."
+    )
 
     if st.session_state.lives <= 0:
-
         st.session_state.game_over = True
 
 
@@ -426,9 +426,7 @@ elif st.session_state.page == "room1":
 
             st.caption("CHALLENGE 1 / 3")
 
-            st.write(
-                "Evaluate the following limit:"
-            )
+            st.write("Evaluate the following limit:")
 
             st.latex(
                 r"\lim_{x \to 2}(3x+4)"
@@ -448,8 +446,6 @@ elif st.session_state.page == "room1":
                     st.session_state.question_number = 2
                     st.session_state.feedback = ""
                     st.session_state.hint_message = ""
-
-                    st.success("Correct! Challenge 1 completed.")
 
                     st.rerun()
 
@@ -484,17 +480,13 @@ elif st.session_state.page == "room1":
 
             st.caption("CHALLENGE 2 / 3")
 
-            st.write(
-                "Evaluate the following limit:"
-            )
+            st.write("Evaluate the following limit:")
 
             st.latex(
                 r"\lim_{x \to 2}\frac{x^2-4}{x-2}"
             )
 
-            st.info(
-                "Hint: Factor the numerator first."
-            )
+            st.info("Hint: Factor the numerator first.")
 
             answer = st.text_input(
                 "Enter your answer:",
@@ -508,8 +500,6 @@ elif st.session_state.page == "room1":
                     st.session_state.question_number = 3
                     st.session_state.feedback = ""
                     st.session_state.hint_message = ""
-
-                    st.success("Correct! Challenge 2 completed.")
 
                     st.rerun()
 
@@ -544,17 +534,13 @@ elif st.session_state.page == "room1":
 
             st.caption("CHALLENGE 3 / 3")
 
-            st.write(
-                "Evaluate the following limit:"
-            )
+            st.write("Evaluate the following limit:")
 
             st.latex(
                 r"\lim_{x \to 1}\frac{x^2+3x-4}{x-1}"
             )
 
-            st.info(
-                "Hint: Factor the numerator."
-            )
+            st.info("Hint: Factor the numerator.")
 
             answer = st.text_input(
                 "Enter your answer:",
@@ -568,8 +554,6 @@ elif st.session_state.page == "room1":
                     st.session_state.room1_cleared = True
                     st.session_state.feedback = ""
                     st.session_state.hint_message = ""
-
-                    st.success("Correct! All challenges completed.")
 
                     st.rerun()
 
