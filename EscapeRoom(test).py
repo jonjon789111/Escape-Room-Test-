@@ -185,68 +185,57 @@ def live_timer():
         f"{minutes:02d}:{seconds:02d}"
     )
 
+
 # ==========================================
 # HOME PAGE
 # ==========================================
 
 def home_page():
+
     st.write("")
     st.write("")
     st.write("")
 
     # TITLE
-    st.markdown(
-        "<h1 style='text-align: center;'>THE LOCKED CLASSROOM</h1>",
-        unsafe_allow_html=True
-    )
 
-    st.markdown(
-        "<h3 style='text-align: center;'>A Differential Calculus Escape Game</h3>",
-        unsafe_allow_html=True
-    )
+    col1, col2, col3 = st.columns([1, 5, 1])
 
-    st.markdown(
-        "<p style='text-align: center; font-size: 18px;'>"
-        "<i>Four rooms. Twelve challenges. One way out.</i>"
-        "</p>",
-        unsafe_allow_html=True
-    )
+    with col2:
+
+        st.title("THE LOCKED CLASSROOM")
+
+        st.subheader("A Differential Calculus Escape Game")
+
+        st.caption("Four rooms. Twelve challenges. One way out.")
 
     st.write("")
     st.divider()
     st.write("")
 
     # OBJECTIVE PANEL
+
     col1, col2, col3 = st.columns([1, 6, 1])
 
     with col2:
 
         with st.container(border=True):
 
-            st.markdown(
-                "<h3 style='text-align: center;'>OBJECTIVE</h3>",
-                unsafe_allow_html=True
-            )
+            st.subheader("OBJECTIVE")
 
-            st.markdown(
-                "<p style='text-align: center; font-size: 20px;'>"
+            st.write(
                 "Solve Differential Calculus challenges to escape "
                 "four locked rooms."
-                "</p>",
-                unsafe_allow_html=True
             )
 
-            st.markdown(
-                "<p style='text-align: center; font-size: 18px;'>"
+            st.write(
                 "Can you find your way out before time runs out?"
-                "</p>",
-                unsafe_allow_html=True
             )
 
     st.write("")
     st.write("")
 
     # BUTTONS
+
     col1, col2, col3, col4, col5 = st.columns([1, 2, 0.3, 2, 1])
 
     with col2:
@@ -268,12 +257,89 @@ def home_page():
     st.write("")
 
     # FOOTER
-    st.markdown(
-        "<p style='text-align: center; color: gray;'>"
-        "THINK CAREFULLY. EVERY SECOND COUNTS."
-        "</p>",
-        unsafe_allow_html=True
+
+    st.caption("THINK CAREFULLY. EVERY SECOND COUNTS.")
+
+
+# ==========================================
+# STORY PAGE
+# ==========================================
+
+def story_page():
+
+    st.title("THE STORY")
+
+    st.divider()
+
+    st.write("")
+
+    st.subheader("The Last Student")
+
+    st.write(
+        "It is already late, and you are the last student "
+        "inside the classroom."
     )
+
+    st.write(
+        "As you prepare to leave, you discover that the "
+        "classroom door is locked."
+    )
+
+    st.write(
+        "You try to open it, but it will not move. "
+        "Then, you notice something strange."
+    )
+
+    st.write(
+        "Mathematical challenges have appeared throughout "
+        "the classroom. A message on the blackboard reveals "
+        "that solving them is the only way to unlock the door."
+    )
+
+    st.write("")
+
+    st.warning(
+        "Four areas stand between you and freedom. "
+        "Each area contains three Differential Calculus challenges."
+    )
+
+    st.write("")
+
+    st.subheader("Your Mission")
+
+    st.write(
+        "Explore the classroom, solve every challenge, "
+        "collect the keys, and find your way to the exit."
+    )
+
+    st.write("")
+
+    st.error(
+        "You have only 10 minutes. Every wrong answer costs "
+        "one life and five seconds."
+    )
+
+    st.write("")
+    st.divider()
+
+    # STORY BUTTONS
+
+    col1, col2, col3 = st.columns([2, 2, 2])
+
+    with col1:
+
+        if st.button("BACK TO MENU", use_container_width=True):
+
+            st.session_state.page = "home"
+            st.rerun()
+
+    with col3:
+
+        if st.button("START GAME", use_container_width=True):
+
+            start_game()
+            st.rerun()
+
 
 # ==========================================
 # INSTRUCTIONS PAGE
@@ -282,6 +348,8 @@ def home_page():
 def instructions_page():
 
     st.title("HOW TO PLAY")
+
+    st.divider()
 
     st.subheader("Your Objective")
 
@@ -317,6 +385,8 @@ def instructions_page():
         "Hints reveal a step in the solution without showing "
         "the final answer."
     )
+
+    st.write("")
 
     if st.button("BACK TO MENU"):
 
@@ -585,17 +655,21 @@ def room2():
 # ==========================================
 
 if st.session_state.page == "home":
+
     home_page()
 
 elif st.session_state.page == "story":
+
     story_page()
 
 elif st.session_state.page == "instructions":
+
     instructions_page()
 
 elif st.session_state.page == "room1":
+
     room1()
 
 elif st.session_state.page == "room2":
-    room2()
 
+    room2()
