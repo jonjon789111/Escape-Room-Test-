@@ -193,145 +193,176 @@ def live_timer():
 def home_page():
 
     # ==========================================
-    # HOME PAGE DESIGN
+    # HORROR HOME PAGE DESIGN
     # ==========================================
 
     st.markdown("""
-        <style>
+    <style>
 
-        /* MAIN BACKGROUND */
-        .stApp {
-            background-color: #10131C;
-        }
+    /* GOOGLE FONTS */
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
-        /* TITLE */
-        .home-title {
-            text-align: center;
-            font-family: 'Cinzel', serif;
-            font-size: 48px;
-            font-weight: 800;
-            color: #F2F0EB;
-            letter-spacing: 2px;
-            margin-top: 35px;
-            margin-bottom: 15px;
-        }
+    /* BACKGROUND */
+    .stApp {
+        background: linear-gradient(
+            135deg,
+            #090D16 0%,
+            #111827 50%,
+            #090D16 100%
+        );
+    }
 
-        /* SUBTITLE */
-        .home-subtitle {
-            text-align: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 25px;
-            color: #D0D0D0;
-            margin-bottom: 8px;
-        }
+    /* USE MORE LAPTOP SCREEN SPACE */
+    .block-container {
+        max-width: 95% !important;
+        padding-top: 3rem !important;
+        padding-bottom: 2rem !important;
+    }
 
-        /* TAGLINE */
-        .home-tagline {
-            text-align: center;
-            font-size: 16px;
-            color: #B8BBC4;
-            margin-bottom: 75px;
-        }
+    /* MAIN TITLE */
+    .horror-title {
+        font-family: 'Cinzel', serif;
+        font-size: clamp(38px, 5vw, 68px);
+        font-weight: 800;
+        color: #F4F1EA;
+        text-align: center;
+        letter-spacing: 5px;
+        text-shadow: 0 0 25px rgba(180, 190, 210, 0.2);
+        margin-bottom: 15px;
+    }
 
-        /* OBJECTIVE PANEL */
-        .objective-panel {
-            background-color: #202C40;
-            padding: 22px;
-            border-radius: 12px;
-            text-align: center;
-            color: #F2F0EB;
-            font-size: 17px;
-            margin-bottom: 65px;
-        }
+    /* SUBTITLE */
+    .horror-subtitle {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 30px;
+        color: #C7CBD4;
+        text-align: center;
+        margin-bottom: 10px;
+    }
 
-        /* BUTTON BASE DESIGN */
-        div.stButton > button {
-            width: 100%;
-            height: 65px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-        }
+    /* TAGLINE */
+    .horror-tagline {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 21px;
+        color: #8993A5;
+        text-align: center;
+        letter-spacing: 2px;
+        margin-bottom: 65px;
+    }
 
-        /* GREEN PLAY BUTTON */
-        div.stButton > button[kind="primary"] {
-            background-color: #28543A;
-            color: white;
-            border: 1px solid #527B5E;
-        }
+    /* OBJECTIVE PANEL */
+    .objective-panel {
+        background: linear-gradient(
+            135deg,
+            #1B293D,
+            #172235
+        );
+        border: 1px solid #43516A;
+        border-radius: 15px;
+        padding: 30px 45px;
+        text-align: center;
+        margin-bottom: 55px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    }
 
-        div.stButton > button[kind="primary"]:hover {
-            background-color: #376E4B;
-            border-color: #8BB697;
-            color: white;
-            box-shadow: 0 5px 18px rgba(50, 120, 75, 0.35);
-        }
+    .objective-heading {
+        font-family: 'Cinzel', serif;
+        font-size: 23px;
+        font-weight: 700;
+        color: #F0EEE9;
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+    }
 
-        /* YELLOW HOW TO PLAY BUTTON */
-        div.stButton > button[kind="secondary"] {
-            background-color: #927A25;
-            color: white;
-            border: 1px solid #C4A947;
-        }
+    .objective-description {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 23px;
+        color: #D0D4DC;
+        line-height: 1.5;
+    }
 
-        div.stButton > button[kind="secondary"]:hover {
-            background-color: #B09635;
-            border-color: #E0C66A;
-            color: white;
-            box-shadow: 0 5px 18px rgba(180, 150, 50, 0.3);
-        }
+    /* BUTTON BASE */
+    .stButton > button {
+        height: 75px !important;
+        border-radius: 12px !important;
+        font-family: 'Cinzel', serif !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        letter-spacing: 3px !important;
+        transition: all 0.25s ease !important;
+    }
 
-        /* FOOTER */
-        .home-footer {
-            text-align: center;
-            color: #78869B;
-            font-size: 12px;
-            letter-spacing: 1px;
-            margin-top: 90px;
-        }
+    /* GREEN PLAY BUTTON */
+    .stButton > button[kind="primary"] {
+        background: #28543A !important;
+        color: white !important;
+        border: 1px solid #63856C !important;
+    }
 
-        </style>
+    .stButton > button[kind="primary"]:hover {
+        background: #376F4B !important;
+        border-color: #A2C2A8 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(40, 100, 60, 0.3);
+    }
 
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    /* YELLOW HOW TO PLAY BUTTON */
+    .stButton > button[kind="secondary"] {
+        background: #927A25 !important;
+        color: white !important;
+        border: 1px solid #C5AC53 !important;
+    }
 
-        <div class="home-title">
-            THE LOCKED CLASSROOM
+    .stButton > button[kind="secondary"]:hover {
+        background: #B09635 !important;
+        border-color: #E0CA79 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(170, 140, 40, 0.25);
+    }
+
+    /* FOOTER */
+    .horror-footer {
+        font-family: 'Cinzel', serif;
+        color: #68758A;
+        font-size: 12px;
+        text-align: center;
+        letter-spacing: 3px;
+        margin-top: 85px;
+    }
+
+    </style>
+
+    <div class="horror-title">
+        THE LOCKED CLASSROOM
+    </div>
+
+    <div class="horror-subtitle">
+        A Differential Calculus Escape Game
+    </div>
+
+    <div class="horror-tagline">
+        FOUR ROOMS. TWELVE CHALLENGES. ONE WAY OUT.
+    </div>
+
+    <div class="objective-panel">
+        <div class="objective-heading">
+            OBJECTIVE
         </div>
 
-        <div class="home-subtitle">
-            A Differential Calculus Escape Game
+        <div class="objective-description">
+            Solve every Differential Calculus challenge
+            and unlock the classroom exit before time runs out.
         </div>
-
-        <div class="home-tagline">
-            Four rooms. Twelve challenges. One way out.
-        </div>
+    </div>
     """, unsafe_allow_html=True)
-
-    # ==========================================
-    # OBJECTIVE PANEL
-    # ==========================================
-
-    left, center, right = st.columns([1, 6, 1])
-
-    with center:
-        st.markdown("""
-            <div class="objective-panel">
-                Solve every Differential Calculus challenge
-                and unlock the classroom exit before time runs out.
-            </div>
-        """, unsafe_allow_html=True)
 
     # ==========================================
     # BUTTONS
     # ==========================================
 
-    st.write("")
+    left, play, how, right = st.columns([1, 3, 3, 1])
 
-    left, play_col, how_col, right = st.columns([1, 3, 3, 1])
-
-    with play_col:
+    with play:
         if st.button(
             "▶ PLAY",
             type="primary",
@@ -340,9 +371,9 @@ def home_page():
             st.session_state.page = "story"
             st.rerun()
 
-    with how_col:
+    with how:
         if st.button(
-            "📖 HOW TO PLAY",
+            "HOW TO PLAY",
             type="secondary",
             use_container_width=True
         ):
@@ -354,11 +385,10 @@ def home_page():
     # ==========================================
 
     st.markdown("""
-        <div class="home-footer">
-            A DIFFERENTIAL CALCULUS ESCAPE GAME
-        </div>
+    <div class="horror-footer">
+        A DIFFERENTIAL CALCULUS ESCAPE GAME
+    </div>
     """, unsafe_allow_html=True)
-
 
 # ==========================================
 # STORY PAGE
