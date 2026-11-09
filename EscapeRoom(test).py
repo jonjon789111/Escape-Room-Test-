@@ -9,7 +9,7 @@ import time
 st.set_page_config(
     page_title="The Locked Classroom",
     page_icon="🔒",
-    layout="centered"
+    layout="wide"
 )
 
 
@@ -192,49 +192,218 @@ def live_timer():
 
 def home_page():
 
+    # ==========================================
+# HOME PAGE
+# ==========================================
+
+def home_page():
+
+    # HOMEPAGE DESIGN
+    st.markdown("""
+        <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+
+        /* BACKGROUND */
+        .stApp {
+            background:
+                radial-gradient(circle at 50% 35%,
+                #24334d 0%,
+                #111c30 48%,
+                #080f1c 100%);
+        }
+
+        /* REMOVE DEFAULT TOP SPACE */
+        .block-container {
+            padding-top: 4rem;
+            padding-bottom: 2rem;
+            max-width: 1200px;
+        }
+
+        /* MAIN TITLE */
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(42px, 5.5vw, 76px);
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: #f4f1ea;
+            text-align: center;
+            text-shadow: 0 0 25px rgba(180,190,210,0.2);
+            margin-bottom: 5px;
+        }
+
+        /* SUBTITLE */
+        .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            color: #c6bda9;
+            text-align: center;
+            margin-top: 0px;
+        }
+
+        /* TAGLINE */
+        .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 21px;
+            font-style: italic;
+            color: #9ca9bb;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            margin-bottom: 45px;
+        }
+
+        /* DECORATIVE LINE */
+        .divider-line {
+            width: 65%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #a99770,
+                transparent
+            );
+            margin: 30px auto;
+        }
+
+        /* OBJECTIVE PANEL */
+        .objective-panel {
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(201,183,145,0.45);
+            border-radius: 12px;
+            padding: 30px 45px;
+            text-align: center;
+            margin: 30px auto 35px auto;
+            max-width: 950px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        .objective-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: #d7c49b;
+            margin-bottom: 15px;
+        }
+
+        .objective-description {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 25px;
+            color: #e5e1d8;
+            line-height: 1.5;
+        }
+
+        /* BUTTONS */
+        div[data-testid="stButton"] button {
+            height: 58px;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            transition: 0.3s ease;
+        }
+
+        /* PLAY BUTTON */
+        div[data-testid="stButton"]:nth-of-type(1) button {
+            background-color: #476b56;
+            color: #ffffff;
+            border: 1px solid #78947e;
+        }
+
+        div[data-testid="stButton"]:nth-of-type(1) button:hover {
+            background-color: #5b8469;
+            border-color: #b5c9ad;
+            transform: translateY(-3px);
+        }
+
+        /* HOW TO PLAY BUTTON */
+        div[data-testid="stButton"]:nth-of-type(2) button {
+            background-color: #b59a60;
+            color: #111827;
+            border: 1px solid #d9c28c;
+        }
+
+        div[data-testid="stButton"]:nth-of-type(2) button:hover {
+            background-color: #d0b77c;
+            border-color: #f0dfb2;
+            transform: translateY(-3px);
+        }
+
+        /* FOOTER */
+        .footer {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            color: #778398;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-top: 65px;
+        }
+
+        </style>
+    """, unsafe_allow_html=True)
+
+    # TITLE
+    st.markdown("""
+        <div class="main-title">
+            THE LOCKED CLASSROOM
+        </div>
+
+        <div class="subtitle">
+            A Differential Calculus Escape Game
+        </div>
+
+        <div class="tagline">
+            Four rooms. Twelve challenges. One way out.
+        </div>
+
+        <div class="divider-line"></div>
+    """, unsafe_allow_html=True)
+
+    # OBJECTIVE PANEL
+    st.markdown("""
+        <div class="objective-panel">
+
+            <div class="objective-heading">
+                OBJECTIVE
+            </div>
+
+            <div class="objective-description">
+                Solve Differential Calculus challenges to escape
+                four locked rooms.<br>
+                Can you find your way out before time runs out?
+            </div>
+
+        </div>
+    """, unsafe_allow_html=True)
+
+    # BUTTONS
     st.write("")
-    st.write("")
-
-    st.title("THE LOCKED CLASSROOM")
-
-    st.subheader("Calculus Escape")
-
-    st.divider()
-
-    # CENTERED BUTTONS
-
-    col1, col2, col3, col4 = st.columns([1, 2, 2, 1])
+    col1, col2, col3, col4, col5 = st.columns([1, 2, 0.3, 2, 1])
 
     with col2:
-
-        if st.button("PLAY", use_container_width=True):
+        if st.button("▶  PLAY", use_container_width=True):
 
             st.session_state.page = "story"
             st.rerun()
 
-    with col3:
-
+    with col4:
         if st.button("HOW TO PLAY", use_container_width=True):
 
             st.session_state.page = "instructions"
             st.rerun()
 
-    st.write("")
-
-    # OBJECTIVE PANEL
-
-    with st.container(border=True):
-
-        st.subheader("OBJECTIVE")
-
-        st.write(
-            "Solve Differential Calculus challenges to escape "
-            "four rooms."
-        )
-
-        st.write(
-            "Can you escape before time runs out?"
-        )
+    # FOOTER
+    st.markdown("""
+        <div class="footer">
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+            THINK CAREFULLY. EVERY SECOND COUNTS.<br>
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        </div>
+    """, unsafe_allow_html=True)
 
 
 # ==========================================
