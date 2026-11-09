@@ -257,74 +257,71 @@ def home_page():
 def story_page():
 
     design()
-    header("THE LOCKED CLASSROOM", "THE STORY",
-           "Every classroom holds a secret.")
 
-    left, center, right = st.columns([1, 5, 1])
+    st.markdown("")
+    st.markdown("## 📖 THE STORY")
+    st.caption("THE LOCKED CLASSROOM • AN ESCAPE ROOM ADVENTURE")
+    st.divider()
 
-    with center:
-        with st.container(border=True):
+    st.markdown("### The final bell has rung...")
+    st.write(
+        "As you prepare to leave, you reach for the door. "
+        "But something is wrong. **It's locked.**"
+    )
 
-            st.markdown(
-                '<div class="section-title">11:47 PM — THE CLASSROOM</div>',
-                unsafe_allow_html=True
-            )
+    st.write("")
 
-            st.markdown("""
-            <div class="story-text">
-                It is already late, and you are the last student inside
-                the classroom.
+    st.info(
+        "Suddenly, strange mathematical challenges begin appearing "
+        "around the classroom."
+    )
 
-                <br><br>
+    st.markdown("### Four areas. Four challenges.")
+    col1, col2 = st.columns(2)
 
-                As you prepare to leave, you reach for the door.
-                But something is wrong. It is locked.
+    with col1:
+        st.markdown("#### 🖍️ The Blackboard")
+        st.caption("Where the first clues await.")
 
-                <br><br>
+        st.markdown("#### 🗄️ The Storage Cabinet")
+        st.caption("A collection of difficult challenges.")
 
-                Suddenly, strange mathematical challenges begin
-                appearing around the classroom. The blackboard,
-                teacher's desk, storage cabinet, and exit door each
-                hold a series of Differential Calculus problems.
+    with col2:
+        st.markdown("#### 🪑 The Teacher's Desk")
+        st.caption("More than just an ordinary desk.")
 
-                <br><br>
+        st.markdown("#### 🚪 The Exit Door")
+        st.caption("Your final obstacle to freedom.")
 
-                You must explore all four areas, solve every challenge,
-                and collect the keys to escape.
+    st.write("")
+    st.warning(
+        "You must explore all four areas, solve every challenge, "
+        "and collect the keys to escape."
+    )
 
-                <br><br>
+    st.markdown("### But remember...")
+    st.write(
+        "Every wrong answer costs **one life and five seconds**. "
+        "Use your hints wisely. Time is limited, and every answer counts."
+    )
 
-                But be careful. Every wrong answer costs one life
-                and five seconds.
-            </div>
-            """, unsafe_allow_html=True)
+    st.divider()
 
-            st.markdown("""
-            <div class="section-title" style="text-align:center;margin-top:20px">
-                SOLVE THE CHALLENGES.<br>
-                COLLECT THE KEYS.<br>
-                FIND YOUR WAY OUT.
-            </div>
-            """, unsafe_allow_html=True)
+    st.markdown("### Your mission")
+    st.markdown("**Solve the problems. Collect the keys. Escape the classroom.**")
 
-    st.markdown("""
-        <div class="subtitle" style="margin:25px">
-            YOU HAVE 10 MINUTES. THREE LIVES. TWO HINTS.
-        </div>
-    """, unsafe_allow_html=True)
+    st.write("")
+    left, right = st.columns(2)
 
-    left, back, gap, start, right = st.columns([1.5, 2.5, 0.3, 2.5, 1.5])
-
-    with back:
-        if st.button("BACK TO MENU", use_container_width=True):
+    with left:
+        if st.button("← Back to Menu", use_container_width=True):
             st.session_state.page = "home"
             st.rerun()
 
-    with start:
-        if st.button("START GAME", type="primary", use_container_width=True):
+    with right:
+        if st.button("START GAME →", type="primary", use_container_width=True):
             start_game()
             st.rerun()
-
 
 # ==========================================
 # INSTRUCTIONS PAGE
