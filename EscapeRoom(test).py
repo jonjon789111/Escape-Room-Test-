@@ -192,107 +192,46 @@ def live_timer():
 
 def home_page():
 
-    # ==========================================
-    # HOME PAGE DESIGN
-    # ==========================================
-
-    st.markdown("""
-        <style>
-
-        /* MAIN TITLE */
-        h1 {
-            text-align: center;
-            font-size: 44px !important;
-            font-weight: 800 !important;
-            letter-spacing: 1px;
-            margin-top: 35px;
-        }
-
-        /* SUBTITLE AND TAGLINE */
-        .stApp p {
-            text-align: center;
-        }
-
-        /* BUTTONS */
-        div.stButton > button {
-            height: 65px;
-            width: 100%;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            transition: 0.3s;
-        }
-
-        /* PLAY BUTTON - GREEN */
-        div.stButton > button[kind="primary"] {
-            background-color: #263F32;
-            color: white;
-            border: 1px solid #52745D;
-        }
-
-        div.stButton > button[kind="primary"]:hover {
-            background-color: #365B43;
-            border-color: #78977D;
-            color: white;
-        }
-
-        /* HOW TO PLAY BUTTON - YELLOW */
-        div.stButton > button[kind="secondary"] {
-            background-color: #8A741F;
-            color: white;
-            border: 1px solid #B49A3D;
-        }
-
-        div.stButton > button[kind="secondary"]:hover {
-            background-color: #A58B2B;
-            border-color: #D0B75C;
-            color: white;
-        }
-
-        </style>
-    """, unsafe_allow_html=True)
-
-    # ==========================================
+    # ==================================
     # TITLE
-    # ==========================================
+    # ==================================
 
     st.write("")
     st.write("")
 
     st.title("THE LOCKED CLASSROOM")
 
-    st.write("A Differential Calculus Escape Game")
+    st.subheader("A Differential Calculus Escape Game")
 
     st.write("Four rooms. Twelve challenges. One way out.")
 
     st.write("")
     st.write("")
-    st.write("")
+    st.divider()
 
-    # ==========================================
-    # OBJECTIVE PANEL
-    # ==========================================
+    # ==================================
+    # OBJECTIVE
+    # ==================================
 
-    left, center, right = st.columns([1, 6, 1])
+    with st.container(border=True):
 
-    with center:
-        st.info(
+        st.subheader("OBJECTIVE")
+
+        st.write(
             "Solve every Differential Calculus challenge "
             "and unlock the classroom exit before time runs out."
         )
 
     st.write("")
     st.write("")
-    st.write("")
 
-    # ==========================================
-    # PLAY BUTTON
-    # ==========================================
+    # ==================================
+    # BUTTONS
+    # ==================================
 
-    left, center, right = st.columns([1, 6, 1])
+    play_col, how_col = st.columns(2)
 
-    with center:
+    with play_col:
         if st.button(
             "▶ PLAY",
             type="primary",
@@ -301,16 +240,7 @@ def home_page():
             st.session_state.page = "story"
             st.rerun()
 
-    st.write("")
-    st.write("")
-
-    # ==========================================
-    # HOW TO PLAY BUTTON
-    # ==========================================
-
-    left, center, right = st.columns([1, 6, 1])
-
-    with center:
+    with how_col:
         if st.button(
             "📖 HOW TO PLAY",
             type="secondary",
@@ -321,12 +251,11 @@ def home_page():
 
     st.write("")
     st.write("")
-    st.write("")
-    st.write("")
+    st.divider()
 
-    # ==========================================
+    # ==================================
     # FOOTER
-    # ==========================================
+    # ==================================
 
     st.caption("A DIFFERENTIAL CALCULUS ESCAPE GAME")
 
