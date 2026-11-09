@@ -98,6 +98,10 @@ if "feedback" not in st.session_state:
 if "hint_message" not in st.session_state:
     st.session_state.hint_message = ""
 
+# Tracks whether the current question has already received a hint.
+if "hint_used_this_question" not in st.session_state:
+    st.session_state.hint_used_this_question = False
+
 
 # ==========================================
 # GAME RESET
@@ -118,6 +122,8 @@ def reset_game():
 
     st.session_state.feedback = ""
     st.session_state.hint_message = ""
+
+    st.session_state.hint_used_this_question = False
 
     st.session_state.page = "home"
 
@@ -140,6 +146,8 @@ def start_game():
 
     st.session_state.feedback = ""
     st.session_state.hint_message = ""
+
+    st.session_state.hint_used_this_question = False
 
     st.session_state.page = "room1"
 
@@ -183,7 +191,7 @@ def wrong_answer():
 
     st.session_state.lives -= 1
 
-    # Deduct 5 seconds safely
+    # Deduct 5 seconds
 
     if st.session_state.start_time is not None:
         st.session_state.start_time -= 5
@@ -194,6 +202,34 @@ def wrong_answer():
 
     if st.session_state.lives <= 0:
         st.session_state.game_over = True
+
+
+# ==========================================
+# USE HINT
+# ==========================================
+
+def use_hint(message):
+
+    if st.session_state.hint_used_this_question:
+
+        st.session_state.hint_message = (
+            "You have already used a hint for this challenge. "
+            "You can only use 1 hint per challenge."
+        )
+
+    elif st.session_state.hints <= 0:
+
+        st.session_state.hint_message = (
+            "You have no hints remaining."
+        )
+
+    else:
+
+        st.session_state.hints -= 1
+
+        st.session_state.hint_used_this_question = True
+
+        st.session_state.hint_message = message
 
 
 # ==========================================
@@ -316,6 +352,8 @@ elif st.session_state.page == "instructions":
 
     st.write("❌ Wrong answers deduct 1 life and 5 seconds.")
 
+    st.write("💡 Only 1 hint can be used per challenge.")
+
     st.write(
         "🚪 Lose all your lives or run out of time, "
         "and the game ends."
@@ -346,9 +384,7 @@ elif st.session_state.page == "room1":
 
     st.divider()
 
-    # --------------------------------------
     # GAME STATUS
-    # --------------------------------------
 
     col1, col2, col3 = st.columns(3)
 
@@ -363,9 +399,7 @@ elif st.session_state.page == "room1":
 
     st.divider()
 
-    # --------------------------------------
     # GAME OVER
-    # --------------------------------------
 
     if st.session_state.game_over:
 
@@ -381,9 +415,7 @@ elif st.session_state.page == "room1":
             reset_game()
             st.rerun()
 
-    # --------------------------------------
     # ROOM CLEARED
-    # --------------------------------------
 
     elif st.session_state.room1_cleared:
 
@@ -403,9 +435,7 @@ elif st.session_state.page == "room1":
             st.session_state.page = "room2"
             st.rerun()
 
-    # --------------------------------------
     # ACTIVE CHALLENGES
-    # --------------------------------------
 
     else:
 
@@ -432,8 +462,6 @@ elif st.session_state.page == "room1":
                 r"\lim_{x \to 2}(3x+4)"
             )
 
-            st.info("Hint: Try direct substitution.")
-
             answer = st.text_input(
                 "Enter your answer:",
                 key="answer_1"
@@ -444,6 +472,8 @@ elif st.session_state.page == "room1":
                 if answer.strip() == "10":
 
                     st.session_state.question_number = 2
+                    st.session_state.hint_used_this_question = False
+
                     st.session_state.feedback = ""
                     st.session_state.hint_message = ""
 
@@ -456,19 +486,9 @@ elif st.session_state.page == "room1":
 
             if st.button("USE HINT", key="hint_1"):
 
-                if st.session_state.hints > 0:
-
-                    st.session_state.hints -= 1
-
-                    st.session_state.hint_message = (
-                        "Substitute x = 2 into the expression."
-                    )
-
-                else:
-
-                    st.session_state.hint_message = (
-                        "You have no hints remaining."
-                    )
+                use_hint(
+                    "Substitute x = 2 into the expression."
+                )
 
                 st.rerun()
 
@@ -486,8 +506,6 @@ elif st.session_state.page == "room1":
                 r"\lim_{x \to 2}\frac{x^2-4}{x-2}"
             )
 
-            st.info("Hint: Factor the numerator first.")
-
             answer = st.text_input(
                 "Enter your answer:",
                 key="answer_2"
@@ -498,6 +516,8 @@ elif st.session_state.page == "room1":
                 if answer.strip() == "4":
 
                     st.session_state.question_number = 3
+                    st.session_state.hint_used_this_question = False
+
                     st.session_state.feedback = ""
                     st.session_state.hint_message = ""
 
@@ -510,19 +530,9 @@ elif st.session_state.page == "room1":
 
             if st.button("USE HINT", key="hint_2"):
 
-                if st.session_state.hints > 0:
-
-                    st.session_state.hints -= 1
-
-                    st.session_state.hint_message = (
-                        "Factor x² - 4 into (x - 2)(x + 2)."
-                    )
-
-                else:
-
-                    st.session_state.hint_message = (
-                        "You have no hints remaining."
-                    )
+                use_hint(
+                    "Factor x² - 4 into (x - 2)(x + 2)."
+                )
 
                 st.rerun()
 
@@ -540,8 +550,6 @@ elif st.session_state.page == "room1":
                 r"\lim_{x \to 1}\frac{x^2+3x-4}{x-1}"
             )
 
-            st.info("Hint: Factor the numerator.")
-
             answer = st.text_input(
                 "Enter your answer:",
                 key="answer_3"
@@ -552,6 +560,7 @@ elif st.session_state.page == "room1":
                 if answer.strip() == "5":
 
                     st.session_state.room1_cleared = True
+
                     st.session_state.feedback = ""
                     st.session_state.hint_message = ""
 
@@ -564,25 +573,13 @@ elif st.session_state.page == "room1":
 
             if st.button("USE HINT", key="hint_3"):
 
-                if st.session_state.hints > 0:
-
-                    st.session_state.hints -= 1
-
-                    st.session_state.hint_message = (
-                        "Factor the numerator into (x - 1)(x + 4)."
-                    )
-
-                else:
-
-                    st.session_state.hint_message = (
-                        "You have no hints remaining."
-                    )
+                use_hint(
+                    "Factor the numerator into (x - 1)(x + 4)."
+                )
 
                 st.rerun()
 
-        # ----------------------------------
-        # FEEDBACK MESSAGES
-        # ----------------------------------
+        # FEEDBACK
 
         if st.session_state.feedback:
 
@@ -592,9 +589,7 @@ elif st.session_state.page == "room1":
 
             st.info(st.session_state.hint_message)
 
-        # ----------------------------------
         # ROOM STATUS
-        # ----------------------------------
 
         st.divider()
 
