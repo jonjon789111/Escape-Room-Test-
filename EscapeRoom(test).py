@@ -9,7 +9,7 @@ import time
 st.set_page_config(
     page_title="The Locked Classroom",
     page_icon="🔒",
-    layout="wide"
+    layout="centered"
 )
 
 
@@ -17,137 +17,38 @@ st.set_page_config(
 # SESSION STATE
 # ==========================================
 
-defaults = {
-    "page": "home",
-    "lives": 3,
-    "hints": 2,
-    "time_limit": 600,
-    "start_time": None,
-    "question_number": 1,
-    "room1_cleared": False,
-    "game_over": False,
-    "feedback": "",
-    "hint_message": "",
-    "hint_used_this_question": False
-}
+if "page" not in st.session_state:
+    st.session_state.page = "home"
 
-for key, value in defaults.items():
-    if key not in st.session_state:
-        st.session_state[key] = value
+if "lives" not in st.session_state:
+    st.session_state.lives = 3
 
+if "hints" not in st.session_state:
+    st.session_state.hints = 2
 
-# ==========================================
-# GLOBAL HORROR THEME
-# ==========================================
+if "time_limit" not in st.session_state:
+    st.session_state.time_limit = 600
 
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+if "start_time" not in st.session_state:
+    st.session_state.start_time = None
 
-/* BACKGROUND */
+if "question_number" not in st.session_state:
+    st.session_state.question_number = 1
 
-.stApp {
-    background: linear-gradient(
-        135deg,
-        #080D18,
-        #111A2B,
-        #080D18
-    );
-    color: #F0EEE9;
-}
+if "room1_cleared" not in st.session_state:
+    st.session_state.room1_cleared = False
 
-/* PAGE WIDTH */
+if "game_over" not in st.session_state:
+    st.session_state.game_over = False
 
-.block-container {
-    max-width: 95%;
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-}
+if "feedback" not in st.session_state:
+    st.session_state.feedback = ""
 
-/* GENERAL TEXT */
+if "hint_message" not in st.session_state:
+    st.session_state.hint_message = ""
 
-h1, h2, h3 {
-    font-family: 'Cinzel', serif !important;
-    color: #F0EEE9 !important;
-}
-
-p, label, li {
-    font-family: 'Cormorant Garamond', serif;
-    color: #D0D4DC;
-}
-
-/* BUTTONS */
-
-div[data-testid="stButton"] button {
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    letter-spacing: 2px;
-    border-radius: 12px;
-    min-height: 55px;
-    transition: 0.2s ease;
-}
-
-/* PLAY BUTTON */
-
-div[data-testid="stButton"] button[kind="primary"] {
-    background-color: #426B50 !important;
-    color: #FFFFFF !important;
-    border: 1px solid #72977A !important;
-}
-
-div[data-testid="stButton"] button[kind="primary"]:hover {
-    background-color: #527F60 !important;
-    border-color: #A5C2A8 !important;
-}
-
-/* HOW TO PLAY BUTTON */
-
-div[data-testid="stButton"] button[kind="secondary"] {
-    background-color: #C6A64A !important;
-    color: #111827 !important;
-    border: 1px solid #E2C66D !important;
-}
-
-div[data-testid="stButton"] button[kind="secondary"]:hover {
-    background-color: #E0C46A !important;
-}
-
-/* INPUTS */
-
-div[data-testid="stTextInput"] input {
-    background-color: #172235;
-    color: white;
-    border: 1px solid #58677C;
-    border-radius: 8px;
-}
-
-/* METRICS */
-
-div[data-testid="stMetric"] {
-    background-color: #172235;
-    padding: 15px;
-    border: 1px solid #35445B;
-    border-radius: 10px;
-}
-
-/* DIVIDERS */
-
-hr {
-    border-color: #35445B;
-}
-
-/* HOMEPAGE FOOTER */
-
-.home-footer {
-    text-align: center;
-    color: #68758A;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    letter-spacing: 2px;
-    margin-top: 55px;
-}
-</style>
-""", unsafe_allow_html=True)
+if "hint_used_this_question" not in st.session_state:
+    st.session_state.hint_used_this_question = False
 
 
 # ==========================================
@@ -181,9 +82,22 @@ def reset_game():
 
 def start_game():
 
-    reset_game()
+    st.session_state.lives = 3
+    st.session_state.hints = 2
 
+    st.session_state.time_limit = 600
     st.session_state.start_time = time.time()
+
+    st.session_state.question_number = 1
+
+    st.session_state.room1_cleared = False
+    st.session_state.game_over = False
+
+    st.session_state.feedback = ""
+    st.session_state.hint_message = ""
+
+    st.session_state.hint_used_this_question = False
+
     st.session_state.page = "room1"
 
 
@@ -261,7 +175,7 @@ def live_timer():
 
         st.metric("TIME LEFT", "00:00")
 
-        st.rerun(scope="app")
+        st.rerun()
 
     minutes = time_left // 60
     seconds = time_left % 60
@@ -278,137 +192,49 @@ def live_timer():
 
 def home_page():
 
-    # ======================================
-    # HOME PAGE TITLE
-    # ======================================
+    st.write("")
+    st.write("")
 
-    st.markdown("""
-    <div style="
-        text-align: center;
-        padding-top: 35px;
-        padding-bottom: 10px;
-    ">
+    st.title("THE LOCKED CLASSROOM")
 
-        <h1 style="
-            font-family: 'Cinzel', serif;
-            font-size: clamp(38px, 5vw, 68px);
-            font-weight: 800;
-            letter-spacing: 5px;
-            color: #F4F1EA;
-            text-shadow: 0 0 25px rgba(180,190,210,0.2);
-            margin-bottom: 15px;
-        ">
-            THE LOCKED CLASSROOM
-        </h1>
+    st.subheader("Calculus Escape")
 
-        <div style="
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 30px;
-            color: #C7CBD4;
-            margin-bottom: 12px;
-        ">
-            A Differential Calculus Escape Game
-        </div>
+    st.divider()
 
-        <div style="
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 21px;
-            color: #8993A5;
-            letter-spacing: 3px;
-            margin-bottom: 55px;
-        ">
-            FOUR ROOMS. TWELVE CHALLENGES. ONE WAY OUT.
-        </div>
+    # CENTERED BUTTONS
 
-    </div>
-    """, unsafe_allow_html=True)
+    col1, col2, col3, col4 = st.columns([1, 2, 2, 1])
 
+    with col2:
 
-    # ======================================
-    # OBJECTIVE PANEL
-    # ======================================
-
-    st.markdown("""
-    <div style="
-        background: linear-gradient(
-            135deg,
-            #1B293D,
-            #172235
-        );
-        border: 1px solid #43516A;
-        border-radius: 15px;
-        padding: 35px 25px;
-        text-align: center;
-        margin-bottom: 45px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    ">
-
-        <div style="
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #F0EEE9;
-            letter-spacing: 4px;
-            margin-bottom: 15px;
-        ">
-            OBJECTIVE
-        </div>
-
-        <div style="
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
-            color: #D0D4DC;
-            line-height: 1.5;
-        ">
-            Solve every Differential Calculus challenge
-            and unlock the classroom exit before time runs out.
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-
-    # ======================================
-    # HOME PAGE BUTTONS
-    # ======================================
-
-    left, play, how, right = st.columns([1, 3, 3, 1])
-
-    with play:
-
-        if st.button(
-            "▶ PLAY",
-            type="primary",
-            use_container_width=True,
-            key="home_play"
-        ):
+        if st.button("PLAY", use_container_width=True):
 
             st.session_state.page = "story"
             st.rerun()
 
+    with col3:
 
-    with how:
-
-        if st.button(
-            "HOW TO PLAY",
-            type="secondary",
-            use_container_width=True,
-            key="home_how"
-        ):
+        if st.button("HOW TO PLAY", use_container_width=True):
 
             st.session_state.page = "instructions"
             st.rerun()
 
+    st.write("")
 
-    # ======================================
-    # FOOTER
-    # ======================================
+    # OBJECTIVE PANEL
 
-    st.markdown("""
-    <div class="home-footer">
-        A DIFFERENTIAL CALCULUS ESCAPE GAME
-    </div>
-    """, unsafe_allow_html=True)
+    with st.container(border=True):
+
+        st.subheader("OBJECTIVE")
+
+        st.write(
+            "Solve Differential Calculus challenges to escape "
+            "four rooms."
+        )
+
+        st.write(
+            "Can you escape before time runs out?"
+        )
 
 
 # ==========================================
@@ -456,14 +282,14 @@ def instructions_page():
 
     st.title("HOW TO PLAY")
 
-    st.subheader("YOUR OBJECTIVE")
+    st.subheader("Your Objective")
 
     st.write(
         "Solve all the challenges in each room to collect keys "
         "and unlock the next area."
     )
 
-    st.subheader("GAME RULES")
+    st.subheader("Game Rules")
 
     st.write("❤️ You have 3 lives.")
 
@@ -484,7 +310,7 @@ def instructions_page():
         "and the game ends."
     )
 
-    st.subheader("HINT SYSTEM")
+    st.subheader("Hint System")
 
     st.write(
         "Hints reveal a step in the solution without showing "
@@ -618,7 +444,6 @@ def room1():
 
             st.rerun()
 
-
     # --------------------------------------
     # QUESTION 2
     # --------------------------------------
@@ -664,7 +489,6 @@ def room1():
 
             st.rerun()
 
-
     # --------------------------------------
     # QUESTION 3
     # --------------------------------------
@@ -708,7 +532,6 @@ def room1():
 
             st.rerun()
 
-
     # --------------------------------------
     # FEEDBACK
     # --------------------------------------
@@ -718,7 +541,6 @@ def room1():
 
     if st.session_state.hint_message:
         st.info(st.session_state.hint_message)
-
 
     # --------------------------------------
     # ROOM STATUS
@@ -762,21 +584,17 @@ def room2():
 # ==========================================
 
 if st.session_state.page == "home":
-
     home_page()
 
 elif st.session_state.page == "story":
-
     story_page()
 
 elif st.session_state.page == "instructions":
-
     instructions_page()
 
 elif st.session_state.page == "room1":
-
     room1()
 
 elif st.session_state.page == "room2":
-
     room2()
+
