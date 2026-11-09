@@ -286,6 +286,16 @@ def story_page():
         "An escape room adventure"
     )
 
+    # ROOM PROGRESS
+    if "room2_cleared" not in st.session_state:
+        st.session_state.room2_cleared = False
+
+    if "room3_cleared" not in st.session_state:
+        st.session_state.room3_cleared = False
+
+    if "room4_cleared" not in st.session_state:
+        st.session_state.room4_cleared = False
+
     st.markdown("### THE FINAL BELL HAS RUNG...")
 
     st.write(
@@ -293,40 +303,98 @@ def story_page():
         "But something is wrong. **It's locked.**"
     )
 
-    st.write("")
-
     st.info(
         "Suddenly, strange mathematical challenges begin appearing "
         "around the classroom."
     )
 
     st.markdown("### FOUR AREAS. FOUR CHALLENGES.")
+    st.caption("Select an unlocked room to begin or continue.")
 
     col1, col2 = st.columns(2, gap="large")
 
+    # ROOM 1
     with col1:
         with st.container(border=True):
             st.markdown("### 🖍️ The Blackboard")
-            st.caption("Where the first clues await.")
+            st.caption("Room 1 — Limits")
 
+            if st.session_state.room1_cleared:
+                st.success("COMPLETED")
+
+            if st.button(
+                "ENTER ROOM 1 →",
+                type="primary",
+                use_container_width=True
+            ):
+                if st.session_state.start_time is None:
+                    start_game()
+                else:
+                    st.session_state.page = "room1"
+                    st.rerun()
+
+    # ROOM 3
+    with col1:
         with st.container(border=True):
             st.markdown("### 🗄️ The Storage Cabinet")
-            st.caption("A collection of difficult challenges.")
+            st.caption("Room 3 — Product, Quotient, and Chain Rules")
 
+            if st.session_state.room3_cleared:
+                st.success("COMPLETED")
+            elif not st.session_state.room2_cleared:
+                st.warning("🔒 LOCKED")
+
+            if st.button(
+                "ENTER ROOM 3 →",
+                disabled=not st.session_state.room2_cleared,
+                use_container_width=True
+            ):
+                st.session_state.page = "room3"
+                st.rerun()
+
+    # ROOM 2
     with col2:
         with st.container(border=True):
             st.markdown("### 🪑 The Teacher's Desk")
-            st.caption("More than just an ordinary desk.")
+            st.caption("Room 2 — Basic Derivatives")
 
+            if st.session_state.room2_cleared:
+                st.success("COMPLETED")
+            elif not st.session_state.room1_cleared:
+                st.warning("🔒 LOCKED")
+
+            if st.button(
+                "ENTER ROOM 2 →",
+                disabled=not st.session_state.room1_cleared,
+                use_container_width=True
+            ):
+                st.session_state.page = "room2"
+                st.rerun()
+
+    # ROOM 4
+    with col2:
         with st.container(border=True):
             st.markdown("### 🚪 The Exit Door")
-            st.caption("Your final obstacle to freedom.")
+            st.caption("Room 4 — Trigonometric Derivatives")
+
+            if st.session_state.room4_cleared:
+                st.success("COMPLETED")
+            elif not st.session_state.room3_cleared:
+                st.warning("🔒 LOCKED")
+
+            if st.button(
+                "ENTER ROOM 4 →",
+                disabled=not st.session_state.room3_cleared,
+                use_container_width=True
+            ):
+                st.session_state.page = "room4"
+                st.rerun()
 
     st.write("")
 
     st.warning(
-        "You must explore all four areas, solve every challenge, "
-        "and collect the keys to escape."
+        "You must complete each room to unlock the next one "
+        "and collect all four keys."
     )
 
     st.markdown("### BUT REMEMBER...")
@@ -351,21 +419,9 @@ def story_page():
 
     st.write("")
 
-    left, right = st.columns(2)
-
-    with left:
-        if st.button("← BACK TO MENU", use_container_width=True):
-            st.session_state.page = "home"
-            st.rerun()
-
-    with right:
-        if st.button(
-            "START GAME →",
-            type="primary",
-            use_container_width=True
-        ):
-            start_game()
-            st.rerun()
+    if st.button("← BACK TO MENU", use_container_width=True):
+        st.session_state.page = "home"
+        st.rerun()
 
 
 # ==========================================
