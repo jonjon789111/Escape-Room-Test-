@@ -2,9 +2,9 @@
 import streamlit as st
 import time
 
-# ==================================
+# ==========================================
 # PAGE CONFIGURATION
-# ==================================
+# ==========================================
 
 st.set_page_config(
     page_title="The Locked Classroom",
@@ -12,63 +12,61 @@ st.set_page_config(
     layout="centered"
 )
 
-# ==================================
+# ==========================================
 # DARK ACADEMIA DESIGN
-# ==================================
+# ==========================================
 
 st.markdown("""
 <style>
+
 .stApp {
-    background-color: #10131C;
+    background: linear-gradient(135deg, #101010, #20201d);
+    color: #eee4ce;
 }
 
-h1 {
-    color: #D6B66F;
-    text-align: center;
-    font-size: 45px;
-    font-weight: bold;
+h1, h2, h3 {
+    color: #d6b879 !important;
+    font-family: Georgia, serif;
 }
 
-h2, h3 {
-    color: #D6B66F;
-}
-
-p {
-    color: #E8EAF0;
-    text-align: center;
-    font-size: 17px;
+p, label, span {
+    color: #eee4ce;
 }
 
 .stButton > button {
-    background: linear-gradient(135deg, #B99A56, #D6B66F);
-    color: #10131C;
-    border: 1px solid #E8CC86;
-    border-radius: 12px;
-    height: 55px;
-    font-size: 17px;
+    width: 100%;
+    height: 48px;
+    background: linear-gradient(135deg, #9b783e, #c5a15c);
+    color: #17130c;
+    border: 1px solid #e0c17c;
+    border-radius: 8px;
     font-weight: bold;
-    letter-spacing: 2px;
-    box-shadow: 0px 4px 12px rgba(185, 154, 86, 0.20);
-    transition: all 0.25s ease;
+    transition: 0.2s;
 }
 
 .stButton > button:hover {
-    background: linear-gradient(135deg, #D6B66F, #F0D99A);
-    color: #10131C;
-    border: 1px solid #F0D99A;
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #c5a15c, #e0c17c);
+    color: #17130c;
+    transform: translateY(-2px);
 }
 
-.stButton > button:active {
-    transform: translateY(1px);
+.stTextInput input {
+    background-color: #25241f;
+    color: white;
+    border: 1px solid #9b783e;
 }
+
+hr {
+    border-color: #79633d;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
 
-# ==================================
-# GAME VARIABLES
-# ==================================
+# ==========================================
+# SESSION STATE
+# ==========================================
 
 if "page" not in st.session_state:
     st.session_state.page = "home"
@@ -76,11 +74,14 @@ if "page" not in st.session_state:
 if "lives" not in st.session_state:
     st.session_state.lives = 3
 
-if "time_left" not in st.session_state:
-    st.session_state.time_left = 600
-
 if "hints" not in st.session_state:
     st.session_state.hints = 2
+
+if "time_limit" not in st.session_state:
+    st.session_state.time_limit = 600
+
+if "start_time" not in st.session_state:
+    st.session_state.start_time = None
 
 if "question_number" not in st.session_state:
     st.session_state.question_number = 1
@@ -91,425 +92,552 @@ if "room1_cleared" not in st.session_state:
 if "game_over" not in st.session_state:
     st.session_state.game_over = False
 
+if "feedback" not in st.session_state:
+    st.session_state.feedback = ""
 
-# ==================================
-# GAME OVER CHECK
-# ==================================
-
-if st.session_state.lives <= 0 or st.session_state.time_left <= 0:
-    st.session_state.game_over = True
+if "hint_message" not in st.session_state:
+    st.session_state.hint_message = ""
 
 
-# ==================================
-# MAIN MENU SCREEN
-# ==================================
+# ==========================================
+# GAME RESET
+# ==========================================
+
+def reset_game():
+
+    st.session_state.lives = 3
+    st.session_state.hints = 2
+
+    st.session_state.time_limit = 600
+    st.session_state.start_time = None
+
+    st.session_state.question_number = 1
+
+    st.session_state.room1_cleared = False
+    st.session_state.game_over = False
+
+    st.session_state.feedback = ""
+    st.session_state.hint_message = ""
+
+    st.session_state.page = "home"
+
+
+# ==========================================
+# START GAME TIMER
+# ==========================================
+
+def start_game():
+
+    st.session_state.start_time = time.time()
+
+    st.session_state.lives = 3
+    st.session_state.hints = 2
+
+    st.session_state.question_number = 1
+
+    st.session_state.room1_cleared = False
+    st.session_state.game_over = False
+
+    st.session_state.feedback = ""
+    st.session_state.hint_message = ""
+
+    st.session_state.page = "room1"
+
+
+# ==========================================
+# LIVE TIMER
+# ==========================================
+
+@st.fragment(run_every="1s")
+def live_timer():
+
+    if st.session_state.start_time is None:
+        return
+
+    elapsed_time = time.time() - st.session_state.start_time
+
+    time_left = st.session_state.time_limit - int(elapsed_time)
+
+    if time_left <= 0:
+
+        st.session_state.game_over = True
+
+        st.error("TIME'S UP! Your time has run out.")
+
+        st.rerun()
+
+    minutes = time_left // 60
+    seconds = time_left % 60
+
+    st.metric(
+        label="TIME LEFT",
+        value=f"{minutes:02d}:{seconds:02d}"
+    )
+
+
+# ==========================================
+# WRONG ANSWER PENALTY
+# ==========================================
+
+def wrong_answer():
+
+    st.session_state.lives -= 1
+
+    # Add 5 seconds to the elapsed time.
+    # This effectively removes 5 seconds
+    # from the remaining countdown.
+
+    st.session_state.start_time += 5
+
+    st.session_state.feedback = "Incorrect answer! You lost 1 life and 5 seconds."
+
+    if st.session_state.lives <= 0:
+
+        st.session_state.game_over = True
+
+
+# ==========================================
+# HOME PAGE
+# ==========================================
 
 if st.session_state.page == "home":
 
     st.markdown("<br><br>", unsafe_allow_html=True)
 
-    st.title("THE LOCKED CLASSROOM")
-
     st.markdown(
-        "<p>Four rooms. Twelve challenges. One way out.</p>",
+        "<h1 style='text-align:center;'>THE LOCKED CLASSROOM</h1>",
         unsafe_allow_html=True
     )
 
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
-    st.info(
-        "Solve every Differential Calculus challenge "
-        "and unlock the classroom exit before time runs out."
+    st.markdown(
+        "<p style='text-align:center;'>Four rooms. Twelve challenges. One way out.</p>",
+        unsafe_allow_html=True
     )
-
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
-    if st.button("▶ PLAY", use_container_width=True):
-        st.session_state.page = "story"
-        st.rerun()
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    if st.button("📖 HOW TO PLAY", use_container_width=True):
-        st.session_state.page = "instructions"
-        st.rerun()
+    col1, col2, col3 = st.columns([1, 2, 1])
 
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    with col2:
+
+        if st.button("PLAY"):
+
+            st.session_state.page = "story"
+            st.rerun()
+
+        if st.button("HOW TO PLAY"):
+
+            st.session_state.page = "instructions"
+            st.rerun()
+
+    st.markdown("---")
+
+    st.subheader("OBJECTIVE")
+
+    st.write(
+        "You are trapped inside a locked classroom. "
+        "Solve Differential Calculus challenges, unlock the rooms, "
+        "and find your way out before time runs out."
+    )
 
     st.markdown(
-        "<p style='color:#7D879B; font-size:12px;'>"
-        "A DIFFERENTIAL CALCULUS ESCAPE GAME"
+        "<p style='text-align:center;'>"
+        "Can you escape the classroom?"
         "</p>",
         unsafe_allow_html=True
     )
 
 
-# ==================================
-# STORY SCREEN
-# ==================================
+# ==========================================
+# STORY PAGE
+# ==========================================
 
 elif st.session_state.page == "story":
 
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
     st.title("THE STORY")
 
-    st.markdown("---")
+    st.write(
+        "It is already late, and you are the last student "
+        "inside the classroom."
+    )
 
-    st.markdown("""
-    You stayed late at school to finish your work.
+    st.write(
+        "As you prepare to leave, you discover that the classroom "
+        "door is locked. The only way out is to solve the challenges "
+        "hidden throughout the room."
+    )
 
-    After spending hours solving problems, you finally
-    decided it was time to go home.
+    st.write(
+        "Four areas stand between you and freedom. "
+        "Each area contains three Differential Calculus challenges."
+    )
 
-    But when you reached the classroom door...
+    st.warning(
+        "You have only 10 minutes. Think carefully."
+    )
 
-    **It was locked.**
+    if st.button("START GAME"):
 
-    You tried opening it, but it wouldn't budge.
-    You looked around and noticed something strange.
-
-    The classroom was divided into four different areas.
-    Each area contained puzzles, locked compartments,
-    and mysterious challenges.
-
-    A note on the teacher's desk caught your attention:
-
-    *"To escape this classroom, you must prove your
-    knowledge. Solve the challenges, collect the keys,
-    and unlock the final exit."*
-
-    You realized that the only way out was through
-    Differential Calculus.
-
-    The clock is ticking.
-
-    **Can you solve all the challenges and escape
-    before time runs out?**
-    """)
-
-    st.markdown("---")
-
-    st.info("Four rooms. Twelve challenges. One way out.")
-
-    if st.button("🔒 START GAME", use_container_width=True):
-
-        # RESET GAME
-        st.session_state.lives = 3
-        st.session_state.time_left = 600
-        st.session_state.hints = 2
-        st.session_state.question_number = 1
-        st.session_state.room1_cleared = False
-        st.session_state.game_over = False
-
-        st.session_state.page = "room1"
+        start_game()
         st.rerun()
 
-    if st.button("⬅ BACK TO MAIN MENU", use_container_width=True):
+    if st.button("BACK TO MENU"):
+
         st.session_state.page = "home"
         st.rerun()
 
 
-# ==================================
-# HOW TO PLAY SCREEN
-# ==================================
+# ==========================================
+# HOW TO PLAY
+# ==========================================
 
 elif st.session_state.page == "instructions":
 
-    st.markdown("<br>", unsafe_allow_html=True)
-
     st.title("HOW TO PLAY")
 
-    st.markdown(
-        "<p>Learn the rules before entering the classroom!</p>",
-        unsafe_allow_html=True
-    )
-
-    st.markdown("---")
-
-    st.subheader("🎯 OBJECTIVE")
+    st.subheader("Your Objective")
 
     st.write(
-        "Escape the locked classroom by completing "
-        "all 12 Differential Calculus challenges "
-        "across four rooms."
+        "Solve all the challenges in each room to collect keys "
+        "and unlock the next area."
     )
 
-    st.markdown("---")
+    st.subheader("Game Rules")
 
-    st.subheader("🔑 GAME PROGRESSION")
+    st.write("❤️ You have 3 lives.")
 
-    st.write("""
-    1. Start in Room 1 and solve its three challenges.
-    2. Complete all three challenges to earn a key.
-    3. Use the key to unlock the next room.
-    4. Complete all four rooms to escape.
-    """)
+    st.write("⏱️ You have 10 minutes to finish the game.")
 
-    st.markdown("---")
+    st.write("💡 You have 2 hints for the entire game.")
 
-    st.subheader("❤️ LIVES")
+    st.write("🔑 Each room has 3 challenges.")
 
-    st.write("""
-    - You start with 3 lives.
-    - Every incorrect answer costs 1 life.
-    - Lose all 3 lives and the game ends.
-    """)
+    st.write("✅ Correct answers allow you to progress.")
 
-    st.markdown("---")
+    st.write("❌ Wrong answers deduct 1 life and 5 seconds.")
 
-    st.subheader("⏱️ TIMER")
-
-    st.write("""
-    - You have 10 minutes to escape.
-    - Every incorrect answer deducts 5 seconds.
-    - If the timer reaches zero, the game ends.
-    """)
-
-    st.markdown("---")
-
-    st.subheader("💡 HINTS")
-
-    st.write("""
-    - You have 2 hints for the entire game.
-    - Each hint reveals one step toward the solution.
-    - Hints will not reveal the final answer.
-    """)
-
-    st.markdown("---")
-
-    st.subheader("📌 IMPORTANT RULES")
-
-    st.write("""
-    - Complete challenges in the correct order.
-    - Correct answers allow you to proceed.
-    - Incorrect answers cost a life and 5 seconds.
-    - You can retry a question after an incorrect answer.
-    - Your lives, timer, and hints carry over between rooms.
-    """)
-
-    st.markdown("---")
-
-    st.success(
-        "YOUR MISSION: Solve all 12 challenges, "
-        "collect all 3 keys, and escape before time runs out!"
+    st.write(
+        "🚪 Lose all your lives or run out of time, "
+        "and the game ends."
     )
 
-    if st.button("⬅ BACK TO MAIN MENU", use_container_width=True):
+    st.subheader("Hint System")
+
+    st.write(
+        "Hints reveal a step in the solution without showing "
+        "the final answer."
+    )
+
+    if st.button("BACK TO MENU"):
+
         st.session_state.page = "home"
         st.rerun()
 
 
-# ==================================
-# ROOM 1 - THE BLACKBOARD
-# ==================================
+# ==========================================
+# ROOM 1: THE BLACKBOARD
+# ==========================================
 
 elif st.session_state.page == "room1":
 
-    st.markdown("<br>", unsafe_allow_html=True)
-
     st.title("THE LOCKED CLASSROOM")
 
-    st.subheader("ROOM 1: THE BLACKBOARD")
+    st.caption("ROOM 1 / 4")
 
-    st.write(
-        "Three challenges are written on the blackboard. "
-        "Solve them to discover the First Key."
-    )
+    st.divider()
 
-    st.markdown("---")
-
-    # PLAYER STATUS
+    # --------------------------------------
+    # GAME STATUS
+    # --------------------------------------
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric("❤️ Lives", st.session_state.lives)
+        st.metric("LIVES", f"❤️ {st.session_state.lives}")
 
     with col2:
-        st.metric("⏱️ Time", st.session_state.time_left)
+        live_timer()
 
     with col3:
-        st.metric("💡 Hints", st.session_state.hints)
+        st.metric("HINTS", f"💡 {st.session_state.hints}")
 
-    st.markdown("---")
+    st.divider()
 
+    # --------------------------------------
     # GAME OVER
+    # --------------------------------------
 
     if st.session_state.game_over:
 
-        st.error("GAME OVER!")
+        st.error("GAME OVER")
 
-        st.write("You ran out of lives or time.")
+        st.write(
+            "You failed to escape the classroom. "
+            "Try again and manage your time carefully."
+        )
 
         if st.button("RESTART GAME"):
-            st.session_state.lives = 3
-            st.session_state.time_left = 600
-            st.session_state.hints = 2
-            st.session_state.question_number = 1
-            st.session_state.room1_cleared = False
-            st.session_state.game_over = False
+
+            reset_game()
             st.rerun()
 
-    # ROOM COMPLETION
+    # --------------------------------------
+    # ROOM CLEARED
+    # --------------------------------------
 
     elif st.session_state.room1_cleared:
 
-        st.success("ROOM 1 CLEARED!")
+        st.success("ROOM CLEARED!")
 
-        st.title("🔑 FIRST KEY FOUND!")
+        st.title("🔑 FIRST KEY OBTAINED")
 
         st.write(
-            "You successfully solved all three "
-            "blackboard challenges."
+            "You successfully solved all three challenges "
+            "on the blackboard."
         )
 
-        st.info("The Teacher's Desk is now unlocked!")
+        st.write("The Teacher's Desk is now unlocked.")
 
         if st.button("CONTINUE"):
+
             st.session_state.page = "room2"
             st.rerun()
 
-    # CHALLENGE 1
+    # --------------------------------------
+    # ACTIVE CHALLENGES
+    # --------------------------------------
 
-    elif st.session_state.question_number == 1:
+    else:
 
-        st.subheader("CHALLENGE 1: DIRECT SUBSTITUTION")
+        st.subheader("ROOM 1: THE BLACKBOARD")
 
-        st.write("Evaluate the following limit:")
-
-        st.latex(r"\lim_{x \to 2}(3x+4)")
-
-        answer = st.text_input(
-            "Enter your answer:",
-            key="room1_answer1"
+        st.write(
+            "The blackboard contains three mathematical challenges. "
+            "Solve each one to unlock the first key."
         )
 
-        if st.button("SUBMIT ANSWER", key="submit1"):
+        st.markdown("### 🔒 Blackboard Challenge")
 
-            if answer.strip() == "10":
+        # ----------------------------------
+        # QUESTION 1
+        # ----------------------------------
 
-                st.success("Correct! Challenge 1 completed.")
+        if st.session_state.question_number == 1:
 
-                st.session_state.question_number = 2
-                st.rerun()
+            st.caption("CHALLENGE 1 / 3")
 
-            else:
+            st.write(
+                "Evaluate the following limit:"
+            )
 
-                st.session_state.lives -= 1
-                st.session_state.time_left -= 5
+            st.latex(
+                r"\lim_{x \to 2}(3x+4)"
+            )
 
-                st.error("Wrong answer! You lost one life and 5 seconds.")
+            st.info("Hint: Try direct substitution.")
 
-                if st.session_state.lives <= 0:
-                    st.session_state.game_over = True
+            answer = st.text_input(
+                "Enter your answer:",
+                key="answer_1"
+            )
 
-                st.rerun()
+            if st.button("SUBMIT ANSWER", key="submit_1"):
 
-    # CHALLENGE 2
+                if answer.strip() == "10":
 
-    elif st.session_state.question_number == 2:
+                    st.session_state.question_number = 2
+                    st.session_state.feedback = ""
+                    st.session_state.hint_message = ""
 
-        st.subheader("CHALLENGE 2: FACTORING")
+                    st.success("Correct! Challenge 1 completed.")
 
-        st.write("Evaluate the following limit:")
+                    st.rerun()
 
-        st.latex(r"\lim_{x \to 2}\frac{x^2-4}{x-2}")
+                else:
 
-        answer = st.text_input(
-            "Enter your answer:",
-            key="room1_answer2"
-        )
+                    wrong_answer()
+                    st.rerun()
 
-        if st.button("SUBMIT ANSWER", key="submit2"):
+            if st.button("USE HINT", key="hint_1"):
 
-            if answer.strip() == "4":
+                if st.session_state.hints > 0:
 
-                st.success("Correct! Challenge 2 completed.")
+                    st.session_state.hints -= 1
 
-                st.session_state.question_number = 3
-                st.rerun()
+                    st.session_state.hint_message = (
+                        "Substitute x = 2 into the expression."
+                    )
 
-            else:
+                else:
 
-                st.session_state.lives -= 1
-                st.session_state.time_left -= 5
-
-                st.error("Wrong answer! You lost one life and 5 seconds.")
-
-                if st.session_state.lives <= 0:
-                    st.session_state.game_over = True
-
-                st.rerun()
-
-    # CHALLENGE 3
-
-    elif st.session_state.question_number == 3:
-
-        st.subheader("CHALLENGE 3: RATIONAL LIMITS")
-
-        st.write("Evaluate the following limit:")
-
-        st.latex(r"\lim_{x \to 1}\frac{x^2+3x-4}{x-1}")
-
-        answer = st.text_input(
-            "Enter your answer:",
-            key="room1_answer3"
-        )
-
-        if st.button("SUBMIT ANSWER", key="submit3"):
-
-            if answer.strip() == "5":
-
-                st.success("Correct! You completed all challenges!")
-
-                st.session_state.question_number = 4
-                st.session_state.room1_cleared = True
+                    st.session_state.hint_message = (
+                        "You have no hints remaining."
+                    )
 
                 st.rerun()
 
-            else:
+        # ----------------------------------
+        # QUESTION 2
+        # ----------------------------------
 
-                st.session_state.lives -= 1
-                st.session_state.time_left -= 5
+        elif st.session_state.question_number == 2:
 
-                st.error("Wrong answer! You lost one life and 5 seconds.")
+            st.caption("CHALLENGE 2 / 3")
 
-                if st.session_state.lives <= 0:
-                    st.session_state.game_over = True
+            st.write(
+                "Evaluate the following limit:"
+            )
+
+            st.latex(
+                r"\lim_{x \to 2}\frac{x^2-4}{x-2}"
+            )
+
+            st.info(
+                "Hint: Factor the numerator first."
+            )
+
+            answer = st.text_input(
+                "Enter your answer:",
+                key="answer_2"
+            )
+
+            if st.button("SUBMIT ANSWER", key="submit_2"):
+
+                if answer.strip() == "4":
+
+                    st.session_state.question_number = 3
+                    st.session_state.feedback = ""
+                    st.session_state.hint_message = ""
+
+                    st.success("Correct! Challenge 2 completed.")
+
+                    st.rerun()
+
+                else:
+
+                    wrong_answer()
+                    st.rerun()
+
+            if st.button("USE HINT", key="hint_2"):
+
+                if st.session_state.hints > 0:
+
+                    st.session_state.hints -= 1
+
+                    st.session_state.hint_message = (
+                        "Factor x² - 4 into (x - 2)(x + 2)."
+                    )
+
+                else:
+
+                    st.session_state.hint_message = (
+                        "You have no hints remaining."
+                    )
 
                 st.rerun()
 
-    # HINT SYSTEM
+        # ----------------------------------
+        # QUESTION 3
+        # ----------------------------------
 
-    if not st.session_state.game_over and not st.session_state.room1_cleared:
+        elif st.session_state.question_number == 3:
 
-        st.markdown("---")
+            st.caption("CHALLENGE 3 / 3")
 
-        if st.button("💡 USE HINT", use_container_width=True):
+            st.write(
+                "Evaluate the following limit:"
+            )
 
-            if st.session_state.hints > 0:
+            st.latex(
+                r"\lim_{x \to 1}\frac{x^2+3x-4}{x-1}"
+            )
 
-                if st.session_state.question_number == 1:
-                    st.info("Hint: Substitute x = 2 into 3x + 4.")
+            st.info(
+                "Hint: Factor the numerator."
+            )
 
-                elif st.session_state.question_number == 2:
-                    st.info("Hint: Factor x² - 4 into (x - 2)(x + 2).")
+            answer = st.text_input(
+                "Enter your answer:",
+                key="answer_3"
+            )
 
-                elif st.session_state.question_number == 3:
-                    st.info("Hint: Factor the numerator into (x - 1)(x + 4).")
+            if st.button("SUBMIT ANSWER", key="submit_3"):
 
-                st.session_state.hints -= 1
+                if answer.strip() == "5":
+
+                    st.session_state.room1_cleared = True
+                    st.session_state.feedback = ""
+                    st.session_state.hint_message = ""
+
+                    st.success("Correct! All challenges completed.")
+
+                    st.rerun()
+
+                else:
+
+                    wrong_answer()
+                    st.rerun()
+
+            if st.button("USE HINT", key="hint_3"):
+
+                if st.session_state.hints > 0:
+
+                    st.session_state.hints -= 1
+
+                    st.session_state.hint_message = (
+                        "Factor the numerator into (x - 1)(x + 4)."
+                    )
+
+                else:
+
+                    st.session_state.hint_message = (
+                        "You have no hints remaining."
+                    )
 
                 st.rerun()
 
-            else:
-                st.warning("You have no hints remaining.")
+        # ----------------------------------
+        # FEEDBACK MESSAGES
+        # ----------------------------------
 
-    # BACK BUTTON
+        if st.session_state.feedback:
 
-    st.markdown("---")
+            st.error(st.session_state.feedback)
 
-    if st.button("⬅ BACK TO MAIN MENU"):
+        if st.session_state.hint_message:
+
+            st.info(st.session_state.hint_message)
+
+        # ----------------------------------
+        # ROOM STATUS
+        # ----------------------------------
+
+        st.divider()
+
+        st.subheader("ROOM STATUS")
+
+        st.write("🔓 Blackboard: Available")
+
+        st.write("🔒 Teacher's Desk: Locked")
+
+        st.write("🔒 Storage Cabinet: Locked")
+
+        st.write("🔒 Exit Door: Locked")
+
+
+# ==========================================
+# ROOM 2 PLACEHOLDER
+# ==========================================
+
+elif st.session_state.page == "room2":
+
+    st.title("ROOM 2: THE TEACHER'S DESK")
+
+    st.info(
+        "Room 2 gameplay has not been added yet."
+    )
+
+    if st.button("BACK TO MAIN MENU"):
+
         st.session_state.page = "home"
         st.rerun()
