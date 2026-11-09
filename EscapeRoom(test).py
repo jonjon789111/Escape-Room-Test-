@@ -359,20 +359,20 @@ def home_page():
 
     # OBJECTIVE PANEL
     st.markdown("""
-        <div class="objective-panel">
+    <div class="objective-panel">
 
-            <div class="objective-heading">
-                OBJECTIVE
-            </div>
-
-            <div class="objective-description">
-                Solve Differential Calculus challenges to escape
-                four locked rooms.<br>
-                Can you find your way out before time runs out?
-            </div>
-
+        <div class="objective-heading">
+            OBJECTIVE
         </div>
-    """, unsafe_allow_html=True)
+
+        <div class="objective-description">
+            Solve Differential Calculus challenges to escape
+            four locked rooms.<br>
+            Can you find your way out before time runs out?
+        </div>
+
+    </div>
+""", unsafe_allow_html=True)
 
     # BUTTONS
     st.write("")
