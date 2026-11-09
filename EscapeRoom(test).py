@@ -1158,7 +1158,7 @@ def room1():
 
     # HEADER
 
-    st.markdown("""
+    st.markdown("""    
         <div class="room-label">ROOM 01</div>
         <div class="room-title">THE BLACKBOARD</div>
         <div class="room-subtitle">The first challenge — Limits</div>
