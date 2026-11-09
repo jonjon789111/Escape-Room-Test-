@@ -190,252 +190,90 @@ def live_timer():
 # ==========================================
 
 def home_page():
-    
-
-    # HOMEPAGE DESIGN
-    st.markdown("""
-        <style>
-
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
-
-        /* BACKGROUND */
-        .stApp {
-            background:
-                radial-gradient(circle at 50% 35%,
-                #24334d 0%,
-                #111c30 48%,
-                #080f1c 100%);
-        }
-
-        /* REMOVE DEFAULT TOP SPACE */
-        .block-container {
-            padding-top: 4rem;
-            padding-bottom: 2rem;
-            max-width: 1200px;
-        }
-
-        /* MAIN TITLE */
-        .main-title {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(42px, 5.5vw, 76px);
-            font-weight: 800;
-            letter-spacing: 5px;
-            color: #f4f1ea;
-            text-align: center;
-            text-shadow: 0 0 25px rgba(180,190,210,0.2);
-            margin-bottom: 5px;
-        }
-
-        /* SUBTITLE */
-        .subtitle {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 30px;
-            font-weight: 500;
-            letter-spacing: 5px;
-            color: #c6bda9;
-            text-align: center;
-            margin-top: 0px;
-        }
-
-        /* TAGLINE */
-        .tagline {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 21px;
-            font-style: italic;
-            color: #9ca9bb;
-            text-align: center;
-            letter-spacing: 2px;
-            margin-top: 15px;
-            margin-bottom: 45px;
-        }
-
-        /* DECORATIVE LINE */
-        .divider-line {
-            width: 65%;
-            height: 1px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                #a99770,
-                transparent
-            );
-            margin: 30px auto;
-        }
-
-        /* OBJECTIVE PANEL */
-        .objective-panel {
-            background: rgba(255,255,255,0.045);
-            border: 1px solid rgba(201,183,145,0.45);
-            border-radius: 12px;
-            padding: 30px 45px;
-            text-align: center;
-            margin: 30px auto 35px auto;
-            max-width: 950px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        }
-
-        .objective-heading {
-            font-family: 'Cinzel', serif;
-            font-size: 23px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            color: #d7c49b;
-            margin-bottom: 15px;
-        }
-
-        .objective-description {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 25px;
-            color: #e5e1d8;
-            line-height: 1.5;
-        }
-
-        /* BUTTONS */
-        div[data-testid="stButton"] button {
-            height: 58px;
-            border-radius: 8px;
-            font-family: 'Cinzel', serif;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            transition: 0.3s ease;
-        }
-
-        /* PLAY BUTTON */
-        div[data-testid="stButton"]:nth-of-type(1) button {
-            background-color: #476b56;
-            color: #ffffff;
-            border: 1px solid #78947e;
-        }
-
-        div[data-testid="stButton"]:nth-of-type(1) button:hover {
-            background-color: #5b8469;
-            border-color: #b5c9ad;
-            transform: translateY(-3px);
-        }
-
-        /* HOW TO PLAY BUTTON */
-        div[data-testid="stButton"]:nth-of-type(2) button {
-            background-color: #b59a60;
-            color: #111827;
-            border: 1px solid #d9c28c;
-        }
-
-        div[data-testid="stButton"]:nth-of-type(2) button:hover {
-            background-color: #d0b77c;
-            border-color: #f0dfb2;
-            transform: translateY(-3px);
-        }
-
-        /* FOOTER */
-        .footer {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 17px;
-            color: #778398;
-            text-align: center;
-            letter-spacing: 2px;
-            margin-top: 65px;
-        }
-
-        </style>
-    """, unsafe_allow_html=True)
+    st.write("")
+    st.write("")
+    st.write("")
 
     # TITLE
-    st.markdown("""
-        <div class="main-title">
-            THE LOCKED CLASSROOM
-        </div>
+    st.markdown(
+        "<h1 style='text-align: center;'>THE LOCKED CLASSROOM</h1>",
+        unsafe_allow_html=True
+    )
 
-        <div class="subtitle">
-            A Differential Calculus Escape Game
-        </div>
+    st.markdown(
+        "<h3 style='text-align: center;'>A Differential Calculus Escape Game</h3>",
+        unsafe_allow_html=True
+    )
 
-        <div class="tagline">
-            Four rooms. Twelve challenges. One way out.
-        </div>
+    st.markdown(
+        "<p style='text-align: center; font-size: 18px;'>"
+        "<i>Four rooms. Twelve challenges. One way out.</i>"
+        "</p>",
+        unsafe_allow_html=True
+    )
 
-        <div class="divider-line"></div>
-    """, unsafe_allow_html=True)
+    st.write("")
+    st.divider()
+    st.write("")
 
     # OBJECTIVE PANEL
-    st.markdown("""
-    <div class="objective-panel">
+    col1, col2, col3 = st.columns([1, 6, 1])
 
-        <div class="objective-heading">
-            OBJECTIVE
-        </div>
+    with col2:
 
-        <div class="objective-description">
-            Solve Differential Calculus challenges to escape
-            four locked rooms.<br>
-            Can you find your way out before time runs out?
-        </div>
+        with st.container(border=True):
 
-    </div>
-""", unsafe_allow_html=True)
+            st.markdown(
+                "<h3 style='text-align: center;'>OBJECTIVE</h3>",
+                unsafe_allow_html=True
+            )
+
+            st.markdown(
+                "<p style='text-align: center; font-size: 20px;'>"
+                "Solve Differential Calculus challenges to escape "
+                "four locked rooms."
+                "</p>",
+                unsafe_allow_html=True
+            )
+
+            st.markdown(
+                "<p style='text-align: center; font-size: 18px;'>"
+                "Can you find your way out before time runs out?"
+                "</p>",
+                unsafe_allow_html=True
+            )
+
+    st.write("")
+    st.write("")
 
     # BUTTONS
-    st.write("")
     col1, col2, col3, col4, col5 = st.columns([1, 2, 0.3, 2, 1])
 
     with col2:
-        if st.button("▶  PLAY", use_container_width=True):
+
+        if st.button("▶ PLAY", use_container_width=True):
 
             st.session_state.page = "story"
             st.rerun()
 
     with col4:
+
         if st.button("HOW TO PLAY", use_container_width=True):
 
             st.session_state.page = "instructions"
             st.rerun()
 
+    st.write("")
+    st.write("")
+    st.write("")
+
     # FOOTER
-    st.markdown("""
-        <div class="footer">
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
-            THINK CAREFULLY. EVERY SECOND COUNTS.<br>
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        </div>
-    """, unsafe_allow_html=True)
-
-
-# ==========================================
-# STORY PAGE
-# ==========================================
-
-def story_page():
-
-    st.title("THE STORY")
-
-    st.write(
-        "It is already late, and you are the last student "
-        "inside the classroom."
+    st.markdown(
+        "<p style='text-align: center; color: gray;'>"
+        "THINK CAREFULLY. EVERY SECOND COUNTS."
+        "</p>",
+        unsafe_allow_html=True
     )
-
-    st.write(
-        "As you prepare to leave, you discover that the classroom "
-        "door is locked. The only way out is to solve the challenges "
-        "hidden throughout the room."
-    )
-
-    st.write(
-        "Four areas stand between you and freedom. "
-        "Each area contains three Differential Calculus challenges."
-    )
-
-    st.warning("You have only 10 minutes. Think carefully.")
-
-    if st.button("START GAME"):
-
-        start_game()
-        st.rerun()
-
-    if st.button("BACK TO MENU"):
-
-        st.session_state.page = "home"
-        st.rerun()
-
 
 # ==========================================
 # INSTRUCTIONS PAGE
