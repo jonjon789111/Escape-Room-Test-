@@ -709,52 +709,358 @@ def story_page():
 
 def instructions_page():
 
-    st.title("HOW TO PLAY")
+     # ==========================================
+    # HOW TO PLAY DESIGN
+    # ==========================================
 
-    st.divider()
+    st.markdown("""
+        <style>
 
-    st.subheader("Your Objective")
+        .stApp {
+            background-color: #101827;
+        }
 
-    st.write(
-        "Solve all the challenges in each room to collect keys "
-        "and unlock the next area."
-    )
+        .block-container {
+            max-width: 1150px;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
 
-    st.subheader("Game Rules")
+        .instruction-label {
+            color: #B59A60;
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            letter-spacing: 5px;
+            text-align: center;
+        }
 
-    st.write("❤️ You have 3 lives.")
+        .instruction-title {
+            color: #F4F1EA;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(38px, 5vw, 60px);
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-align: center;
+            margin-top: 10px;
+            text-shadow: 0 0 20px rgba(180,190,210,0.2);
+        }
 
-    st.write("⏱️ You have 10 minutes to finish the game.")
+        .instruction-subtitle {
+            color: #C6B78E;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 23px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
 
-    st.write("💡 You have 2 hints for the entire game.")
+        .instruction-divider {
+            width: 75%;
+            height: 1px;
+            background: linear-gradient(
+                to right,
+                transparent,
+                #B59A60,
+                transparent
+            );
+            margin: 30px auto;
+        }
 
-    st.write("🔑 Each room has 3 challenges.")
+        .section-heading {
+            color: #C6B78E;
+            font-family: 'Cinzel', serif;
+            font-size: 19px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
 
-    st.write("✅ Correct answers allow you to progress.")
+        .instruction-text {
+            color: #E0E3E8;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 19px;
+            line-height: 1.7;
+        }
 
-    st.write("❌ Wrong answers deduct 1 life and 5 seconds.")
+        .instruction-number {
+            color: #D8B96F;
+            font-family: 'Cinzel', serif;
+            font-size: 25px;
+            font-weight: bold;
+        }
 
-    st.write("💡 Only 1 hint can be used per challenge.")
+        .instruction-footer {
+            color: #7F8999;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-top: 35px;
+        }
 
-    st.write(
-        "🚪 Lose all your lives or run out of time, "
-        "and the game ends."
-    )
+        div[data-testid="stButton"] button {
+            height: 55px;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
 
-    st.subheader("Hint System")
+        div[data-testid="stButton"] button[kind="primary"] {
+            background-color: #476B56 !important;
+            color: white !important;
+            border: 1px solid #78947E !important;
+        }
 
-    st.write(
-        "Hints reveal a step in the solution without showing "
-        "the final answer."
-    )
+        div[data-testid="stButton"] button[kind="primary"]:hover {
+            background-color: #5B8469 !important;
+            color: white !important;
+        }
+
+        div[data-testid="stButton"] button[kind="secondary"] {
+            background-color: #B59A60 !important;
+            color: #17202B !important;
+            border: 1px solid #D9C28C !important;
+        }
+
+        div[data-testid="stButton"] button[kind="secondary"]:hover {
+            background-color: #D0B77C !important;
+            color: #17202B !important;
+        }
+
+        </style>
+    """, unsafe_allow_html=True)
+
+
+    # ==========================================
+    # HEADER
+    # ==========================================
+
+    st.markdown("""
+        <div class="instruction-label">THE LOCKED CLASSROOM</div>
+
+        <div class="instruction-title">
+            HOW TO PLAY
+        </div>
+
+        <div class="instruction-subtitle">
+            Read carefully before entering.
+        </div>
+
+        <div class="instruction-divider"></div>
+    """, unsafe_allow_html=True)
+
+
+    # ==========================================
+    # GAME OBJECTIVE
+    # ==========================================
+
+    left, center, right = st.columns([1, 5, 1])
+
+    with center:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-heading">YOUR OBJECTIVE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.markdown("""
+                <div class="instruction-text">
+                    Complete all four rooms by answering three
+                    Differential Calculus questions in each room.
+                    Solve every challenge to collect the keys and
+                    unlock your way out.
+                </div>
+            """, unsafe_allow_html=True)
+
 
     st.write("")
 
-    if st.button("BACK TO MENU"):
 
-        st.session_state.page = "home"
-        st.rerun()
+    # ==========================================
+    # GAME RULES
+    # ==========================================
 
+    st.markdown("""
+        <div class="instruction-divider"></div>
+        <div class="section-heading" style="text-align:center;">
+            GAME RULES
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        with st.container(border=True):
+
+            st.markdown("""
+                <div class="instruction-number">01</div>
+                <div class="section-heading">FOUR ROOMS</div>
+                <div class="instruction-text">
+                    Complete three questions in each room.
+                    Clear a room to unlock the next one.
+                </div>
+                <br>
+
+                <div class="instruction-number">02</div>
+                <div class="section-heading">THREE LIVES</div>
+                <div class="instruction-text">
+                    You start with three lives.
+                    Every incorrect answer costs one life.
+                </div>
+                <br>
+
+                <div class="instruction-number">03</div>
+                <div class="section-heading">TIME LIMIT</div>
+                <div class="instruction-text">
+                    You have ten minutes to complete all
+                    twelve challenges.
+                </div>
+            """, unsafe_allow_html=True)
+
+    with col2:
+
+        with st.container(border=True):
+
+            st.markdown("""
+                <div class="instruction-number">04</div>
+                <div class="section-heading">TWO HINTS</div>
+                <div class="instruction-text">
+                    You have two hints for the entire game.
+                    Each question can only use one hint.
+                </div>
+                <br>
+
+                <div class="instruction-number">05</div>
+                <div class="section-heading">TIME PENALTY</div>
+                <div class="instruction-text">
+                    Every incorrect answer also deducts
+                    five seconds from your remaining time.
+                </div>
+                <br>
+
+                <div class="instruction-number">06</div>
+                <div class="section-heading">GAME OVER</div>
+                <div class="instruction-text">
+                    The game ends when you run out of lives
+                    or when the timer reaches zero.
+                </div>
+            """, unsafe_allow_html=True)
+
+
+    # ==========================================
+    # ROOM GUIDE
+    # ==========================================
+
+    st.markdown("""
+        <div class="instruction-divider"></div>
+        <div class="section-heading" style="text-align:center;">
+            YOUR FOUR DESTINATIONS
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    room_col1, room_col2, room_col3, room_col4 = st.columns(4)
+
+    rooms = [
+        ("ROOM 01", "BLACKBOARD", "Limits"),
+        ("ROOM 02", "TEACHER'S DESK", "Basic Derivatives"),
+        ("ROOM 03", "STORAGE CABINET", "Product, Quotient, and Chain Rules"),
+        ("ROOM 04", "EXIT DOOR", "Trigonometric Derivatives")
+    ]
+
+    for column, room in zip(
+        [room_col1, room_col2, room_col3, room_col4],
+        rooms
+    ):
+
+        with column:
+
+            with st.container(border=True):
+
+                st.markdown(
+                    f"""
+                    <div style="
+                        color:#D8B96F;
+                        font-family:'Cinzel',serif;
+                        font-size:13px;
+                        letter-spacing:2px;
+                        text-align:center;
+                    ">
+                        {room[0]}
+                    </div>
+
+                    <div style="
+                        color:#C6B78E;
+                        font-family:'Cinzel',serif;
+                        font-size:15px;
+                        font-weight:bold;
+                        text-align:center;
+                        margin-top:12px;
+                    ">
+                        {room[1]}
+                    </div>
+
+                    <div style="
+                        color:#E0E3E8;
+                        font-family:'Cormorant Garamond',serif;
+                        font-size:17px;
+                        text-align:center;
+                        margin-top:10px;
+                    ">
+                        {room[2]}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+
+    # ==========================================
+    # NAVIGATION BUTTONS
+    # ==========================================
+
+    st.markdown('<div class="instruction-divider"></div>',
+                unsafe_allow_html=True)
+
+    left, back_col, gap, start_col, right = st.columns(
+        [1.5, 2.5, 0.3, 2.5, 1.5]
+    )
+
+    with back_col:
+
+        if st.button(
+            "BACK TO MENU",
+            use_container_width=True,
+            type="secondary"
+        ):
+            st.session_state.page = "home"
+            st.rerun()
+
+    with start_col:
+
+        if st.button(
+            "START GAME",
+            use_container_width=True,
+            type="primary"
+        ):
+            start_game()
+            st.rerun()
+
+
+    # ==========================================
+    # FOOTER
+    # ==========================================
+
+    st.markdown("""
+        <div class="instruction-footer">
+            KNOW THE RULES. TRUST YOUR SOLUTIONS. ESCAPE.
+        </div>
+    """, unsafe_allow_html=True)
 
 # ==========================================
 # ROOM 1: THE BLACKBOARD
