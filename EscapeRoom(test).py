@@ -192,44 +192,144 @@ def live_timer():
 
 def home_page():
 
-    # ==================================
-    # TITLE
-    # ==================================
+    # ==========================================
+    # HOME PAGE DESIGN
+    # ==========================================
 
-    st.write("")
-    st.write("")
+    st.markdown("""
+        <style>
 
-    st.title("THE LOCKED CLASSROOM")
+        /* MAIN BACKGROUND */
+        .stApp {
+            background-color: #10131C;
+        }
 
-    st.subheader("A Differential Calculus Escape Game")
+        /* TITLE */
+        .home-title {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            font-weight: 800;
+            color: #F2F0EB;
+            letter-spacing: 2px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
 
-    st.write("Four rooms. Twelve challenges. One way out.")
+        /* SUBTITLE */
+        .home-subtitle {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 25px;
+            color: #D0D0D0;
+            margin-bottom: 8px;
+        }
 
-    st.write("")
-    st.write("")
-    st.divider()
+        /* TAGLINE */
+        .home-tagline {
+            text-align: center;
+            font-size: 16px;
+            color: #B8BBC4;
+            margin-bottom: 75px;
+        }
 
-    # ==================================
-    # OBJECTIVE
-    # ==================================
+        /* OBJECTIVE PANEL */
+        .objective-panel {
+            background-color: #202C40;
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            color: #F2F0EB;
+            font-size: 17px;
+            margin-bottom: 65px;
+        }
 
-    with st.container(border=True):
+        /* BUTTON BASE DESIGN */
+        div.stButton > button {
+            width: 100%;
+            height: 65px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
 
-        st.subheader("OBJECTIVE")
+        /* GREEN PLAY BUTTON */
+        div.stButton > button[kind="primary"] {
+            background-color: #28543A;
+            color: white;
+            border: 1px solid #527B5E;
+        }
 
-        st.write(
-            "Solve every Differential Calculus challenge "
-            "and unlock the classroom exit before time runs out."
-        )
+        div.stButton > button[kind="primary"]:hover {
+            background-color: #376E4B;
+            border-color: #8BB697;
+            color: white;
+            box-shadow: 0 5px 18px rgba(50, 120, 75, 0.35);
+        }
 
-    st.write("")
-    st.write("")
+        /* YELLOW HOW TO PLAY BUTTON */
+        div.stButton > button[kind="secondary"] {
+            background-color: #927A25;
+            color: white;
+            border: 1px solid #C4A947;
+        }
 
-    # ==================================
+        div.stButton > button[kind="secondary"]:hover {
+            background-color: #B09635;
+            border-color: #E0C66A;
+            color: white;
+            box-shadow: 0 5px 18px rgba(180, 150, 50, 0.3);
+        }
+
+        /* FOOTER */
+        .home-footer {
+            text-align: center;
+            color: #78869B;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-top: 90px;
+        }
+
+        </style>
+
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
+        <div class="home-title">
+            THE LOCKED CLASSROOM
+        </div>
+
+        <div class="home-subtitle">
+            A Differential Calculus Escape Game
+        </div>
+
+        <div class="home-tagline">
+            Four rooms. Twelve challenges. One way out.
+        </div>
+    """, unsafe_allow_html=True)
+
+    # ==========================================
+    # OBJECTIVE PANEL
+    # ==========================================
+
+    left, center, right = st.columns([1, 6, 1])
+
+    with center:
+        st.markdown("""
+            <div class="objective-panel">
+                Solve every Differential Calculus challenge
+                and unlock the classroom exit before time runs out.
+            </div>
+        """, unsafe_allow_html=True)
+
+    # ==========================================
     # BUTTONS
-    # ==================================
+    # ==========================================
 
-    play_col, how_col = st.columns(2)
+    st.write("")
+
+    left, play_col, how_col, right = st.columns([1, 3, 3, 1])
 
     with play_col:
         if st.button(
@@ -249,15 +349,16 @@ def home_page():
             st.session_state.page = "instructions"
             st.rerun()
 
-    st.write("")
-    st.write("")
-    st.divider()
-
-    # ==================================
+    # ==========================================
     # FOOTER
-    # ==================================
+    # ==========================================
 
-    st.caption("A DIFFERENTIAL CALCULUS ESCAPE GAME")
+    st.markdown("""
+        <div class="home-footer">
+            A DIFFERENTIAL CALCULUS ESCAPE GAME
+        </div>
+    """, unsafe_allow_html=True)
+
 
 # ==========================================
 # STORY PAGE
