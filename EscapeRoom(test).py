@@ -544,10 +544,9 @@ def instructions_page():
             "START GAME →",
             type="primary",
             use_container_width=True
-):
-    st.session_state.page = "story"
-    st.rerun()
-
+        ):
+            st.session_state.page="story"
+            st.rerun()
 
 # ==========================================
 # ROOM 1 — THE BLACKBOARD
