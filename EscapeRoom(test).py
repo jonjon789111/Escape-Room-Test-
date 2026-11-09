@@ -12,10 +12,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# ==========================================
-# SESSION STATE
-# ==========================================
-
 defaults = {
     "page": "home",
     "lives": 3,
@@ -23,7 +19,14 @@ defaults = {
     "time_limit": 600,
     "start_time": None,
     "question_number": 0,
+
+    # ROOM PROGRESS
     "room1_cleared": False,
+    "room2_cleared": False,
+    "room3_cleared": False,
+    "room4_cleared": False,
+
+    # GAME STATUS
     "game_over": False,
     "feedback": "",
     "hint_message": "",
@@ -33,7 +36,6 @@ defaults = {
 for key, value in defaults.items():
     if key not in st.session_state:
         st.session_state[key] = value
-
 
 # ==========================================
 # SHARED DESIGN
@@ -138,11 +140,19 @@ def reset_game():
     st.session_state.time_limit = 600
     st.session_state.start_time = None
     st.session_state.question_number = 0
+
+    # ROOM PROGRESS
     st.session_state.room1_cleared = False
+    st.session_state.room2_cleared = False
+    st.session_state.room3_cleared = False
+    st.session_state.room4_cleared = False
+
+    # GAME STATUS
     st.session_state.game_over = False
     st.session_state.feedback = ""
     st.session_state.hint_message = ""
     st.session_state.hint_used_this_question = False
+
 
 
 def start_game():
