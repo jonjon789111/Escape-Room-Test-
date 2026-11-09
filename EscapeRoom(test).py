@@ -186,7 +186,7 @@ def wrong_answer():
     # Deduct 5 seconds safely
 
     if st.session_state.start_time is not None:
-        st.session_state.start_time += 5
+        st.session_state.start_time -= 5
 
     st.session_state.feedback = (
         "Incorrect answer! You lost 1 life and 5 seconds."
