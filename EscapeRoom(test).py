@@ -9,7 +9,7 @@ import time
 st.set_page_config(
     page_title="The Locked Classroom",
     page_icon="🔒",
-    layout="centered"
+    layout="wide"
 )
 
 # ==========================================
@@ -52,8 +52,8 @@ def design():
 
     .block-container {
         max-width: 1150px;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 3.5rem !important;
+        padding-bottom: 3rem !important;
     }
 
     .main-title {
@@ -165,10 +165,12 @@ def use_hint(message):
 
     if st.session_state.hint_used_this_question:
         st.warning("You already used a hint for this question.")
+
     elif st.session_state.hints > 0:
         st.session_state.hints -= 1
         st.session_state.hint_used_this_question = True
         st.session_state.hint_message = message
+
     else:
         st.warning("No hints remaining.")
 
@@ -188,6 +190,23 @@ def live_timer():
     if remaining <= 0:
         st.session_state.game_over = True
         st.rerun()
+
+
+def game_status():
+
+    # Center the three status indicators
+    left, lives, hints, timer, right = st.columns(
+        [1, 2, 2, 2, 1]
+    )
+
+    with lives:
+        st.metric("LIVES", st.session_state.lives)
+
+    with hints:
+        st.metric("HINTS", st.session_state.hints)
+
+    with timer:
+        live_timer()
 
 
 # ==========================================
@@ -218,7 +237,9 @@ def home_page():
                 '<div class="section-title" style="text-align:center">OBJECTIVE</div>',
                 unsafe_allow_html=True
             )
+
             st.write("")
+
             st.markdown(
                 '<div class="story-text" style="text-align:center">'
                 'Solve Differential Calculus challenges to escape the locked classroom.'
@@ -228,6 +249,7 @@ def home_page():
             )
 
     st.write("")
+
     left, play, gap, instructions, right = st.columns(
         [1.5, 2.5, 0.3, 2.5, 1.5]
     )
@@ -255,12 +277,14 @@ def home_page():
 # ==========================================
 
 def story_page():
+
     design()
 
-    st.markdown("")
-    st.markdown("## 📖 THE STORY")
-    st.caption("THE LOCKED CLASSROOM  |  AN ESCAPE ROOM ADVENTURE")
-    st.divider()
+    header(
+        "THE LOCKED CLASSROOM",
+        "THE STORY",
+        "An escape room adventure"
+    )
 
     st.markdown("### THE FINAL BELL HAS RUNG...")
 
@@ -343,6 +367,7 @@ def story_page():
             start_game()
             st.rerun()
 
+
 # ==========================================
 # INSTRUCTIONS PAGE
 # ==========================================
@@ -350,16 +375,22 @@ def story_page():
 def instructions_page():
 
     design()
-    header("THE LOCKED CLASSROOM", "HOW TO PLAY",
-           "Read carefully before entering.")
+
+    header(
+        "THE LOCKED CLASSROOM",
+        "HOW TO PLAY",
+        "Read carefully before entering."
+    )
 
     left, center, right = st.columns([1, 5, 1])
 
     with center:
-
         with st.container(border=True):
-            st.markdown('<div class="section-title">YOUR OBJECTIVE</div>',
-                        unsafe_allow_html=True)
+            st.markdown(
+                '<div class="section-title">YOUR OBJECTIVE</div>',
+                unsafe_allow_html=True
+            )
+
             st.markdown("""
             <div class="story-text">
                 Complete all four rooms by answering three
@@ -369,10 +400,12 @@ def instructions_page():
             """, unsafe_allow_html=True)
 
     st.write("")
+
     st.markdown(
         '<div class="section-title" style="text-align:center">GAME RULES</div>',
         unsafe_allow_html=True
     )
+
     st.write("")
 
     col1, col2 = st.columns(2)
@@ -410,7 +443,8 @@ def instructions_page():
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
     st.markdown(
-        '<div class="section-title" style="text-align:center">YOUR FOUR DESTINATIONS</div>',
+        '<div class="section-title" style="text-align:center">'
+        'YOUR FOUR DESTINATIONS</div>',
         unsafe_allow_html=True
     )
 
@@ -442,7 +476,10 @@ def instructions_page():
                 )
 
     st.write("")
-    left, back, gap, start, right = st.columns([1.5, 2.5, 0.3, 2.5, 1.5])
+
+    left, back, gap, start, right = st.columns(
+        [1.5, 2.5, 0.3, 2.5, 1.5]
+    )
 
     with back:
         if st.button("BACK TO MENU", use_container_width=True):
@@ -462,25 +499,23 @@ def instructions_page():
 def room1():
 
     design()
-    header("ROOM 01", "THE BLACKBOARD", "The first challenge — Limits")
+
+    header(
+        "ROOM 01",
+        "THE BLACKBOARD",
+        "The first challenge — Limits"
+    )
 
     if st.session_state.game_over:
         st.error("GAME OVER! You have run out of lives or time.")
+
         if st.button("RETURN TO MENU"):
             st.session_state.page = "home"
             st.rerun()
+
         return
 
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.metric("LIVES", st.session_state.lives)
-
-    with col2:
-        st.metric("HINTS", st.session_state.hints)
-
-    with col3:
-        live_timer()
+    game_status()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
@@ -526,8 +561,11 @@ def room1():
                 key=f"room1_answer_{number}"
             )
 
-            if st.button("SUBMIT ANSWER", type="primary",
-                         use_container_width=True):
+            if st.button(
+                "SUBMIT ANSWER",
+                type="primary",
+                use_container_width=True
+            ):
 
                 if answer.strip() == q["answer"]:
                     st.session_state.feedback = "correct"
@@ -537,8 +575,11 @@ def room1():
 
                 st.rerun()
 
-            if st.button("USE HINT", type="secondary",
-                         use_container_width=True):
+            if st.button(
+                "USE HINT",
+                type="secondary",
+                use_container_width=True
+            ):
                 use_hint(q["hint"])
                 st.rerun()
 
@@ -546,9 +587,11 @@ def room1():
                 st.info(st.session_state.hint_message)
 
             if st.session_state.feedback == "correct":
+
                 st.success("Correct! You solved the challenge.")
 
                 if st.button("CONTINUE", type="primary"):
+
                     st.session_state.question_number += 1
                     st.session_state.feedback = ""
                     st.session_state.hint_message = ""
@@ -562,6 +605,7 @@ def room1():
                     st.rerun()
 
             elif st.session_state.feedback == "wrong":
+
                 st.error("Incorrect! One life and five seconds deducted.")
                 st.session_state.feedback = ""
 
@@ -578,8 +622,12 @@ def room1():
 def room2():
 
     design()
-    header("ROOM 02", "THE TEACHER'S DESK",
-           "Basic Derivatives — Power Rule")
+
+    header(
+        "ROOM 02",
+        "THE TEACHER'S DESK",
+        "Basic Derivatives — Power Rule"
+    )
 
     if not st.session_state.room1_cleared:
         st.warning("Complete Room 1 first.")
@@ -587,21 +635,14 @@ def room2():
 
     if st.session_state.game_over:
         st.error("GAME OVER! You have run out of lives or time.")
+
         if st.button("RETURN TO MENU"):
             st.session_state.page = "home"
             st.rerun()
+
         return
 
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.metric("LIVES", st.session_state.lives)
-
-    with col2:
-        st.metric("HINTS", st.session_state.hints)
-
-    with col3:
-        live_timer()
+    game_status()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
@@ -612,6 +653,7 @@ def room2():
             '<div class="section-title">ROOM 02 UNLOCKED</div>',
             unsafe_allow_html=True
         )
+
         st.write("The Teacher's Desk is ready for its challenges.")
         st.info("Room 2 questions and gameplay have not been added yet.")
 
