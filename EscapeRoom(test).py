@@ -192,32 +192,22 @@ def live_timer():
 
 def home_page():
 
-     # TITLE SECTION
     st.write("")
     st.write("")
 
-    st.markdown(
-        "<h1 style='text-align: center;'>THE LOCKED CLASSROOM</h1>",
-        unsafe_allow_html=True
-    )
+    # TITLE
+    st.title("THE LOCKED CLASSROOM")
 
-    st.markdown(
-        "<h3 style='text-align: center;'>A Differential Calculus Escape Game</h3>",
-        unsafe_allow_html=True
-    )
+    st.subheader("A Differential Calculus Escape Game")
 
-    st.markdown(
-        "<p style='text-align: center;'>Four rooms. Twelve challenges. One way out.</p>",
-        unsafe_allow_html=True
-    )
+    st.write("Four rooms. Twelve challenges. One way out.")
 
     st.write("")
-    st.write("")
-
     st.divider()
+    st.write("")
 
-    # BUTTON SECTION
-    left, play_col, how_col, right = st.columns([1, 2, 2, 1])
+    # BUTTONS
+    left, play_col, how_col, right = st.columns([1, 3, 3, 1])
 
     with play_col:
         if st.button("PLAY", type="primary", use_container_width=True):
@@ -232,31 +222,22 @@ def home_page():
     st.write("")
     st.write("")
 
-    # OBJECTIVE SECTION
+    # OBJECTIVE
     with st.container(border=True):
 
-        st.markdown(
-            "<h2 style='text-align: center;'>OBJECTIVE</h2>",
-            unsafe_allow_html=True
+        st.subheader("OBJECTIVE")
+
+        st.write(
+            "Solve Differential Calculus challenges to escape "
+            "four rooms."
         )
 
-        st.markdown(
-            "<p style='text-align: center;'>Solve Differential Calculus challenges to escape four rooms.</p>",
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            "<p style='text-align: center;'>Can you escape before time runs out?</p>",
-            unsafe_allow_html=True
-        )
+        st.write("Can you escape before time runs out?")
 
     st.write("")
     st.divider()
 
-    st.markdown(
-        "<p style='text-align: center;'>THE LOCKED CLASSROOM</p>",
-        unsafe_allow_html=True
-    )
+    st.caption("THE LOCKED CLASSROOM")
 
 
 # ==========================================
