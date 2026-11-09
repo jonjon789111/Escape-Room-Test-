@@ -255,7 +255,7 @@ def home_page():
 # ==========================================
 
 def story_page():
-design()
+    design()
 
     st.markdown("")
     st.markdown("## 📖 THE STORY")
