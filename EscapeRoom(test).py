@@ -41,28 +41,112 @@ for key, value in defaults.items():
 # ==========================================
 
 st.markdown("""
-<div style="text-align: center;">
-    <div style="
-        font-family: 'Cinzel', serif;
-        font-size: 24px;
-        font-weight: 700;
-        color: #F0EEE9;
-        letter-spacing: 4px;
-        margin-bottom: 15px;
-    ">
-        OBJECTIVE
-    </div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
-    <div style="
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 24px;
-        color: #D0D4DC;
-        line-height: 1.5;
-    ">
-        Solve every Differential Calculus challenge
-        and unlock the classroom exit before time runs out.
-    </div>
-</div>
+/* BACKGROUND */
+
+.stApp {
+    background: linear-gradient(
+        135deg,
+        #080D18,
+        #111A2B,
+        #080D18
+    );
+    color: #F0EEE9;
+}
+
+/* PAGE WIDTH */
+
+.block-container {
+    max-width: 95%;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* GENERAL TEXT */
+
+h1, h2, h3 {
+    font-family: 'Cinzel', serif !important;
+    color: #F0EEE9 !important;
+}
+
+p, label, li {
+    font-family: 'Cormorant Garamond', serif;
+    color: #D0D4DC;
+}
+
+/* BUTTONS */
+
+div[data-testid="stButton"] button {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border-radius: 12px;
+    min-height: 55px;
+    transition: 0.2s ease;
+}
+
+/* PLAY BUTTON */
+
+div[data-testid="stButton"] button[kind="primary"] {
+    background-color: #426B50 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #72977A !important;
+}
+
+div[data-testid="stButton"] button[kind="primary"]:hover {
+    background-color: #527F60 !important;
+    border-color: #A5C2A8 !important;
+}
+
+/* HOW TO PLAY BUTTON */
+
+div[data-testid="stButton"] button[kind="secondary"] {
+    background-color: #C6A64A !important;
+    color: #111827 !important;
+    border: 1px solid #E2C66D !important;
+}
+
+div[data-testid="stButton"] button[kind="secondary"]:hover {
+    background-color: #E0C46A !important;
+}
+
+/* INPUTS */
+
+div[data-testid="stTextInput"] input {
+    background-color: #172235;
+    color: white;
+    border: 1px solid #58677C;
+    border-radius: 8px;
+}
+
+/* METRICS */
+
+div[data-testid="stMetric"] {
+    background-color: #172235;
+    padding: 15px;
+    border: 1px solid #35445B;
+    border-radius: 10px;
+}
+
+/* DIVIDERS */
+
+hr {
+    border-color: #35445B;
+}
+
+/* HOMEPAGE FOOTER */
+
+.home-footer {
+    text-align: center;
+    color: #68758A;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    letter-spacing: 2px;
+    margin-top: 55px;
+}
+</style>
 """, unsafe_allow_html=True)
 
 
