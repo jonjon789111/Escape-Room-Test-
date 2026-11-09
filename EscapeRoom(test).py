@@ -193,16 +193,22 @@ def live_timer():
 def home_page():
 
     st.write("")
-    st.title("THE LOCKED CLASSROOM")
 
-    st.write("A Differential Calculus Escape Game")
-    st.write("Four rooms. Twelve challenges. One way out.")
-
-    st.divider()
-
-    left, center, right = st.columns([1, 2, 1])
+    # CENTER THE ENTIRE HOME PAGE
+    left, center, right = st.columns([1, 3, 1])
 
     with center:
+
+        # TITLE
+        st.title("THE LOCKED CLASSROOM")
+
+        st.write("A Differential Calculus Escape Game")
+
+        st.write("Four rooms. Twelve challenges. One way out.")
+
+        st.divider()
+
+        # BUTTONS
         if st.button("PLAY", type="primary", use_container_width=True):
             st.session_state.page = "story"
             st.rerun()
@@ -211,20 +217,23 @@ def home_page():
             st.session_state.page = "instructions"
             st.rerun()
 
-    st.write("")
+        st.write("")
 
-    with st.container(border=True):
-        st.subheader("OBJECTIVE")
+        # OBJECTIVE
+        with st.container(border=True):
 
-        st.write(
-            "Solve Differential Calculus challenges to escape "
-            "four rooms."
-        )
+            st.subheader("OBJECTIVE")
 
-        st.write("Can you escape before time runs out?")
+            st.write(
+                "Solve Differential Calculus challenges to escape "
+                "four rooms."
+            )
 
-    st.divider()
-    st.caption("THE LOCKED CLASSROOM")
+            st.write("Can you escape before time runs out?")
+
+        st.divider()
+
+        st.caption("THE LOCKED CLASSROOM")
 
 
 # ==========================================
