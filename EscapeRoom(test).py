@@ -192,7 +192,7 @@ def live_timer():
 
 def home_page():
 
-     st.write("")
+    st.write("")
     st.title("THE LOCKED CLASSROOM")
 
     st.write("A Differential Calculus Escape Game")
