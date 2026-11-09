@@ -518,91 +518,124 @@ def room1():
 
     game_status()
 
-    st.markdown(
-        '<div class="gold-line"></div>',
-        unsafe_allow_html=True
-    )
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
     # CHALLENGE 1
     if st.session_state.question_number == 0:
 
-        st.markdown(
-            '<div class="section-title">CHALLENGE 1 OF 3</div>',
-            unsafe_allow_html=True
-        )
+        with st.container(border=True):
 
-        st.write("Find the limit:")
-        st.latex(r"\lim_{x\to2}(3x+4)")
+            st.markdown(
+                '<div class="section-title">CHALLENGE 1 OF 3</div>',
+                unsafe_allow_html=True
+            )
 
-        answer = st.text_input("YOUR ANSWER", key="answer1")
+            st.write("Find the limit:")
+            st.latex(r"\lim_{x\to2}(3x+4)")
 
-        if st.button("SUBMIT ANSWER", type="primary"):
+            answer = st.text_input("YOUR ANSWER", key="answer1")
 
-            if answer.strip() == "10":
-                st.session_state.feedback = "correct"
-            else:
-                wrong_answer()
-                st.session_state.feedback = "wrong"
+            left, right = st.columns(2)
 
-            st.rerun()
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-        if st.button("USE HINT", type="secondary"):
-            use_hint("Substitute x = 2 into the expression.")
-            st.rerun()
+                    if answer.strip() == "10":
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Substitute x = 2 into the expression.")
+
+                    st.rerun()
 
     # CHALLENGE 2
     elif st.session_state.question_number == 1:
 
-        st.markdown(
-            '<div class="section-title">CHALLENGE 2 OF 3</div>',
-            unsafe_allow_html=True
-        )
+        with st.container(border=True):
 
-        st.write("Evaluate the following limit:")
-        st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
+            st.markdown(
+                '<div class="section-title">CHALLENGE 2 OF 3</div>',
+                unsafe_allow_html=True
+            )
 
-        answer = st.text_input("YOUR ANSWER", key="answer2")
+            st.write("Evaluate the following limit:")
+            st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
 
-        if st.button("SUBMIT ANSWER", type="primary"):
+            answer = st.text_input("YOUR ANSWER", key="answer2")
 
-            if answer.strip() == "4":
-                st.session_state.feedback = "correct"
-            else:
-                wrong_answer()
-                st.session_state.feedback = "wrong"
+            left, right = st.columns(2)
 
-            st.rerun()
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-        if st.button("USE HINT", type="secondary"):
-            use_hint("Factor the numerator into (x - 2)(x + 2).")
-            st.rerun()
+                    if answer.strip() == "4":
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Factor the numerator into (x - 2)(x + 2).")
+
+                    st.rerun()
 
     # CHALLENGE 3
     elif st.session_state.question_number == 2:
 
-        st.markdown(
-            '<div class="section-title">CHALLENGE 3 OF 3</div>',
-            unsafe_allow_html=True
-        )
+        with st.container(border=True):
 
-        st.write("Find the limit:")
-        st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
+            st.markdown(
+                '<div class="section-title">CHALLENGE 3 OF 3</div>',
+                unsafe_allow_html=True
+            )
 
-        answer = st.text_input("YOUR ANSWER", key="answer3")
+            st.write("Find the limit:")
+            st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
 
-        if st.button("SUBMIT ANSWER", type="primary"):
+            answer = st.text_input("YOUR ANSWER", key="answer3")
 
-            if answer.strip() == "5":
-                st.session_state.feedback = "correct"
-            else:
-                wrong_answer()
-                st.session_state.feedback = "wrong"
+            left, right = st.columns(2)
 
-            st.rerun()
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-        if st.button("USE HINT", type="secondary"):
-            use_hint("Factor the numerator into (x - 1)(x + 4).")
-            st.rerun()
+                    if answer.strip() == "5":
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Factor the numerator into (x - 1)(x + 4).")
+
+                    st.rerun()
 
     # FEEDBACK
     if st.session_state.feedback == "correct":
@@ -633,14 +666,12 @@ def room1():
         if st.session_state.game_over:
             st.rerun()
 
-    # HINT DISPLAY
+    # HINT MESSAGE
     if st.session_state.hint_message:
         st.info(st.session_state.hint_message)
 
-    st.markdown(
-        '<div class="gold-line"></div>',
-        unsafe_allow_html=True
-    )
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
 
 # ==========================================
 # ROOM 2 — THE TEACHER'S DESK
