@@ -286,16 +286,6 @@ def story_page():
         "An escape room adventure"
     )
 
-    # ROOM PROGRESS
-    if "room2_cleared" not in st.session_state:
-        st.session_state.room2_cleared = False
-
-    if "room3_cleared" not in st.session_state:
-        st.session_state.room3_cleared = False
-
-    if "room4_cleared" not in st.session_state:
-        st.session_state.room4_cleared = False
-
     st.markdown("### THE FINAL BELL HAS RUNG...")
 
     st.write(
@@ -309,7 +299,7 @@ def story_page():
     )
 
     st.markdown("### FOUR AREAS. FOUR CHALLENGES.")
-    st.caption("Select an unlocked room to begin or continue.")
+    st.caption("Click an unlocked room to continue your adventure.")
 
     col1, col2 = st.columns(2, gap="large")
 
@@ -322,11 +312,7 @@ def story_page():
             if st.session_state.room1_cleared:
                 st.success("COMPLETED")
 
-            if st.button(
-                "ENTER ROOM 1 →",
-                type="primary",
-                use_container_width=True
-            ):
+            if st.button("ENTER ROOM 1 →", type="primary", use_container_width=True):
                 if st.session_state.start_time is None:
                     start_game()
                 else:
@@ -356,7 +342,7 @@ def story_page():
     with col2:
         with st.container(border=True):
             st.markdown("### 🪑 The Teacher's Desk")
-            st.caption("Room 2 — Basic Derivatives")
+            st.caption("Room 2 — Basic Derivatives (Power Rule)")
 
             if st.session_state.room2_cleared:
                 st.success("COMPLETED")
@@ -393,7 +379,7 @@ def story_page():
     st.write("")
 
     st.warning(
-        "You must complete each room to unlock the next one "
+        "Complete each room to unlock the next one "
         "and collect all four keys."
     )
 
@@ -402,7 +388,7 @@ def story_page():
     col1, col2 = st.columns(2)
 
     with col1:
-        st.metric("LIVES", "3")
+        st.metric("LIVES", st.session_state.lives)
         st.caption("Every wrong answer costs one life.")
 
     with col2:
@@ -422,6 +408,7 @@ def story_page():
     if st.button("← BACK TO MENU", use_container_width=True):
         st.session_state.page = "home"
         st.rerun()
+
 
 
 # ==========================================
