@@ -12,6 +12,7 @@ st.set_page_config(
     layout="centered"
 )
 
+
 # ==========================================
 # DESIGN AND FONTS
 # ==========================================
@@ -21,8 +22,6 @@ st.markdown("""
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
-/* MAIN BACKGROUND */
-
 .stApp {
     background:
         radial-gradient(ellipse at 50% 20%, #17374a 0%, transparent 55%),
@@ -31,29 +30,21 @@ st.markdown("""
     font-family: 'Inter', sans-serif;
 }
 
-/* CONTENT WIDTH */
-
 .block-container {
     max-width: 1100px;
     padding-top: 2rem;
     padding-bottom: 3rem;
 }
 
-/* HEADINGS */
-
 h1, h2, h3 {
     font-family: 'Cormorant Garamond', serif !important;
     color: #e8d3a0 !important;
 }
 
-/* NORMAL TEXT */
-
 p, label, span {
     font-family: 'Inter', sans-serif;
     color: #eee6d2;
 }
-
-/* HOME SCREEN TITLE */
 
 .home-small-title {
     font-family: 'Cinzel', serif;
@@ -73,9 +64,8 @@ p, label, span {
     text-align: center;
     letter-spacing: 2px;
     color: #f0d99f;
-    text-shadow:
-        0 2px 2px #4d3518,
-        0 4px 12px rgba(226, 184, 100, 0.35);
+    text-shadow: 0 2px 2px #4d3518,
+                 0 4px 12px rgba(226, 184, 100, 0.35);
     margin: 0;
 }
 
@@ -89,64 +79,35 @@ p, label, span {
     letter-spacing: 2px;
 }
 
-/* SMALL DECORATIVE LINE */
-
 .gold-line {
     width: 150px;
     height: 2px;
     margin: 22px auto 30px auto;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #d7b66f,
-        transparent
-    );
+    background: linear-gradient(90deg, transparent, #d7b66f, transparent);
 }
-
-/* BUTTONS */
 
 .stButton > button {
     width: 100%;
     min-height: 58px;
     border-radius: 40px;
     border: 1px solid #d4b879;
-
-    background: linear-gradient(
-        135deg,
-        #18364b,
-        #0b1c2a
-    );
-
+    background: linear-gradient(135deg, #18364b, #0b1c2a);
     color: #f0dba8;
     font-family: 'Cinzel', serif;
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 2px;
-
-    box-shadow:
-        0 0 8px rgba(217, 184, 112, 0.15),
-        inset 0 0 12px rgba(255,255,255,0.04);
-
+    box-shadow: 0 0 8px rgba(217, 184, 112, 0.15);
     transition: all 0.25s ease;
 }
 
 .stButton > button:hover {
-    background: linear-gradient(
-        135deg,
-        #31536a,
-        #142b3d
-    );
-
+    background: linear-gradient(135deg, #31536a, #142b3d);
     color: #fff0c8;
     border: 1px solid #f5d895;
-
-    box-shadow:
-        0 0 18px rgba(224, 190, 115, 0.4);
-
+    box-shadow: 0 0 18px rgba(224, 190, 115, 0.4);
     transform: translateY(-3px);
 }
-
-/* OBJECTIVE PANEL */
 
 .objective-panel {
     background: rgba(13, 29, 41, 0.78);
@@ -155,10 +116,7 @@ p, label, span {
     padding: 25px 30px;
     margin-top: 25px;
     text-align: center;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.3),
-        inset 0 0 20px rgba(255,255,255,0.025);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
 
 .objective-title {
@@ -177,14 +135,6 @@ p, label, span {
     line-height: 1.8;
 }
 
-/* DIVIDERS */
-
-hr {
-    border-color: rgba(205, 176, 115, 0.35);
-}
-
-/* INPUT FIELDS */
-
 .stTextInput input {
     background-color: #102536;
     color: white;
@@ -192,7 +142,9 @@ hr {
     border-radius: 8px;
 }
 
-/* METRICS */
+hr {
+    border-color: rgba(205, 176, 115, 0.35);
+}
 
 [data-testid="stMetric"] {
     background: rgba(15, 35, 49, 0.75);
@@ -207,12 +159,6 @@ hr {
 
 [data-testid="stMetricValue"] {
     color: #f4e5c2 !important;
-}
-
-/* INFO BOXES */
-
-.stAlert {
-    border-radius: 10px;
 }
 
 </style>
@@ -258,7 +204,7 @@ if "hint_used_this_question" not in st.session_state:
 
 
 # ==========================================
-# RESET GAME
+# GAME FUNCTIONS
 # ==========================================
 
 def reset_game():
@@ -282,10 +228,6 @@ def reset_game():
     st.session_state.page = "home"
 
 
-# ==========================================
-# START GAME
-# ==========================================
-
 def start_game():
 
     st.session_state.start_time = time.time()
@@ -304,6 +246,47 @@ def start_game():
     st.session_state.hint_used_this_question = False
 
     st.session_state.page = "room1"
+
+
+def wrong_answer():
+
+    st.session_state.lives -= 1
+
+    # Deduct 5 seconds
+
+    if st.session_state.start_time is not None:
+        st.session_state.start_time -= 5
+
+    st.session_state.feedback = (
+        "Incorrect answer! You lost 1 life and 5 seconds."
+    )
+
+    if st.session_state.lives <= 0:
+        st.session_state.game_over = True
+
+
+def use_hint(message):
+
+    if st.session_state.hint_used_this_question:
+
+        st.session_state.hint_message = (
+            "You have already used a hint for this challenge. "
+            "Only 1 hint is allowed per challenge."
+        )
+
+    elif st.session_state.hints <= 0:
+
+        st.session_state.hint_message = (
+            "You have no hints remaining."
+        )
+
+    else:
+
+        st.session_state.hints -= 1
+
+        st.session_state.hint_used_this_question = True
+
+        st.session_state.hint_message = message
 
 
 # ==========================================
@@ -337,59 +320,10 @@ def live_timer():
 
 
 # ==========================================
-# WRONG ANSWER
+# HOME PAGE FUNCTION
 # ==========================================
 
-def wrong_answer():
-
-    st.session_state.lives -= 1
-
-    # Deduct 5 seconds
-
-    if st.session_state.start_time is not None:
-        st.session_state.start_time -= 5
-
-    st.session_state.feedback = (
-        "Incorrect answer! You lost 1 life and 5 seconds."
-    )
-
-    if st.session_state.lives <= 0:
-        st.session_state.game_over = True
-
-
-# ==========================================
-# HINT SYSTEM
-# ==========================================
-
-def use_hint(message):
-
-    if st.session_state.hint_used_this_question:
-
-        st.session_state.hint_message = (
-            "You have already used a hint for this challenge. "
-            "Only 1 hint is allowed per challenge."
-        )
-
-    elif st.session_state.hints <= 0:
-
-        st.session_state.hint_message = (
-            "You have no hints remaining."
-        )
-
-    else:
-
-        st.session_state.hints -= 1
-
-        st.session_state.hint_used_this_question = True
-
-        st.session_state.hint_message = message
-
-
-# ==========================================
-# HOME PAGE
-# ==========================================
-
-if st.session_state.page == "home":
+def home_page():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -415,26 +349,21 @@ if st.session_state.page == "home":
         unsafe_allow_html=True
     )
 
-    # MAIN MENU BUTTONS
-
     col1, col2, col3 = st.columns([1, 1, 1])
-
-    with col1:
-        st.write("")
 
     with col2:
 
         if st.button("PLAY", key="home_play"):
+
             st.session_state.page = "story"
             st.rerun()
 
     with col3:
 
         if st.button("HOW TO PLAY", key="home_how"):
+
             st.session_state.page = "instructions"
             st.rerun()
-
-    # OBJECTIVE PANEL
 
     st.markdown("""
     <div class="objective-panel">
@@ -454,10 +383,10 @@ if st.session_state.page == "home":
 
 
 # ==========================================
-# STORY PAGE
+# STORY PAGE FUNCTION
 # ==========================================
 
-elif st.session_state.page == "story":
+def story_page():
 
     st.title("THE STORY")
 
@@ -477,24 +406,24 @@ elif st.session_state.page == "story":
         "Each area contains three Differential Calculus challenges."
     )
 
-    st.warning(
-        "You have only 10 minutes. Think carefully."
-    )
+    st.warning("You have only 10 minutes. Think carefully.")
 
     if st.button("START GAME"):
+
         start_game()
         st.rerun()
 
     if st.button("BACK TO MENU"):
+
         st.session_state.page = "home"
         st.rerun()
 
 
 # ==========================================
-# HOW TO PLAY
+# INSTRUCTIONS PAGE FUNCTION
 # ==========================================
 
-elif st.session_state.page == "instructions":
+def instructions_page():
 
     st.title("HOW TO PLAY")
 
@@ -508,19 +437,12 @@ elif st.session_state.page == "instructions":
     st.subheader("Game Rules")
 
     st.write("❤️ You have 3 lives.")
-
     st.write("⏱️ You have 10 minutes to finish the game.")
-
     st.write("💡 You have 2 hints for the entire game.")
-
     st.write("🔑 Each room has 3 challenges.")
-
     st.write("✅ Correct answers allow you to progress.")
-
     st.write("❌ Wrong answers deduct 1 life and 5 seconds.")
-
     st.write("💡 Only 1 hint can be used per challenge.")
-
     st.write(
         "🚪 Lose all your lives or run out of time, "
         "and the game ends."
@@ -534,15 +456,16 @@ elif st.session_state.page == "instructions":
     )
 
     if st.button("BACK TO MENU"):
+
         st.session_state.page = "home"
         st.rerun()
 
 
 # ==========================================
-# ROOM 1: THE BLACKBOARD
+# ROOM 1 FUNCTION: THE BLACKBOARD
 # ==========================================
 
-elif st.session_state.page == "room1":
+def room1():
 
     st.title("THE LOCKED CLASSROOM")
 
@@ -577,6 +500,7 @@ elif st.session_state.page == "room1":
         )
 
         if st.button("RESTART GAME"):
+
             reset_game()
             st.rerun()
 
@@ -596,6 +520,7 @@ elif st.session_state.page == "room1":
         st.write("The Teacher's Desk is now unlocked.")
 
         if st.button("CONTINUE"):
+
             st.session_state.page = "room2"
             st.rerun()
 
@@ -612,9 +537,7 @@ elif st.session_state.page == "room1":
 
         st.markdown("### 🔒 Blackboard Challenge")
 
-        # ----------------------------------
         # QUESTION 1
-        # ----------------------------------
 
         if st.session_state.question_number == 1:
 
@@ -634,6 +557,7 @@ elif st.session_state.page == "room1":
                 if answer.strip() == "10":
 
                     st.session_state.question_number = 2
+
                     st.session_state.hint_used_this_question = False
 
                     st.session_state.feedback = ""
@@ -654,9 +578,7 @@ elif st.session_state.page == "room1":
 
                 st.rerun()
 
-        # ----------------------------------
         # QUESTION 2
-        # ----------------------------------
 
         elif st.session_state.question_number == 2:
 
@@ -678,6 +600,7 @@ elif st.session_state.page == "room1":
                 if answer.strip() == "4":
 
                     st.session_state.question_number = 3
+
                     st.session_state.hint_used_this_question = False
 
                     st.session_state.feedback = ""
@@ -698,9 +621,7 @@ elif st.session_state.page == "room1":
 
                 st.rerun()
 
-        # ----------------------------------
         # QUESTION 3
-        # ----------------------------------
 
         elif st.session_state.question_number == 3:
 
@@ -756,26 +677,53 @@ elif st.session_state.page == "room1":
         st.subheader("ROOM STATUS")
 
         st.write("🔓 Blackboard: Available")
-
         st.write("🔒 Teacher's Desk: Locked")
-
         st.write("🔒 Storage Cabinet: Locked")
-
         st.write("🔒 Exit Door: Locked")
 
 
 # ==========================================
-# ROOM 2 PLACEHOLDER
+# ROOM 2 FUNCTION: THE TEACHER'S DESK
 # ==========================================
 
-elif st.session_state.page == "room2":
+def room2():
 
     st.title("ROOM 2: THE TEACHER'S DESK")
+
+    st.caption("ROOM 2 / 4")
+
+    st.divider()
 
     st.info(
         "Room 2 gameplay has not been added yet."
     )
 
     if st.button("BACK TO MAIN MENU"):
+
         st.session_state.page = "home"
         st.rerun()
+
+
+# ==========================================
+# MAIN PAGE NAVIGATION
+# ==========================================
+
+if st.session_state.page == "home":
+
+    home_page()
+
+elif st.session_state.page == "story":
+
+    story_page()
+
+elif st.session_state.page == "instructions":
+
+    instructions_page()
+
+elif st.session_state.page == "room1":
+
+    room1()
+
+elif st.session_state.page == "room2":
+
+    room2()
