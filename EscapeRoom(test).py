@@ -192,8 +192,8 @@ def live_timer():
 
 def home_page():
 
-    st.write("")
-    st.write("")
+     st.write("")
+     st.write("")
 
     # TITLE
     st.markdown("")  # spacing
