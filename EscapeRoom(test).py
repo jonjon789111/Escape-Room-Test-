@@ -255,15 +255,15 @@ def home_page():
 # ==========================================
 
 def story_page():
-
-    design()
+design()
 
     st.markdown("")
     st.markdown("## 📖 THE STORY")
-    st.caption("THE LOCKED CLASSROOM • AN ESCAPE ROOM ADVENTURE")
+    st.caption("THE LOCKED CLASSROOM  |  AN ESCAPE ROOM ADVENTURE")
     st.divider()
 
-    st.markdown("### The final bell has rung...")
+    st.markdown("### THE FINAL BELL HAS RUNG...")
+
     st.write(
         "As you prepare to leave, you reach for the door. "
         "But something is wrong. **It's locked.**"
@@ -276,50 +276,70 @@ def story_page():
         "around the classroom."
     )
 
-    st.markdown("### Four areas. Four challenges.")
-    col1, col2 = st.columns(2)
+    st.markdown("### FOUR AREAS. FOUR CHALLENGES.")
+
+    col1, col2 = st.columns(2, gap="large")
 
     with col1:
-        st.markdown("#### 🖍️ The Blackboard")
-        st.caption("Where the first clues await.")
+        with st.container(border=True):
+            st.markdown("### 🖍️ The Blackboard")
+            st.caption("Where the first clues await.")
 
-        st.markdown("#### 🗄️ The Storage Cabinet")
-        st.caption("A collection of difficult challenges.")
+        with st.container(border=True):
+            st.markdown("### 🗄️ The Storage Cabinet")
+            st.caption("A collection of difficult challenges.")
 
     with col2:
-        st.markdown("#### 🪑 The Teacher's Desk")
-        st.caption("More than just an ordinary desk.")
+        with st.container(border=True):
+            st.markdown("### 🪑 The Teacher's Desk")
+            st.caption("More than just an ordinary desk.")
 
-        st.markdown("#### 🚪 The Exit Door")
-        st.caption("Your final obstacle to freedom.")
+        with st.container(border=True):
+            st.markdown("### 🚪 The Exit Door")
+            st.caption("Your final obstacle to freedom.")
 
     st.write("")
+
     st.warning(
         "You must explore all four areas, solve every challenge, "
         "and collect the keys to escape."
     )
 
-    st.markdown("### But remember...")
-    st.write(
-        "Every wrong answer costs **one life and five seconds**. "
-        "Use your hints wisely. Time is limited, and every answer counts."
-    )
+    st.markdown("### BUT REMEMBER...")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric("LIVES", "3")
+        st.caption("Every wrong answer costs one life.")
+
+    with col2:
+        st.metric("TIME PENALTY", "5 seconds")
+        st.caption("Every mistake takes away precious time.")
 
     st.divider()
 
-    st.markdown("### Your mission")
-    st.markdown("**Solve the problems. Collect the keys. Escape the classroom.**")
+    st.markdown("### YOUR MISSION")
+
+    st.markdown(
+        "**Solve the problems. Collect the keys. Escape the classroom.**"
+    )
 
     st.write("")
+
     left, right = st.columns(2)
 
     with left:
-        if st.button("← Back to Menu", use_container_width=True):
+        if st.button("← BACK TO MENU", use_container_width=True):
             st.session_state.page = "home"
             st.rerun()
 
     with right:
-        if st.button("START GAME →", type="primary", use_container_width=True):
+        if st.button(
+            "START GAME →",
+            type="primary",
+            use_container_width=True
+        ):
             start_game()
             st.rerun()
 
