@@ -706,7 +706,7 @@ def room1():
 
                 st.session_state.room1_cleared = True
                 st.session_state.question_number = 0
-                st.session_state.page = "room2"
+                st.session_state.page = "story"
 
             st.rerun()
 
