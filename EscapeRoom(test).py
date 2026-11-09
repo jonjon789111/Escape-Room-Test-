@@ -540,9 +540,13 @@ def instructions_page():
             st.rerun()
 
     with start:
-        if st.button("START GAME", type="primary", use_container_width=True):
-            start_game()
-            st.rerun()
+        if st.button(
+    "START GAME →",
+    type="primary",
+    use_container_width=True
+):
+    st.session_state.page = "story"
+    st.rerun()
 
 
 # ==========================================
