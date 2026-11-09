@@ -1068,234 +1068,225 @@ def instructions_page():
 
 def room1():
 
-    st.title("THE LOCKED CLASSROOM")
+     st.markdown("""
+        <style>
+        .stApp {
+            background-color: #101827;
+        }
 
-    st.caption("ROOM 1 / 4")
+        .block-container {
+            max-width: 1150px;
+            padding-top: 2rem;
+        }
 
-    st.divider()
+        .room-label {
+            color: #B59A60;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 5px;
+            text-align: center;
+        }
+
+        .room-title {
+            color: #F4F1EA;
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-align: center;
+        }
+
+        .room-subtitle {
+            color: #C6B78E;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 23px;
+            text-align: center;
+        }
+
+        .room-divider {
+            width: 75%;
+            height: 1px;
+            background: linear-gradient(
+                to right, transparent, #B59A60, transparent
+            );
+            margin: 25px auto;
+        }
+
+        .question-label {
+            color: #D8B96F;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            letter-spacing: 3px;
+        }
+
+        .question-text {
+            color: #F4F1EA;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 27px;
+            line-height: 1.6;
+        }
+
+        .room-footer {
+            color: #7F8999;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        div[data-testid="stButton"] button {
+            height: 50px;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        div[data-testid="stButton"] button[kind="primary"] {
+            background-color: #476B56 !important;
+            color: white !important;
+            border: 1px solid #78947E !important;
+        }
+
+        div[data-testid="stButton"] button[kind="secondary"] {
+            background-color: #B59A60 !important;
+            color: #17202B !important;
+            border: 1px solid #D9C28C !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # HEADER
+
+    st.markdown("""
+        <div class="room-label">ROOM 01</div>
+        <div class="room-title">THE BLACKBOARD</div>
+        <div class="room-subtitle">The first challenge — Limits</div>
+        <div class="room-divider"></div>
+    """, unsafe_allow_html=True)
 
     # GAME STATUS
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric("LIVES", f"❤️ {st.session_state.lives}")
+        st.metric("LIVES", st.session_state.lives)
 
     with col2:
-        live_timer()
+        st.metric("HINTS", st.session_state.hints)
 
     with col3:
-        st.metric("HINTS", f"💡 {st.session_state.hints}")
+        live_timer()
 
-    st.divider()
+    st.markdown('<div class="room-divider"></div>',
+                unsafe_allow_html=True)
 
-    # GAME OVER
+    # QUESTIONS
 
-    if st.session_state.game_over:
+    questions = [
+        {
+            "question": "Find the limit:",
+            "formula": r"\lim_{x \to 2}(3x+4)",
+            "answer": "10",
+            "hint": "Substitute x = 2 into the expression."
+        },
+        {
+            "question": "Evaluate the following limit:",
+            "formula": r"\lim_{x \to 2}\frac{x^2-4}{x-2}",
+            "answer": "4",
+            "hint": "Factor the numerator into (x - 2)(x + 2)."
+        },
+        {
+            "question": "Find the limit:",
+            "formula": r"\lim_{x \to 1}\frac{x^2+3x-4}{x-1}",
+            "answer": "5",
+            "hint": "Factor the numerator into (x - 1)(x + 4)."
+        }
+    ]
 
-        st.error("GAME OVER")
+    q = questions[st.session_state.question_number]
 
-        st.write(
-            "You failed to escape the classroom. "
-            "Try again and manage your time carefully."
-        )
+    left, center, right = st.columns([1, 5, 1])
 
-        if st.button("RESTART GAME"):
+    with center:
 
-            reset_game()
-            st.rerun()
+        with st.container(border=True):
 
-        return
-
-    # ROOM CLEARED
-
-    if st.session_state.room1_cleared:
-
-        st.success("ROOM CLEARED!")
-
-        st.title("FIRST KEY OBTAINED")
-
-        st.write(
-            "You successfully solved all three challenges "
-            "on the blackboard."
-        )
-
-        st.write("The Teacher's Desk is now unlocked.")
-
-        if st.button("CONTINUE"):
-
-            st.session_state.page = "room2"
-            st.rerun()
-
-        return
-
-    # ACTIVE CHALLENGES
-
-    st.subheader("ROOM 1: THE BLACKBOARD")
-
-    st.write(
-        "The blackboard contains three mathematical challenges. "
-        "Solve each one to unlock the first key."
-    )
-
-    st.divider()
-
-    # --------------------------------------
-    # QUESTION 1
-    # --------------------------------------
-
-    if st.session_state.question_number == 1:
-
-        st.caption("CHALLENGE 1 / 3")
-
-        st.write("Evaluate the following limit:")
-
-        st.latex(r"\lim_{x \to 2}(3x+4)")
-
-        answer = st.text_input(
-            "Enter your answer:",
-            key="answer_1"
-        )
-
-        if st.button("SUBMIT ANSWER", key="submit_1"):
-
-            if answer.strip() == "10":
-
-                st.session_state.question_number = 2
-
-                st.session_state.hint_used_this_question = False
-
-                st.session_state.feedback = ""
-                st.session_state.hint_message = ""
-
-                st.rerun()
-
-            else:
-
-                wrong_answer()
-                st.rerun()
-
-        if st.button("USE HINT", key="hint_1"):
-
-            use_hint(
-                "Substitute x = 2 into the expression."
+            st.markdown(
+                f'<div class="question-label">CHALLENGE '
+                f'{st.session_state.question_number + 1} OF 3</div>',
+                unsafe_allow_html=True
             )
 
-            st.rerun()
+            st.write("")
 
-    # --------------------------------------
-    # QUESTION 2
-    # --------------------------------------
-
-    elif st.session_state.question_number == 2:
-
-        st.caption("CHALLENGE 2 / 3")
-
-        st.write("Evaluate the following limit:")
-
-        st.latex(
-            r"\lim_{x \to 2}\frac{x^2-4}{x-2}"
-        )
-
-        answer = st.text_input(
-            "Enter your answer:",
-            key="answer_2"
-        )
-
-        if st.button("SUBMIT ANSWER", key="submit_2"):
-
-            if answer.strip() == "4":
-
-                st.session_state.question_number = 3
-
-                st.session_state.hint_used_this_question = False
-
-                st.session_state.feedback = ""
-                st.session_state.hint_message = ""
-
-                st.rerun()
-
-            else:
-
-                wrong_answer()
-                st.rerun()
-
-        if st.button("USE HINT", key="hint_2"):
-
-            use_hint(
-                "Factor x² - 4 into (x - 2)(x + 2)."
+            st.markdown(
+                f'<div class="question-text">{q["question"]}</div>',
+                unsafe_allow_html=True
             )
 
-            st.rerun()
+            st.latex(q["formula"])
 
-    # --------------------------------------
-    # QUESTION 3
-    # --------------------------------------
+            st.write("")
 
-    elif st.session_state.question_number == 3:
-
-        st.caption("CHALLENGE 3 / 3")
-
-        st.write("Evaluate the following limit:")
-
-        st.latex(
-            r"\lim_{x \to 1}\frac{x^2+3x-4}{x-1}"
-        )
-
-        answer = st.text_input(
-            "Enter your answer:",
-            key="answer_3"
-        )
-
-        if st.button("SUBMIT ANSWER", key="submit_3"):
-
-            if answer.strip() == "5":
-
-                st.session_state.room1_cleared = True
-
-                st.session_state.feedback = ""
-                st.session_state.hint_message = ""
-
-                st.rerun()
-
-            else:
-
-                wrong_answer()
-                st.rerun()
-
-        if st.button("USE HINT", key="hint_3"):
-
-            use_hint(
-                "Factor the numerator into (x - 1)(x + 4)."
+            answer = st.text_input(
+                "YOUR ANSWER",
+                key=f"room1_answer_{st.session_state.question_number}"
             )
 
-            st.rerun()
+            if st.button(
+                "SUBMIT ANSWER",
+                use_container_width=True,
+                type="primary"
+            ):
 
-    # --------------------------------------
-    # FEEDBACK
-    # --------------------------------------
+                if answer.strip() == q["answer"]:
+                    st.session_state.feedback = "correct"
+                else:
+                    wrong_answer()
+                    st.session_state.feedback = "wrong"
 
-    if st.session_state.feedback:
-        st.error(st.session_state.feedback)
+                st.rerun()
 
-    if st.session_state.hint_message:
-        st.info(st.session_state.hint_message)
+            if st.button(
+                "USE HINT",
+                use_container_width=True,
+                type="secondary"
+            ):
+                use_hint(q["hint"])
+                st.rerun()
 
-    # --------------------------------------
-    # ROOM STATUS
-    # --------------------------------------
+            if st.session_state.hint_message:
+                st.info(st.session_state.hint_message)
 
-    st.divider()
+            if st.session_state.feedback == "correct":
+                st.success("Correct! You solved the challenge.")
 
-    st.subheader("ROOM STATUS")
+                if st.button("CONTINUE", type="primary"):
+                    st.session_state.question_number += 1
+                    st.session_state.feedback = ""
+                    st.session_state.hint_message = ""
+                    st.session_state.hint_used_this_question = False
 
-    st.write("🔓 Blackboard: Available")
+                    if st.session_state.question_number >= 3:
+                        st.session_state.room1_cleared = True
+                        st.session_state.page = "room2"
 
-    st.write("🔒 Teacher's Desk: Locked")
+                    st.rerun()
 
-    st.write("🔒 Storage Cabinet: Locked")
+            elif st.session_state.feedback == "wrong":
+                st.error("Incorrect answer! You lost one life and five seconds.")
+                st.session_state.feedback = ""
 
-    st.write("🔒 Exit Door: Locked")
+    st.markdown('<div class="room-divider"></div>',
+                unsafe_allow_html=True)
+
+    st.markdown("""
+        <div class="room-footer">
+            THINK BEFORE YOU ANSWER.
+        </div>
+    """, unsafe_allow_html=True)
+
 
 
 # ==========================================
