@@ -9,7 +9,7 @@ import time
 st.set_page_config(
     page_title="The Locked Classroom",
     page_icon="🔒",
-    layout="centered"
+    layout="wide"
 )
 
 
