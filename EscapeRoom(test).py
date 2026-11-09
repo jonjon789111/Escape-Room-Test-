@@ -500,14 +500,12 @@ def room1():
 
     design()
 
-    header(
-        "ROOM 01",
-        "THE BLACKBOARD",
-        "The first challenge — Limits"
-    )
+    st.title("ROOM 01 — THE BLACKBOARD")
+    st.write("The first challenge: Limits")
+    st.divider()
 
     if st.session_state.game_over:
-        st.error("GAME OVER! You have run out of lives or time.")
+        st.error("GAME OVER! You ran out of lives or time.")
 
         if st.button("RETURN TO MENU"):
             st.session_state.page = "home"
@@ -517,103 +515,108 @@ def room1():
 
     game_status()
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.divider()
 
-    questions = [
-        {
-            "question": "Find the limit:",
-            "formula": r"\lim_{x\to2}(3x+4)",
-            "answer": "10",
-            "hint": "Substitute x = 2 into the expression."
-        },
-        {
-            "question": "Evaluate the following limit:",
-            "formula": r"\lim_{x\to2}\frac{x^2-4}{x-2}",
-            "answer": "4",
-            "hint": "Factor the numerator into (x - 2)(x + 2)."
-        },
-        {
-            "question": "Find the limit:",
-            "formula": r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}",
-            "answer": "5",
-            "hint": "Factor the numerator into (x - 1)(x + 4)."
-        }
-    ]
+    # CHALLENGE 1
+    if st.session_state.question_number == 0:
 
-    number = st.session_state.question_number
-    q = questions[number]
+        st.subheader("CHALLENGE 1 OF 3")
+        st.write("Find the limit:")
+        st.latex(r"\lim_{x\to2}(3x+4)")
 
-    left, center, right = st.columns([1, 5, 1])
+        answer = st.text_input("Your answer:", key="answer1")
 
-    with center:
-        with st.container(border=True):
+        if st.button("SUBMIT ANSWER"):
 
-            st.markdown(
-                f'<div class="section-title">CHALLENGE {number + 1} OF 3</div>',
-                unsafe_allow_html=True
-            )
+            if answer.strip() == "10":
+                st.session_state.feedback = "correct"
+            else:
+                wrong_answer()
+                st.session_state.feedback = "wrong"
 
-            st.write(q["question"])
-            st.latex(q["formula"])
+            st.rerun()
 
-            answer = st.text_input(
-                "YOUR ANSWER",
-                key=f"room1_answer_{number}"
-            )
+        if st.button("USE HINT"):
+            use_hint("Substitute x = 2 into the expression.")
+            st.rerun()
 
-            if st.button(
-                "SUBMIT ANSWER",
-                type="primary",
-                use_container_width=True
-            ):
+    # CHALLENGE 2
+    elif st.session_state.question_number == 1:
 
-                if answer.strip() == q["answer"]:
-                    st.session_state.feedback = "correct"
-                else:
-                    wrong_answer()
-                    st.session_state.feedback = "wrong"
+        st.subheader("CHALLENGE 2 OF 3")
+        st.write("Evaluate the following limit:")
+        st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
 
-                st.rerun()
+        answer = st.text_input("Your answer:", key="answer2")
 
-            if st.button(
-                "USE HINT",
-                type="secondary",
-                use_container_width=True
-            ):
-                use_hint(q["hint"])
-                st.rerun()
+        if st.button("SUBMIT ANSWER"):
 
-            if st.session_state.hint_message:
-                st.info(st.session_state.hint_message)
+            if answer.strip() == "4":
+                st.session_state.feedback = "correct"
+            else:
+                wrong_answer()
+                st.session_state.feedback = "wrong"
 
-            if st.session_state.feedback == "correct":
+            st.rerun()
 
-                st.success("Correct! You solved the challenge.")
+        if st.button("USE HINT"):
+            use_hint("Factor the numerator into (x - 2)(x + 2).")
+            st.rerun()
 
-                if st.button("CONTINUE", type="primary"):
+    # CHALLENGE 3
+    elif st.session_state.question_number == 2:
 
-                    st.session_state.question_number += 1
-                    st.session_state.feedback = ""
-                    st.session_state.hint_message = ""
-                    st.session_state.hint_used_this_question = False
+        st.subheader("CHALLENGE 3 OF 3")
+        st.write("Find the limit:")
+        st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
 
-                    if st.session_state.question_number == 3:
-                        st.session_state.room1_cleared = True
-                        st.session_state.question_number = 0
-                        st.session_state.page = "room2"
+        answer = st.text_input("Your answer:", key="answer3")
 
-                    st.rerun()
+        if st.button("SUBMIT ANSWER"):
 
-            elif st.session_state.feedback == "wrong":
+            if answer.strip() == "5":
+                st.session_state.feedback = "correct"
+            else:
+                wrong_answer()
+                st.session_state.feedback = "wrong"
 
-                st.error("Incorrect! One life and five seconds deducted.")
-                st.session_state.feedback = ""
+            st.rerun()
 
-                if st.session_state.game_over:
-                    st.rerun()
+        if st.button("USE HINT"):
+            use_hint("Factor the numerator into (x - 1)(x + 4).")
+            st.rerun()
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    # FEEDBACK
+    if st.session_state.feedback == "correct":
 
+        st.success("Correct! You solved the challenge.")
+
+        if st.button("CONTINUE"):
+
+            st.session_state.question_number += 1
+            st.session_state.feedback = ""
+            st.session_state.hint_message = ""
+            st.session_state.hint_used_this_question = False
+
+            if st.session_state.question_number == 3:
+                st.session_state.room1_cleared = True
+                st.session_state.question_number = 0
+                st.session_state.page = "room2"
+
+            st.rerun()
+
+    elif st.session_state.feedback == "wrong":
+
+        st.error("Incorrect! One life and five seconds deducted.")
+
+        st.session_state.feedback = ""
+
+        if st.session_state.game_over:
+            st.rerun()
+
+    # DISPLAY HINT
+    if st.session_state.hint_message:
+        st.info(st.session_state.hint_message)
 
 # ==========================================
 # ROOM 2 — THE TEACHER'S DESK
