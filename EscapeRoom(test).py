@@ -192,27 +192,123 @@ def live_timer():
 
 def home_page():
 
-    st.write("")
-    st.write("")
-    st.write("")
+    # DARK ACADEMIA HOMEPAGE DESIGN
+
+    st.markdown("""
+        <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+
+        .stApp {
+            background: radial-gradient(
+                circle at 50% 35%,
+                #24334d 0%,
+                #111c30 48%,
+                #080f1c 100%
+            );
+        }
+
+        .block-container {
+            padding-top: 4rem;
+            padding-bottom: 2rem;
+            max-width: 1200px;
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(42px, 5.5vw, 76px);
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: #F4F1EA;
+            text-align: center;
+            text-shadow: 0 0 25px rgba(180,190,210,0.2);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            color: #C6BDA9;
+            text-align: center;
+        }
+
+        .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 21px;
+            font-style: italic;
+            color: #9CA9BB;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            margin-bottom: 35px;
+        }
+
+        .divider-line {
+            width: 65%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #A99770,
+                transparent
+            );
+            margin: 30px auto;
+        }
+
+        .objective-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: #D7C49B;
+            text-align: center;
+        }
+
+        .objective-panel {
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(201,183,145,0.45);
+            border-radius: 12px;
+            padding: 30px 45px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        .footer-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            color: #778398;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        </style>
+    """, unsafe_allow_html=True)
 
     # TITLE
 
-    col1, col2, col3 = st.columns([1, 5, 1])
+    st.markdown("""
+        <div class="main-title">
+            THE LOCKED CLASSROOM
+        </div>
 
-    with col2:
+        <div class="subtitle">
+            A Differential Calculus Escape Game
+        </div>
 
-        st.title("THE LOCKED CLASSROOM")
+        <div class="tagline">
+            Four rooms. Twelve challenges. One way out.
+        </div>
 
-        st.subheader("A Differential Calculus Escape Game")
-
-        st.caption("Four rooms. Twelve challenges. One way out.")
+        <div class="divider-line"></div>
+    """, unsafe_allow_html=True)
 
     st.write("")
-    st.divider()
     st.write("")
 
     # OBJECTIVE PANEL
+    # Native Streamlit components only
 
     col1, col2, col3 = st.columns([1, 6, 1])
 
@@ -220,15 +316,38 @@ def home_page():
 
         with st.container(border=True):
 
-            st.subheader("OBJECTIVE")
-
-            st.write(
-                "Solve Differential Calculus challenges to escape "
-                "four locked rooms."
+            st.markdown(
+                "<div class='objective-heading'>OBJECTIVE</div>",
+                unsafe_allow_html=True
             )
 
-            st.write(
-                "Can you find your way out before time runs out?"
+            st.write("")
+
+            st.markdown(
+                """
+                <p style="
+                    text-align: center;
+                    font-size: 22px;
+                    color: #E5E1D8;
+                ">
+                    Solve Differential Calculus challenges to escape
+                    four locked rooms.
+                </p>
+                """,
+                unsafe_allow_html=True
+            )
+
+            st.markdown(
+                """
+                <p style="
+                    text-align: center;
+                    font-size: 19px;
+                    color: #C6BDA9;
+                ">
+                    Can you find your way out before time runs out?
+                </p>
+                """,
+                unsafe_allow_html=True
             )
 
     st.write("")
@@ -258,7 +377,14 @@ def home_page():
 
     # FOOTER
 
-    st.caption("THINK CAREFULLY. EVERY SECOND COUNTS.")
+    st.markdown("""
+        <div class="divider-line"></div>
+
+        <div class="footer-text">
+            THINK CAREFULLY. EVERY SECOND COUNTS.
+        </div>
+    """, unsafe_allow_html=True)
+
 
 
 # ==========================================
