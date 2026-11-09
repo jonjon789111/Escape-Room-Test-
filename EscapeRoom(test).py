@@ -500,11 +500,14 @@ def room1():
 
     design()
 
-    st.title("ROOM 01 — THE BLACKBOARD")
-    st.write("The first challenge: Limits")
-    st.divider()
+    header(
+        "ROOM 01",
+        "THE BLACKBOARD",
+        "The first challenge — Limits"
+    )
 
     if st.session_state.game_over:
+
         st.error("GAME OVER! You ran out of lives or time.")
 
         if st.button("RETURN TO MENU"):
@@ -515,18 +518,25 @@ def room1():
 
     game_status()
 
-    st.divider()
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
 
     # CHALLENGE 1
     if st.session_state.question_number == 0:
 
-        st.subheader("CHALLENGE 1 OF 3")
+        st.markdown(
+            '<div class="section-title">CHALLENGE 1 OF 3</div>',
+            unsafe_allow_html=True
+        )
+
         st.write("Find the limit:")
         st.latex(r"\lim_{x\to2}(3x+4)")
 
-        answer = st.text_input("Your answer:", key="answer1")
+        answer = st.text_input("YOUR ANSWER", key="answer1")
 
-        if st.button("SUBMIT ANSWER"):
+        if st.button("SUBMIT ANSWER", type="primary"):
 
             if answer.strip() == "10":
                 st.session_state.feedback = "correct"
@@ -536,20 +546,24 @@ def room1():
 
             st.rerun()
 
-        if st.button("USE HINT"):
+        if st.button("USE HINT", type="secondary"):
             use_hint("Substitute x = 2 into the expression.")
             st.rerun()
 
     # CHALLENGE 2
     elif st.session_state.question_number == 1:
 
-        st.subheader("CHALLENGE 2 OF 3")
+        st.markdown(
+            '<div class="section-title">CHALLENGE 2 OF 3</div>',
+            unsafe_allow_html=True
+        )
+
         st.write("Evaluate the following limit:")
         st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
 
-        answer = st.text_input("Your answer:", key="answer2")
+        answer = st.text_input("YOUR ANSWER", key="answer2")
 
-        if st.button("SUBMIT ANSWER"):
+        if st.button("SUBMIT ANSWER", type="primary"):
 
             if answer.strip() == "4":
                 st.session_state.feedback = "correct"
@@ -559,20 +573,24 @@ def room1():
 
             st.rerun()
 
-        if st.button("USE HINT"):
+        if st.button("USE HINT", type="secondary"):
             use_hint("Factor the numerator into (x - 2)(x + 2).")
             st.rerun()
 
     # CHALLENGE 3
     elif st.session_state.question_number == 2:
 
-        st.subheader("CHALLENGE 3 OF 3")
+        st.markdown(
+            '<div class="section-title">CHALLENGE 3 OF 3</div>',
+            unsafe_allow_html=True
+        )
+
         st.write("Find the limit:")
         st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
 
-        answer = st.text_input("Your answer:", key="answer3")
+        answer = st.text_input("YOUR ANSWER", key="answer3")
 
-        if st.button("SUBMIT ANSWER"):
+        if st.button("SUBMIT ANSWER", type="primary"):
 
             if answer.strip() == "5":
                 st.session_state.feedback = "correct"
@@ -582,7 +600,7 @@ def room1():
 
             st.rerun()
 
-        if st.button("USE HINT"):
+        if st.button("USE HINT", type="secondary"):
             use_hint("Factor the numerator into (x - 1)(x + 4).")
             st.rerun()
 
@@ -591,7 +609,7 @@ def room1():
 
         st.success("Correct! You solved the challenge.")
 
-        if st.button("CONTINUE"):
+        if st.button("CONTINUE", type="primary"):
 
             st.session_state.question_number += 1
             st.session_state.feedback = ""
@@ -599,6 +617,7 @@ def room1():
             st.session_state.hint_used_this_question = False
 
             if st.session_state.question_number == 3:
+
                 st.session_state.room1_cleared = True
                 st.session_state.question_number = 0
                 st.session_state.page = "room2"
@@ -614,9 +633,14 @@ def room1():
         if st.session_state.game_over:
             st.rerun()
 
-    # DISPLAY HINT
+    # HINT DISPLAY
     if st.session_state.hint_message:
         st.info(st.session_state.hint_message)
+
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
 
 # ==========================================
 # ROOM 2 — THE TEACHER'S DESK
