@@ -13,51 +13,206 @@ st.set_page_config(
 )
 
 # ==========================================
-# DARK ACADEMIA DESIGN
+# DESIGN AND FONTS
 # ==========================================
 
 st.markdown("""
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* MAIN BACKGROUND */
+
 .stApp {
-    background: linear-gradient(135deg, #101010, #20201d);
-    color: #eee4ce;
+    background:
+        radial-gradient(ellipse at 50% 20%, #17374a 0%, transparent 55%),
+        linear-gradient(145deg, #07131d, #102536 55%, #080f17);
+    color: #eee6d2;
+    font-family: 'Inter', sans-serif;
 }
+
+/* CONTENT WIDTH */
+
+.block-container {
+    max-width: 1100px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* HEADINGS */
 
 h1, h2, h3 {
-    color: #d6b879 !important;
-    font-family: Georgia, serif;
+    font-family: 'Cormorant Garamond', serif !important;
+    color: #e8d3a0 !important;
 }
 
+/* NORMAL TEXT */
+
 p, label, span {
-    color: #eee4ce;
+    font-family: 'Inter', sans-serif;
+    color: #eee6d2;
 }
+
+/* HOME SCREEN TITLE */
+
+.home-small-title {
+    font-family: 'Cinzel', serif;
+    color: #e7d4a2;
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: 8px;
+    text-align: center;
+    margin-bottom: -10px;
+}
+
+.home-main-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 7vw, 76px);
+    font-weight: 800;
+    line-height: 1.05;
+    text-align: center;
+    letter-spacing: 2px;
+    color: #f0d99f;
+    text-shadow:
+        0 2px 2px #4d3518,
+        0 4px 12px rgba(226, 184, 100, 0.35);
+    margin: 0;
+}
+
+.home-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 35px;
+    font-weight: 600;
+    color: #e6d3a6;
+    text-align: center;
+    margin-top: 8px;
+    letter-spacing: 2px;
+}
+
+/* SMALL DECORATIVE LINE */
+
+.gold-line {
+    width: 150px;
+    height: 2px;
+    margin: 22px auto 30px auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #d7b66f,
+        transparent
+    );
+}
+
+/* BUTTONS */
 
 .stButton > button {
     width: 100%;
-    height: 48px;
-    background: linear-gradient(135deg, #9b783e, #c5a15c);
-    color: #17130c;
-    border: 1px solid #e0c17c;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: 0.2s;
+    min-height: 58px;
+    border-radius: 40px;
+    border: 1px solid #d4b879;
+
+    background: linear-gradient(
+        135deg,
+        #18364b,
+        #0b1c2a
+    );
+
+    color: #f0dba8;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    box-shadow:
+        0 0 8px rgba(217, 184, 112, 0.15),
+        inset 0 0 12px rgba(255,255,255,0.04);
+
+    transition: all 0.25s ease;
 }
 
 .stButton > button:hover {
-    background: linear-gradient(135deg, #c5a15c, #e0c17c);
-    color: #17130c;
-    transform: translateY(-2px);
+    background: linear-gradient(
+        135deg,
+        #31536a,
+        #142b3d
+    );
+
+    color: #fff0c8;
+    border: 1px solid #f5d895;
+
+    box-shadow:
+        0 0 18px rgba(224, 190, 115, 0.4);
+
+    transform: translateY(-3px);
 }
 
-.stTextInput input {
-    background-color: #25241f;
-    color: white;
-    border: 1px solid #9b783e;
+/* OBJECTIVE PANEL */
+
+.objective-panel {
+    background: rgba(13, 29, 41, 0.78);
+    border: 1px solid rgba(181, 194, 195, 0.55);
+    border-radius: 20px;
+    padding: 25px 30px;
+    margin-top: 25px;
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.3),
+        inset 0 0 20px rgba(255,255,255,0.025);
 }
+
+.objective-title {
+    font-family: 'Cinzel', serif;
+    color: #e7d19d;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.objective-text {
+    font-family: 'Inter', sans-serif;
+    color: #f1eee8;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* DIVIDERS */
 
 hr {
-    border-color: #79633d;
+    border-color: rgba(205, 176, 115, 0.35);
+}
+
+/* INPUT FIELDS */
+
+.stTextInput input {
+    background-color: #102536;
+    color: white;
+    border: 1px solid #b99b60;
+    border-radius: 8px;
+}
+
+/* METRICS */
+
+[data-testid="stMetric"] {
+    background: rgba(15, 35, 49, 0.75);
+    padding: 12px;
+    border: 1px solid rgba(197, 166, 103, 0.4);
+    border-radius: 12px;
+}
+
+[data-testid="stMetricLabel"] {
+    color: #d9c28f !important;
+}
+
+[data-testid="stMetricValue"] {
+    color: #f4e5c2 !important;
+}
+
+/* INFO BOXES */
+
+.stAlert {
+    border-radius: 10px;
 }
 
 </style>
@@ -98,13 +253,12 @@ if "feedback" not in st.session_state:
 if "hint_message" not in st.session_state:
     st.session_state.hint_message = ""
 
-# Tracks whether the current question has already received a hint.
 if "hint_used_this_question" not in st.session_state:
     st.session_state.hint_used_this_question = False
 
 
 # ==========================================
-# GAME RESET
+# RESET GAME
 # ==========================================
 
 def reset_game():
@@ -169,8 +323,7 @@ def live_timer():
     if time_left <= 0:
 
         st.session_state.game_over = True
-
-        st.error("TIME'S UP! Your time has run out.")
+        st.error("TIME'S UP!")
 
         st.rerun()
 
@@ -205,7 +358,7 @@ def wrong_answer():
 
 
 # ==========================================
-# USE HINT
+# HINT SYSTEM
 # ==========================================
 
 def use_hint(message):
@@ -214,7 +367,7 @@ def use_hint(message):
 
         st.session_state.hint_message = (
             "You have already used a hint for this challenge. "
-            "You can only use 1 hint per challenge."
+            "Only 1 hint is allowed per challenge."
         )
 
     elif st.session_state.hints <= 0:
@@ -238,50 +391,66 @@ def use_hint(message):
 
 if st.session_state.page == "home":
 
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
-    st.markdown(
-        "<h1 style='text-align:center;'>THE LOCKED CLASSROOM</h1>",
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        "<p style='text-align:center;'>Four rooms. Twelve challenges. One way out.</p>",
-        unsafe_allow_html=True
-    )
-
     st.markdown("<br>", unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 2, 1])
+    st.markdown(
+        "<div class='home-small-title'>THE</div>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        "<div class='home-main-title'>"
+        "LOCKED<br>CLASSROOM"
+        "</div>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        "<div class='home-subtitle'>Calculus Escape</div>",
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        "<div class='gold-line'></div>",
+        unsafe_allow_html=True
+    )
+
+    # MAIN MENU BUTTONS
+
+    col1, col2, col3 = st.columns([1, 1, 1])
+
+    with col1:
+        st.write("")
 
     with col2:
 
-        if st.button("PLAY"):
-
+        if st.button("PLAY", key="home_play"):
             st.session_state.page = "story"
             st.rerun()
 
-        if st.button("HOW TO PLAY"):
+    with col3:
 
+        if st.button("HOW TO PLAY", key="home_how"):
             st.session_state.page = "instructions"
             st.rerun()
 
-    st.markdown("---")
+    # OBJECTIVE PANEL
 
-    st.subheader("OBJECTIVE")
+    st.markdown("""
+    <div class="objective-panel">
 
-    st.write(
-        "You are trapped inside a locked classroom. "
-        "Solve Differential Calculus challenges, unlock the rooms, "
-        "and find your way out before time runs out."
-    )
+        <div class="objective-title">
+            OBJECTIVE
+        </div>
 
-    st.markdown(
-        "<p style='text-align:center;'>"
-        "Can you escape the classroom?"
-        "</p>",
-        unsafe_allow_html=True
-    )
+        <div class="objective-text">
+            Solve Differential Calculus challenges to escape
+            four rooms.<br>
+            Can you escape before time runs out?
+        </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ==========================================
@@ -313,12 +482,10 @@ elif st.session_state.page == "story":
     )
 
     if st.button("START GAME"):
-
         start_game()
         st.rerun()
 
     if st.button("BACK TO MENU"):
-
         st.session_state.page = "home"
         st.rerun()
 
@@ -367,7 +534,6 @@ elif st.session_state.page == "instructions":
     )
 
     if st.button("BACK TO MENU"):
-
         st.session_state.page = "home"
         st.rerun()
 
@@ -411,7 +577,6 @@ elif st.session_state.page == "room1":
         )
 
         if st.button("RESTART GAME"):
-
             reset_game()
             st.rerun()
 
@@ -431,7 +596,6 @@ elif st.session_state.page == "room1":
         st.write("The Teacher's Desk is now unlocked.")
 
         if st.button("CONTINUE"):
-
             st.session_state.page = "room2"
             st.rerun()
 
@@ -458,9 +622,7 @@ elif st.session_state.page == "room1":
 
             st.write("Evaluate the following limit:")
 
-            st.latex(
-                r"\lim_{x \to 2}(3x+4)"
-            )
+            st.latex(r"\lim_{x \to 2}(3x+4)")
 
             answer = st.text_input(
                 "Enter your answer:",
@@ -582,11 +744,9 @@ elif st.session_state.page == "room1":
         # FEEDBACK
 
         if st.session_state.feedback:
-
             st.error(st.session_state.feedback)
 
         if st.session_state.hint_message:
-
             st.info(st.session_state.hint_message)
 
         # ROOM STATUS
@@ -617,6 +777,5 @@ elif st.session_state.page == "room2":
     )
 
     if st.button("BACK TO MAIN MENU"):
-
         st.session_state.page = "home"
         st.rerun()
