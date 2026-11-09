@@ -434,78 +434,273 @@ def home_page():
 
 def story_page():
 
-    st.title("THE STORY")
+    # ==========================================
+    # STORY PAGE DESIGN
+    # ==========================================
 
-    st.divider()
+    st.markdown("""
+        <style>
+
+        .stApp {
+            background-color: #101827;
+        }
+
+        .block-container {
+            max-width: 1150px;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .story-label {
+            color: #B59A60;
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            letter-spacing: 5px;
+            text-align: center;
+        }
+
+        .story-title {
+            color: #F4F1EA;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(38px, 5vw, 60px);
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(180,190,210,0.2);
+        }
+
+        .story-subtitle {
+            color: #C6B78E;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 23px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .story-divider {
+            width: 75%;
+            height: 1px;
+            background: linear-gradient(
+                to right,
+                transparent,
+                #B59A60,
+                transparent
+            );
+            margin: 30px auto;
+        }
+
+        .story-section-title {
+            color: #C6B78E;
+            font-family: 'Cinzel', serif;
+            font-size: 21px;
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        .story-paragraph {
+            color: #E0E3E8;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 21px;
+            line-height: 1.8;
+        }
+
+        .story-warning {
+            color: #D8B96F;
+            font-family: 'Cinzel', serif;
+            font-size: 17px;
+            letter-spacing: 2px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .story-footer {
+            color: #7F8999;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-top: 35px;
+        }
+
+        div[data-testid="stButton"] button {
+            height: 55px;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        div[data-testid="stButton"] button[kind="primary"] {
+            background-color: #476B56 !important;
+            color: white !important;
+            border: 1px solid #78947E !important;
+        }
+
+        div[data-testid="stButton"] button[kind="primary"]:hover {
+            background-color: #5B8469 !important;
+            color: white !important;
+        }
+
+        div[data-testid="stButton"] button[kind="secondary"] {
+            background-color: #B59A60 !important;
+            color: #17202B !important;
+            border: 1px solid #D9C28C !important;
+        }
+
+        div[data-testid="stButton"] button[kind="secondary"]:hover {
+            background-color: #D0B77C !important;
+            color: #17202B !important;
+        }
+
+        </style>
+    """, unsafe_allow_html=True)
+
+
+    # ==========================================
+    # STORY HEADER
+    # ==========================================
+
+    st.markdown("""
+        <div class="story-label">THE LOCKED CLASSROOM</div>
+
+        <div class="story-title">
+            THE STORY
+        </div>
+
+        <div class="story-subtitle">
+            Every classroom holds a secret.
+        </div>
+
+        <div class="story-divider"></div>
+    """, unsafe_allow_html=True)
+
+
+    # ==========================================
+    # STORY CONTENT
+    # ==========================================
+
+    left, center, right = st.columns([1, 5, 1])
+
+    with center:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="story-section-title">11:47 PM — THE CLASSROOM</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("")
+
+            st.markdown("""
+                <div class="story-paragraph">
+                    It is already late, and you are the last student
+                    inside the classroom.
+                    <br><br>
+                    As you prepare to leave, you reach for the door.
+                    But something is wrong. It is locked.
+                    <br><br>
+                    Suddenly, strange mathematical challenges begin
+                    appearing around the classroom. The blackboard,
+                    teacher's desk, storage cabinet, and exit door
+                    each hold a series of Differential Calculus problems.
+                    <br><br>
+                    A message appears on the board:
+                </div>
+            """, unsafe_allow_html=True)
+
+            st.write("")
+
+            st.markdown("""
+                <div style="
+                    text-align: center;
+                    color: #D8B96F;
+                    font-family: 'Cinzel', serif;
+                    font-size: 23px;
+                    font-weight: bold;
+                    letter-spacing: 2px;
+                    padding: 20px;
+                    border-top: 1px solid #766747;
+                    border-bottom: 1px solid #766747;
+                ">
+                    SOLVE THE CHALLENGES.<br>
+                    COLLECT THE KEYS.<br>
+                    FIND YOUR WAY OUT.
+                </div>
+            """, unsafe_allow_html=True)
+
+            st.write("")
+
+            st.markdown("""
+                <div class="story-paragraph">
+                    You must explore all four areas and complete
+                    three challenges in each room to unlock the next.
+                    Every correct answer brings you closer to freedom.
+                    <br><br>
+                    But be careful. Every wrong answer costs you
+                    one life and five seconds.
+                </div>
+            """, unsafe_allow_html=True)
+
+
+    # ==========================================
+    # GAME WARNING
+    # ==========================================
 
     st.write("")
+    st.markdown("""
+        <div class="story-warning">
+            YOU HAVE 10 MINUTES. THREE LIVES. TWO HINTS.
+        </div>
+    """, unsafe_allow_html=True)
 
-    st.subheader("The Last Student")
+    st.markdown("""
+        <div class="story-divider"></div>
+    """, unsafe_allow_html=True)
 
-    st.write(
-        "It is already late, and you are the last student "
-        "inside the classroom."
+
+    # ==========================================
+    # NAVIGATION BUTTONS
+    # ==========================================
+
+    left, back_col, gap, start_col, right = st.columns(
+        [1.5, 2.5, 0.3, 2.5, 1.5]
     )
 
-    st.write(
-        "As you prepare to leave, you discover that the "
-        "classroom door is locked."
-    )
+    with back_col:
 
-    st.write(
-        "You try to open it, but it will not move. "
-        "Then, you notice something strange."
-    )
-
-    st.write(
-        "Mathematical challenges have appeared throughout "
-        "the classroom. A message on the blackboard reveals "
-        "that solving them is the only way to unlock the door."
-    )
-
-    st.write("")
-
-    st.warning(
-        "Four areas stand between you and freedom. "
-        "Each area contains three Differential Calculus challenges."
-    )
-
-    st.write("")
-
-    st.subheader("Your Mission")
-
-    st.write(
-        "Explore the classroom, solve every challenge, "
-        "collect the keys, and find your way to the exit."
-    )
-
-    st.write("")
-
-    st.error(
-        "You have only 10 minutes. Every wrong answer costs "
-        "one life and five seconds."
-    )
-
-    st.write("")
-    st.divider()
-
-    # STORY BUTTONS
-
-    col1, col2, col3 = st.columns([2, 2, 2])
-
-    with col1:
-
-        if st.button("BACK TO MENU", use_container_width=True):
-
+        if st.button(
+            "BACK TO MENU",
+            use_container_width=True,
+            type="secondary"
+        ):
             st.session_state.page = "home"
             st.rerun()
 
-    with col3:
+    with start_col:
 
-        if st.button("START GAME", use_container_width=True):
-
+        if st.button(
+            "START GAME",
+            use_container_width=True,
+            type="primary"
+        ):
             start_game()
             st.rerun()
+
+
+    # ==========================================
+    # FOOTER
+    # ==========================================
+
+    st.markdown("""
+        <div class="story-footer">
+            YOUR ESCAPE BEGINS NOW.
+        </div>
+    """, unsafe_allow_html=True)
+
 
 
 # ==========================================
