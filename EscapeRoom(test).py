@@ -190,6 +190,7 @@ def live_timer():
 # ==========================================
 
 def home_page():
+    
 
     # HOMEPAGE DESIGN
     st.markdown("""
