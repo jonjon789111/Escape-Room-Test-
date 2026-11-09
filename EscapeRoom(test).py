@@ -17,38 +17,146 @@ st.set_page_config(
 # SESSION STATE
 # ==========================================
 
-if "page" not in st.session_state:
-    st.session_state.page = "home"
+defaults = {
+    "page": "home",
+    "lives": 3,
+    "hints": 2,
+    "time_limit": 600,
+    "start_time": None,
+    "question_number": 1,
+    "room1_cleared": False,
+    "game_over": False,
+    "feedback": "",
+    "hint_message": "",
+    "hint_used_this_question": False
+}
 
-if "lives" not in st.session_state:
-    st.session_state.lives = 3
+for key, value in defaults.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
 
-if "hints" not in st.session_state:
-    st.session_state.hints = 2
 
-if "time_limit" not in st.session_state:
-    st.session_state.time_limit = 600
+# ==========================================
+# GLOBAL HORROR THEME
+# ==========================================
 
-if "start_time" not in st.session_state:
-    st.session_state.start_time = None
+st.markdown("""
+<style>
 
-if "question_number" not in st.session_state:
-    st.session_state.question_number = 1
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
-if "room1_cleared" not in st.session_state:
-    st.session_state.room1_cleared = False
+/* BACKGROUND */
 
-if "game_over" not in st.session_state:
-    st.session_state.game_over = False
+.stApp {
+    background: linear-gradient(
+        135deg,
+        #090D16 0%,
+        #111827 50%,
+        #090D16 100%
+    );
+    color: #F2F0EB;
+}
 
-if "feedback" not in st.session_state:
-    st.session_state.feedback = ""
+/* WIDE LAPTOP LAYOUT */
 
-if "hint_message" not in st.session_state:
-    st.session_state.hint_message = ""
+.block-container {
+    max-width: 95% !important;
+    padding-top: 2rem !important;
+    padding-bottom: 3rem !important;
+}
 
-if "hint_used_this_question" not in st.session_state:
-    st.session_state.hint_used_this_question = False
+/* GENERAL HEADINGS */
+
+h1, h2, h3 {
+    font-family: 'Cinzel', serif !important;
+    color: #F2F0EB !important;
+}
+
+/* GENERAL TEXT */
+
+p, label, .stMarkdown {
+    color: #D0D4DC;
+}
+
+/* BUTTON BASE */
+
+.stButton button {
+    min-height: 65px;
+    border-radius: 12px;
+    font-family: 'Cinzel', serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+    transition: all 0.25s ease;
+}
+
+/* PRIMARY BUTTON - GREEN */
+
+button[data-testid="stBaseButton-primary"] {
+    background-color: #28543A !important;
+    color: white !important;
+    border: 1px solid #63856C !important;
+}
+
+button[data-testid="stBaseButton-primary"]:hover {
+    background-color: #376F4B !important;
+    border-color: #A2C2A8 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(40, 100, 60, 0.3);
+}
+
+/* SECONDARY BUTTON - YELLOW */
+
+button[data-testid="stBaseButton-secondary"] {
+    background-color: #927A25 !important;
+    color: white !important;
+    border: 1px solid #C5AC53 !important;
+}
+
+button[data-testid="stBaseButton-secondary"]:hover {
+    background-color: #B09635 !important;
+    border-color: #E0CA79 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(170, 140, 40, 0.25);
+}
+
+/* INPUT FIELDS */
+
+.stTextInput input {
+    background-color: #182235;
+    color: white;
+    border: 1px solid #43516A;
+    border-radius: 8px;
+}
+
+/* METRICS */
+
+[data-testid="stMetric"] {
+    background-color: #172235;
+    padding: 15px;
+    border: 1px solid #43516A;
+    border-radius: 10px;
+}
+
+/* DIVIDERS */
+
+hr {
+    border-color: #354258;
+}
+
+/* FOOTER */
+
+.home-footer {
+    font-family: 'Cinzel', serif;
+    color: #68758A;
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 3px;
+    margin-top: 75px;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 
 # ==========================================
@@ -82,22 +190,9 @@ def reset_game():
 
 def start_game():
 
-    st.session_state.lives = 3
-    st.session_state.hints = 2
+    reset_game()
 
-    st.session_state.time_limit = 600
     st.session_state.start_time = time.time()
-
-    st.session_state.question_number = 1
-
-    st.session_state.room1_cleared = False
-    st.session_state.game_over = False
-
-    st.session_state.feedback = ""
-    st.session_state.hint_message = ""
-
-    st.session_state.hint_used_this_question = False
-
     st.session_state.page = "room1"
 
 
@@ -175,7 +270,7 @@ def live_timer():
 
         st.metric("TIME LEFT", "00:00")
 
-        st.rerun()
+        st.rerun(scope="app")
 
     minutes = time_left // 60
     seconds = time_left % 60
@@ -192,66 +287,58 @@ def live_timer():
 
 def home_page():
 
-    # ==========================================
-    # HORROR HOME PAGE DESIGN
-    # ==========================================
+    # ======================================
+    # HOME PAGE TITLE
+    # ======================================
 
     st.markdown("""
-    <style>
-
-    /* GOOGLE FONTS */
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
-
-    /* BACKGROUND */
-    .stApp {
-        background: linear-gradient(
-            135deg,
-            #090D16 0%,
-            #111827 50%,
-            #090D16 100%
-        );
-    }
-
-    /* USE MORE LAPTOP SCREEN SPACE */
-    .block-container {
-        max-width: 95% !important;
-        padding-top: 3rem !important;
-        padding-bottom: 2rem !important;
-    }
-
-    /* MAIN TITLE */
-    .horror-title {
-        font-family: 'Cinzel', serif;
-        font-size: clamp(38px, 5vw, 68px);
-        font-weight: 800;
-        color: #F4F1EA;
+    <div style="
         text-align: center;
-        letter-spacing: 5px;
-        text-shadow: 0 0 25px rgba(180, 190, 210, 0.2);
-        margin-bottom: 15px;
-    }
+        padding-top: 35px;
+        padding-bottom: 10px;
+    ">
 
-    /* SUBTITLE */
-    .horror-subtitle {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 30px;
-        color: #C7CBD4;
-        text-align: center;
-        margin-bottom: 10px;
-    }
+        <h1 style="
+            font-family: 'Cinzel', serif;
+            font-size: clamp(38px, 5vw, 68px);
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: #F4F1EA;
+            text-shadow: 0 0 25px rgba(180,190,210,0.2);
+            margin-bottom: 15px;
+        ">
+            THE LOCKED CLASSROOM
+        </h1>
 
-    /* TAGLINE */
-    .horror-tagline {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 21px;
-        color: #8993A5;
-        text-align: center;
-        letter-spacing: 2px;
-        margin-bottom: 65px;
-    }
+        <div style="
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            color: #C7CBD4;
+            margin-bottom: 12px;
+        ">
+            A Differential Calculus Escape Game
+        </div>
 
-    /* OBJECTIVE PANEL */
-    .objective-panel {
+        <div style="
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 21px;
+            color: #8993A5;
+            letter-spacing: 3px;
+            margin-bottom: 55px;
+        ">
+            FOUR ROOMS. TWELVE CHALLENGES. ONE WAY OUT.
+        </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+
+    # ======================================
+    # OBJECTIVE PANEL
+    # ======================================
+
+    st.markdown("""
+    <div style="
         background: linear-gradient(
             135deg,
             #1B293D,
@@ -259,136 +346,79 @@ def home_page():
         );
         border: 1px solid #43516A;
         border-radius: 15px;
-        padding: 30px 45px;
+        padding: 35px 25px;
         text-align: center;
-        margin-bottom: 55px;
+        margin-bottom: 45px;
         box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    }
+    ">
 
-    .objective-heading {
-        font-family: 'Cinzel', serif;
-        font-size: 23px;
-        font-weight: 700;
-        color: #F0EEE9;
-        letter-spacing: 3px;
-        margin-bottom: 15px;
-    }
-
-    .objective-description {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 23px;
-        color: #D0D4DC;
-        line-height: 1.5;
-    }
-
-    /* BUTTON BASE */
-    .stButton > button {
-        height: 75px !important;
-        border-radius: 12px !important;
-        font-family: 'Cinzel', serif !important;
-        font-size: 18px !important;
-        font-weight: 700 !important;
-        letter-spacing: 3px !important;
-        transition: all 0.25s ease !important;
-    }
-
-    /* GREEN PLAY BUTTON */
-    .stButton > button[kind="primary"] {
-        background: #28543A !important;
-        color: white !important;
-        border: 1px solid #63856C !important;
-    }
-
-    .stButton > button[kind="primary"]:hover {
-        background: #376F4B !important;
-        border-color: #A2C2A8 !important;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(40, 100, 60, 0.3);
-    }
-
-    /* YELLOW HOW TO PLAY BUTTON */
-    .stButton > button[kind="secondary"] {
-        background: #927A25 !important;
-        color: white !important;
-        border: 1px solid #C5AC53 !important;
-    }
-
-    .stButton > button[kind="secondary"]:hover {
-        background: #B09635 !important;
-        border-color: #E0CA79 !important;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(170, 140, 40, 0.25);
-    }
-
-    /* FOOTER */
-    .horror-footer {
-        font-family: 'Cinzel', serif;
-        color: #68758A;
-        font-size: 12px;
-        text-align: center;
-        letter-spacing: 3px;
-        margin-top: 85px;
-    }
-
-    </style>
-
-    <div class="horror-title">
-        THE LOCKED CLASSROOM
-    </div>
-
-    <div class="horror-subtitle">
-        A Differential Calculus Escape Game
-    </div>
-
-    <div class="horror-tagline">
-        FOUR ROOMS. TWELVE CHALLENGES. ONE WAY OUT.
-    </div>
-
-    <div class="objective-panel">
-        <div class="objective-heading">
+        <div style="
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #F0EEE9;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+        ">
             OBJECTIVE
         </div>
 
-        <div class="objective-description">
+        <div style="
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: #D0D4DC;
+            line-height: 1.5;
+        ">
             Solve every Differential Calculus challenge
             and unlock the classroom exit before time runs out.
         </div>
+
     </div>
     """, unsafe_allow_html=True)
 
-    # ==========================================
-    # BUTTONS
-    # ==========================================
+
+    # ======================================
+    # HOME PAGE BUTTONS
+    # ======================================
 
     left, play, how, right = st.columns([1, 3, 3, 1])
 
     with play:
+
         if st.button(
             "▶ PLAY",
             type="primary",
-            use_container_width=True
+            use_container_width=True,
+            key="home_play"
         ):
+
             st.session_state.page = "story"
             st.rerun()
 
+
     with how:
+
         if st.button(
             "HOW TO PLAY",
             type="secondary",
-            use_container_width=True
+            use_container_width=True,
+            key="home_how"
         ):
+
             st.session_state.page = "instructions"
             st.rerun()
 
-    # ==========================================
+
+    # ======================================
     # FOOTER
-    # ==========================================
+    # ======================================
 
     st.markdown("""
-    <div class="horror-footer">
+    <div class="home-footer">
         A DIFFERENTIAL CALCULUS ESCAPE GAME
     </div>
     """, unsafe_allow_html=True)
+
 
 # ==========================================
 # STORY PAGE
@@ -435,14 +465,14 @@ def instructions_page():
 
     st.title("HOW TO PLAY")
 
-    st.subheader("Your Objective")
+    st.subheader("YOUR OBJECTIVE")
 
     st.write(
         "Solve all the challenges in each room to collect keys "
         "and unlock the next area."
     )
 
-    st.subheader("Game Rules")
+    st.subheader("GAME RULES")
 
     st.write("❤️ You have 3 lives.")
 
@@ -463,7 +493,7 @@ def instructions_page():
         "and the game ends."
     )
 
-    st.subheader("Hint System")
+    st.subheader("HINT SYSTEM")
 
     st.write(
         "Hints reveal a step in the solution without showing "
@@ -597,6 +627,7 @@ def room1():
 
             st.rerun()
 
+
     # --------------------------------------
     # QUESTION 2
     # --------------------------------------
@@ -642,6 +673,7 @@ def room1():
 
             st.rerun()
 
+
     # --------------------------------------
     # QUESTION 3
     # --------------------------------------
@@ -685,6 +717,7 @@ def room1():
 
             st.rerun()
 
+
     # --------------------------------------
     # FEEDBACK
     # --------------------------------------
@@ -694,6 +727,7 @@ def room1():
 
     if st.session_state.hint_message:
         st.info(st.session_state.hint_message)
+
 
     # --------------------------------------
     # ROOM STATUS
