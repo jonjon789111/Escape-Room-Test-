@@ -41,121 +41,28 @@ for key, value in defaults.items():
 # ==========================================
 
 st.markdown("""
-<style>
+<div style="text-align: center;">
+    <div style="
+        font-family: 'Cinzel', serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: #F0EEE9;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+    ">
+        OBJECTIVE
+    </div>
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
-
-/* BACKGROUND */
-
-.stApp {
-    background: linear-gradient(
-        135deg,
-        #090D16 0%,
-        #111827 50%,
-        #090D16 100%
-    );
-    color: #F2F0EB;
-}
-
-/* WIDE LAPTOP LAYOUT */
-
-.block-container {
-    max-width: 95% !important;
-    padding-top: 2rem !important;
-    padding-bottom: 3rem !important;
-}
-
-/* GENERAL HEADINGS */
-
-h1, h2, h3 {
-    font-family: 'Cinzel', serif !important;
-    color: #F2F0EB !important;
-}
-
-/* GENERAL TEXT */
-
-p, label, .stMarkdown {
-    color: #D0D4DC;
-}
-
-/* BUTTON BASE */
-
-.stButton button {
-    min-height: 65px;
-    border-radius: 12px;
-    font-family: 'Cinzel', serif !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    letter-spacing: 2px;
-    transition: all 0.25s ease;
-}
-
-/* PRIMARY BUTTON - GREEN */
-
-button[data-testid="stBaseButton-primary"] {
-    background-color: #28543A !important;
-    color: white !important;
-    border: 1px solid #63856C !important;
-}
-
-button[data-testid="stBaseButton-primary"]:hover {
-    background-color: #376F4B !important;
-    border-color: #A2C2A8 !important;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(40, 100, 60, 0.3);
-}
-
-/* SECONDARY BUTTON - YELLOW */
-
-button[data-testid="stBaseButton-secondary"] {
-    background-color: #927A25 !important;
-    color: white !important;
-    border: 1px solid #C5AC53 !important;
-}
-
-button[data-testid="stBaseButton-secondary"]:hover {
-    background-color: #B09635 !important;
-    border-color: #E0CA79 !important;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(170, 140, 40, 0.25);
-}
-
-/* INPUT FIELDS */
-
-.stTextInput input {
-    background-color: #182235;
-    color: white;
-    border: 1px solid #43516A;
-    border-radius: 8px;
-}
-
-/* METRICS */
-
-[data-testid="stMetric"] {
-    background-color: #172235;
-    padding: 15px;
-    border: 1px solid #43516A;
-    border-radius: 10px;
-}
-
-/* DIVIDERS */
-
-hr {
-    border-color: #354258;
-}
-
-/* FOOTER */
-
-.home-footer {
-    font-family: 'Cinzel', serif;
-    color: #68758A;
-    font-size: 12px;
-    text-align: center;
-    letter-spacing: 3px;
-    margin-top: 75px;
-}
-
-</style>
+    <div style="
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 24px;
+        color: #D0D4DC;
+        line-height: 1.5;
+    ">
+        Solve every Differential Calculus challenge
+        and unlock the classroom exit before time runs out.
+    </div>
+</div>
 """, unsafe_allow_html=True)
 
 
