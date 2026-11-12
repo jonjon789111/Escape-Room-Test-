@@ -327,7 +327,7 @@ def story_page():
                     start_game()
                 else:
                     st.session_state.page = "room1"
-                    st.rerun()
+                st.rerun()
 
     # ROOM 3
     with col1:
