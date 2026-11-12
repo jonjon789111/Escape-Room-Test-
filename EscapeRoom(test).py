@@ -419,7 +419,27 @@ def key_inventory():
     scrolling=False,
     tab_index=None
 )
-            
+
+def progress_bar():
+
+    completed_rooms = sum([
+        st.session_state.room1_cleared,
+        st.session_state.room2_cleared,
+        st.session_state.room3_cleared,
+        st.session_state.room4_cleared
+    ])
+
+    completed_questions = (completed_rooms * 3) + st.session_state.question_number
+
+    progress = min(completed_questions / 12, 1.0)
+
+    st.markdown("### ✦ ESCAPE PROGRESS")
+
+    st.progress(
+        progress,
+        text=f"{completed_questions}/12 CHALLENGES COMPLETED"
+    )
+
 # ==========================================
 # HOMEPAGE
 # ==========================================
@@ -775,6 +795,7 @@ def room1():
         return
 
     game_status()
+    progress_bar()
     key_inventory()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
@@ -960,6 +981,7 @@ def room2():
         return
 
     game_status()
+    progress_bar()
     key_inventory()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
