@@ -43,7 +43,12 @@ for key, value in defaults.items():
 # ==========================================
 
 def design():
+    blur = ""
 
+    if st.session_state.page != "home":
+        blur = "blur(6px)"
+
+   
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
