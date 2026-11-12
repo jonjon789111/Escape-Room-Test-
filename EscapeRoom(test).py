@@ -167,43 +167,44 @@ def design():
 
     /* GAME HUD */
 
-    div[data-testid="stVerticalBlockBorderWrapper"] {{
+    .hud-container {{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px auto;
+        max-width: 750px;
+    }}
+
+    .hud-item {{
+        flex: 1;
         background: rgba(23, 34, 51, 0.90);
         border: 1px solid #8C774D;
         border-radius: 10px;
-        padding: 12px;
+        padding: 15px;
+        text-align: center;
     }}
 
-    div[data-testid="stMetricLabel"] {{
+    .hud-icon {{
+        font-size: 25px;
+        color: #D8B96F;
+    }}
+
+    .hud-label {{
         font-family: Cinzel, serif;
+        font-size: 12px;
         color: #C6B78E;
         letter-spacing: 2px;
-        justify-content: center;
     }}
 
-    div[data-testid="stMetricValue"] {{
+    .hud-value {{
         font-family: Cinzel, serif;
-        color: #F4F1EA;
         font-size: 27px;
-    }}
-
-    div[data-testid="stVerticalBlockBorderWrapper"] h3 {{
-        color: #D8B96F;
-        text-align: center;
-        font-family: Cinzel, serif;
+        font-weight: bold;
+        color: #F4F1EA;
     }}
 
     </style>
     """, unsafe_allow_html=True)
-    
-def header(label, title, subtitle):
-
-    st.markdown(f"""
-        <div class="section-title" style="text-align:center">{label}</div>
-        <div class="main-title">{title}</div>
-        <div class="subtitle">{subtitle}</div>
-        <div class="gold-line"></div>
-    """, unsafe_allow_html=True)
 
 def header(label, title, subtitle):
 
@@ -213,7 +214,6 @@ def header(label, title, subtitle):
         <div class="subtitle">{subtitle}</div>
         <div class="gold-line"></div>
     """, unsafe_allow_html=True)
-
 
 # ==========================================
 # GAME FUNCTIONS
@@ -282,22 +282,29 @@ def game_status():
 
     minutes, seconds = divmod(remaining, 60)
 
-    col1, col2, col3 = st.columns(3)
+    st.markdown(f"""
+    <div class="hud-container">
 
-    with col1:
-        with st.container(border=True):
-            st.markdown("### ♥")
-            st.metric("LIVES", st.session_state.lives)
+        <div class="hud-item">
+            <div class="hud-icon">♥</div>
+            <div class="hud-label">LIVES</div>
+            <div class="hud-value">{st.session_state.lives}</div>
+        </div>
 
-    with col2:
-        with st.container(border=True):
-            st.markdown("### ✦")
-            st.metric("HINTS", st.session_state.hints)
+        <div class="hud-item">
+            <div class="hud-icon">✦</div>
+            <div class="hud-label">HINTS</div>
+            <div class="hud-value">{st.session_state.hints}</div>
+        </div>
 
-    with col3:
-        with st.container(border=True):
-            st.markdown("### ◷")
-            st.metric("TIME LEFT", f"{minutes:02d}:{seconds:02d}")
+        <div class="hud-item">
+            <div class="hud-icon">◷</div>
+            <div class="hud-label">TIME LEFT</div>
+            <div class="hud-value">{minutes:02d}:{seconds:02d}</div>
+        </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
     if remaining <= 0:
         st.session_state.game_over = True
