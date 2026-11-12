@@ -780,13 +780,12 @@ def room1():
     # CHALLENGE 1
     if st.session_state.question_number == 0:
 
-        st.markdown("""
-            <div class="question-box">
-                <div class="question-title">CHALLENGE 1 OF 3</div>
-            </div>
-        """, unsafe_allow_html=True)
+        with st.container(border=True):
 
-        with st.container(border=False):
+            st.markdown(
+                '<div class="section-title">CHALLENGE 1 OF 3</div>',
+                unsafe_allow_html=True
+            )
 
             st.write("Find the limit:")
             st.latex(r"\lim_{x\to2}(3x+4)")
@@ -819,13 +818,12 @@ def room1():
     # CHALLENGE 2
     elif st.session_state.question_number == 1:
 
-        st.markdown("""
-            <div class="question-box">
-                <div class="question-title">CHALLENGE 2 OF 3</div>
-            </div>
-        """, unsafe_allow_html=True)
+        with st.container(border=True):
 
-        with st.container(border=False):
+            st.markdown(
+                '<div class="section-title">CHALLENGE 2 OF 3</div>',
+                unsafe_allow_html=True
+            )
 
             st.write("Evaluate the following limit:")
             st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
@@ -858,13 +856,12 @@ def room1():
     # CHALLENGE 3
     elif st.session_state.question_number == 2:
 
-        st.markdown("""
-            <div class="question-box">
-                <div class="question-title">CHALLENGE 3 OF 3</div>
-            </div>
-        """, unsafe_allow_html=True)
+        with st.container(border=True):
 
-        with st.container(border=False):
+            st.markdown(
+                '<div class="section-title">CHALLENGE 3 OF 3</div>',
+                unsafe_allow_html=True
+            )
 
             st.write("Find the limit:")
             st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
@@ -899,25 +896,25 @@ def room1():
 
         st.success("Correct! You solved the challenge.")
 
-    if st.button("CONTINUE", type="primary"):
+        if st.button("CONTINUE", type="primary"):
 
-        st.session_state.question_number += 1
-        st.session_state.feedback = ""
-        st.session_state.hint_message = ""
-        st.session_state.hint_used_this_question = False
+            st.session_state.question_number += 1
+            st.session_state.feedback = ""
+            st.session_state.hint_message = ""
+            st.session_state.hint_used_this_question = False
 
-        if st.session_state.question_number == 3:
+            if st.session_state.question_number == 3:
 
-            st.session_state.room1_cleared = True
+                st.session_state.room1_cleared = True
 
-            # COLLECT BRONZE KEY
-            if "Bronze Key" not in st.session_state.keys_collected:
-                st.session_state.keys_collected.append("Bronze Key")
+                # COLLECT BRONZE KEY
+                if "Bronze Key" not in st.session_state.keys_collected:
+                    st.session_state.keys_collected.append("Bronze Key")
 
-            st.session_state.question_number = 0
-            st.session_state.page = "story"
+                st.session_state.question_number = 0
+                st.session_state.page = "story"
 
-        st.rerun()
+            st.rerun()
 
     elif st.session_state.feedback == "wrong":
 
