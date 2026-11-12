@@ -1,4 +1,3 @@
-
 import streamlit as st
 import time
 import base64
@@ -20,8 +19,6 @@ defaults = {
     "time_limit": 600,
     "start_time": None,
     "question_number": 0,
-    "cutscene_next_page": "room1",
-    "cutscene_start_new_game": False,
 
     # ROOM PROGRESS
     "room1_cleared": False,
@@ -46,6 +43,8 @@ for key, value in defaults.items():
 # ==========================================
 # SHARED DESIGN
 # ==========================================
+
+
 
 def design():
 
@@ -420,67 +419,69 @@ def key_inventory():
     scrolling=False,
     tab_index=None
 )
-
+            
 # ==========================================
-# CUTSCENE SYSTEM
+# HOMEPAGE
 # ==========================================
 
-
-
-
-def cutscene_page():
+def home_page():
 
     design()
 
     st.write("")
     st.write("")
 
+    st.markdown("""
+        <div class="main-title">THE LOCKED CLASSROOM</div>
+        <div class="subtitle">A Differential Calculus Escape Game</div>
+        <div class="subtitle" style="font-size:18px;letter-spacing:3px">
+            FOUR ROOMS. TWELVE CHALLENGES. ONE WAY OUT.
+        </div>
+        <div class="gold-line"></div>
+    """, unsafe_allow_html=True)
+
     left, center, right = st.columns([1, 5, 1])
 
     with center:
         with st.container(border=True):
-
-            st.write("")
-            st.write("")
-
             st.markdown(
-                "<div style='text-align:center'>",
+                '<div class="section-title" style="text-align:center">OBJECTIVE</div>',
                 unsafe_allow_html=True
             )
 
-            st.caption("THE FIRST CHALLENGE")
-
-            st.title("THE BLACKBOARD")
-
-            st.write("")
             st.write("")
 
-            st.write("The classroom grows silent.")
-            st.write("Strange equations begin appearing")
-            st.write("on the old blackboard.")
-
-            st.write("")
-            st.markdown("*Your first test awaits.*")
-
-            st.write("")
-            st.write("")
-
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown(
+                '<div class="story-text" style="text-align:center">'
+                'Solve Differential Calculus challenges to escape the locked classroom.'
+                '<br>Can you complete all four rooms before time runs out?'
+                '</div>',
+                unsafe_allow_html=True
+            )
 
     st.write("")
 
-    left, center, right = st.columns([2, 3, 2])
+    left, play, gap, instructions, right = st.columns(
+        [1.5, 2.5, 0.3, 2.5, 1.5]
+    )
 
-    with center:
-        if st.button("CONTINUE →", type="primary", use_container_width=True):
-
-            if st.session_state.cutscene_start_new_game:
-                start_game()
-            else:
-                st.session_state.page = st.session_state.cutscene_next_page
-
-            st.session_state.cutscene_start_new_game = False
+    with play:
+        if st.button("PLAY", type="primary", use_container_width=True):
+            st.session_state.page = "story"
             st.rerun()
+
+    with instructions:
+        if st.button("HOW TO PLAY", type="secondary", use_container_width=True):
+            st.session_state.page = "instructions"
+            st.rerun()
+
+    st.markdown(
+        '<div class="subtitle" style="font-size:17px;margin-top:40px">'
+        'THINK CAREFULLY. SOLVE WISELY. ESCAPE.'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
 
 # ==========================================
 # STORY PAGE
@@ -516,39 +517,27 @@ def story_page():
     # ROOM 1
     with col1:
         with st.container(border=True):
-
             st.markdown("### 🖍️ The Blackboard")
             st.caption("Room 1 — Limits")
 
             if st.session_state.room1_cleared:
                 st.success("COMPLETED")
 
-            if st.button(
-                "ENTER ROOM 1 →",
-                type="primary",
-                use_container_width=True
-            ):
-
-                st.session_state.cutscene_next_page = "room1"
-
+            if st.button("ENTER ROOM 1 →", type="primary", use_container_width=True):
                 if st.session_state.start_time is None:
-                    st.session_state.cutscene_start_new_game = True
+                    start_game()
                 else:
-                    st.session_state.cutscene_start_new_game = False
-
-                st.session_state.page = "cutscene"
+                    st.session_state.page = "room1"
                 st.rerun()
 
     # ROOM 2
     with col2:
         with st.container(border=True):
-
             st.markdown("### 🪑 The Teacher's Desk")
             st.caption("Room 2 — Basic Derivatives (Power Rule)")
 
             if st.session_state.room2_cleared:
                 st.success("COMPLETED")
-
             elif not st.session_state.room1_cleared:
                 st.warning("🔒 LOCKED")
 
@@ -557,20 +546,17 @@ def story_page():
                 disabled=not st.session_state.room1_cleared,
                 use_container_width=True
             ):
-
                 st.session_state.page = "room2"
                 st.rerun()
 
     # ROOM 3
     with col1:
         with st.container(border=True):
-
             st.markdown("### 🗄️ The Storage Cabinet")
             st.caption("Room 3 — Product, Quotient, and Chain Rules")
 
             if st.session_state.room3_cleared:
                 st.success("COMPLETED")
-
             elif not st.session_state.room2_cleared:
                 st.warning("🔒 LOCKED")
 
@@ -579,20 +565,17 @@ def story_page():
                 disabled=not st.session_state.room2_cleared,
                 use_container_width=True
             ):
-
                 st.session_state.page = "room3"
                 st.rerun()
 
     # ROOM 4
     with col2:
         with st.container(border=True):
-
             st.markdown("### 🚪 The Exit Door")
             st.caption("Room 4 — Trigonometric Derivatives")
 
             if st.session_state.room4_cleared:
                 st.success("COMPLETED")
-
             elif not st.session_state.room3_cleared:
                 st.warning("🔒 LOCKED")
 
@@ -601,7 +584,6 @@ def story_page():
                 disabled=not st.session_state.room3_cleared,
                 use_container_width=True
             ):
-
                 st.session_state.page = "room4"
                 st.rerun()
 
@@ -635,9 +617,10 @@ def story_page():
     st.write("")
 
     if st.button("← BACK TO MENU", use_container_width=True):
-
         st.session_state.page = "home"
         st.rerun()
+
+
 
 # ==========================================
 # INSTRUCTIONS PAGE
@@ -1146,9 +1129,6 @@ elif st.session_state.page == "story":
 elif st.session_state.page == "instructions":
     instructions_page()
 
-elif st.session_state.page == "cutscene":
-    cutscene_page()
-    
 elif st.session_state.page == "room1":
     room1()
 
