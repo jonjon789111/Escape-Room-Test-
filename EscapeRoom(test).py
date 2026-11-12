@@ -812,7 +812,7 @@ def room1():
     # FEEDBACK
     if st.session_state.feedback == "correct":
 
-    st.success("Correct! You solved the challenge.")
+        st.success("Correct! You solved the challenge.")
 
     if st.button("CONTINUE", type="primary"):
 
