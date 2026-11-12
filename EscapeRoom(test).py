@@ -316,52 +316,6 @@ def game_status():
 
 def key_inventory():
 
-    st.markdown("""
-        <style>
-        .key-inventory {
-            background: rgba(15, 20, 30, 0.88);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 15px;
-            padding: 22px;
-            margin: 15px 0;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55);
-            color: white;
-        }
-
-        .key-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #f5d58a;
-            margin-bottom: 5px;
-        }
-
-        .key-count {
-            font-size: 14px;
-            color: #cccccc;
-            margin-bottom: 18px;
-        }
-
-        .key-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 11px 13px;
-            margin-top: 8px;
-            border-radius: 9px;
-            background: rgba(255, 255, 255, 0.08);
-            font-size: 15px;
-        }
-
-        .key-collected {
-            color: #8ee6a1;
-        }
-
-        .key-locked {
-            color: #b8b8b8;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
     keys = {
         "Bronze Key": "Room 1",
         "Silver Key": "Room 2",
@@ -372,14 +326,57 @@ def key_inventory():
     collected = len(st.session_state.keys_collected)
 
     html = f"""
+    <style>
+    .key-inventory {{
+        background: rgba(15, 20, 30, 0.92);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 15px;
+        padding: 22px;
+        margin: 15px 0;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        color: white;
+    }}
+
+    .key-title {{
+        font-size: 22px;
+        font-weight: bold;
+        color: #f5d58a;
+    }}
+
+    .key-count {{
+        color: #cccccc;
+        font-size: 13px;
+        margin: 8px 0 18px 0;
+    }}
+
+    .key-item {{
+        display: flex;
+        justify-content: space-between;
+        padding: 12px;
+        margin-top: 8px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.08);
+    }}
+
+    .key-collected {{
+        color: #8ee6a1;
+    }}
+
+    .key-locked {{
+        color: #bbbbbb;
+    }}
+    </style>
+
     <div class="key-inventory">
+
         <div class="key-title">🔑 KEY INVENTORY</div>
+
         <div class="key-count">
             {collected}/4 KEYS COLLECTED
         </div>
     """
 
-    for key, room in keys.items():
+    for key in keys:
 
         if key in st.session_state.keys_collected:
             status = "🔓 COLLECTED"
