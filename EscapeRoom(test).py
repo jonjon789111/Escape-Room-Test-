@@ -978,6 +978,7 @@ def room2():
         return
 
     game_status()
+    key_inventory()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
