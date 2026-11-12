@@ -21,7 +21,7 @@ defaults = {
     "start_time": None,
     "question_number": 0,
     "cutscene_next_page": "room1",
-    "cutscene_start_new_game": False
+    "cutscene_start_new_game": False,
 
     # ROOM PROGRESS
     "room1_cleared": False,
