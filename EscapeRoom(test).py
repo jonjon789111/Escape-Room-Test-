@@ -48,7 +48,18 @@ def design():
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
     .stApp {
-        background: #101827;
+        background:
+            linear-gradient(
+                rgba(16, 24, 39, 0.82),
+                rgba(16, 24, 39, 0.82)
+            ),
+            url("klasrum.jpg");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+
         color: #F4F1EA;
     }
 
@@ -117,7 +128,6 @@ def design():
 
     </style>
     """, unsafe_allow_html=True)
-
 
 def header(label, title, subtitle):
 
