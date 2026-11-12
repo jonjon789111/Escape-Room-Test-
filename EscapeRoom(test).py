@@ -1001,6 +1001,9 @@ def room1():
                 if "Bronze Key" not in st.session_state.keys_collected:
                     st.session_state.keys_collected.append("Bronze Key")
 
+                st.session_state.notification = "🔑 BRONZE KEY COLLECTED!"
+                st.session_state.notification_type = "warning"
+
                 st.session_state.question_number = 0
                 st.session_state.page = "story"
 
