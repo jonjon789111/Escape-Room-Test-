@@ -209,6 +209,60 @@ def design():
     </style>
     """, unsafe_allow_html=True)
 
+def floating_notification():
+
+    notification = st.session_state.get("notification", "")
+
+    if not notification:
+        return
+
+    notification_type = st.session_state.get(
+        "notification_type", "success"
+    )
+
+    colors = {
+        "success": "#3cb878",
+        "error": "#d9534f",
+        "warning": "#d9a441",
+        "info": "#4b91c9"
+    }
+
+    color = colors.get(notification_type, "#d9a441")
+
+    st.markdown(f"""
+        <style>
+        .floating-notification {{
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 999999;
+            background: rgba(20, 20, 20, 0.96);
+            border-left: 5px solid {color};
+            color: white;
+            padding: 16px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            font-size: 16px;
+            animation: notificationSlide 0.5s ease;
+        }}
+
+        @keyframes notificationSlide {{
+            from {{
+                opacity: 0;
+                transform: translateX(100px);
+            }}
+            to {{
+                opacity: 1;
+                transform: translateX(0);
+            }}
+        }}
+        </style>
+
+        <div class="floating-notification">
+            {notification}
+        </div>
+    """, unsafe_allow_html=True)
+
 def header(label, title, subtitle):
 
     st.markdown(f"""
@@ -796,6 +850,7 @@ def room1():
 
     game_status()
     progress_bar()
+    floating_notification()
     key_inventory()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
@@ -982,6 +1037,7 @@ def room2():
 
     game_status()
     progress_bar()
+    floating_notification()
     key_inventory()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
