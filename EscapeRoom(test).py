@@ -329,25 +329,6 @@ def story_page():
                     st.session_state.page = "room1"
                 st.rerun()
 
-    # ROOM 3
-    with col1:
-        with st.container(border=True):
-            st.markdown("### 🗄️ The Storage Cabinet")
-            st.caption("Room 3 — Product, Quotient, and Chain Rules")
-
-            if st.session_state.room3_cleared:
-                st.success("COMPLETED")
-            elif not st.session_state.room2_cleared:
-                st.warning("🔒 LOCKED")
-
-            if st.button(
-                "ENTER ROOM 3 →",
-                disabled=not st.session_state.room2_cleared,
-                use_container_width=True
-            ):
-                st.session_state.page = "room3"
-                st.rerun()
-
     # ROOM 2
     with col2:
         with st.container(border=True):
@@ -365,6 +346,25 @@ def story_page():
                 use_container_width=True
             ):
                 st.session_state.page = "room2"
+                st.rerun()
+
+    # ROOM 3
+    with col1:
+        with st.container(border=True):
+            st.markdown("### 🗄️ The Storage Cabinet")
+            st.caption("Room 3 — Product, Quotient, and Chain Rules")
+
+            if st.session_state.room3_cleared:
+                st.success("COMPLETED")
+            elif not st.session_state.room2_cleared:
+                st.warning("🔒 LOCKED")
+
+            if st.button(
+                "ENTER ROOM 3 →",
+                disabled=not st.session_state.room2_cleared,
+                use_container_width=True
+            ):
+                st.session_state.page = "room3"
                 st.rerun()
 
     # ROOM 4
