@@ -425,37 +425,61 @@ def key_inventory():
 # CUTSCENE SYSTEM
 # ==========================================
 
+
 def cutscene_page():
 
     design()
 
-    st.markdown(
-        """
+    st.markdown("""
         <div style="
             background-color: #101827;
-            padding: 60px;
+            padding: 60px 45px;
             border: 2px solid #B59A60;
             border-radius: 15px;
             text-align: center;
-            color: white;
+            color: #F4F1EA;
         ">
-            <h2 style="color: #B59A60;">THE FIRST CHALLENGE</h2>
 
-            <h1>THE BLACKBOARD</h1>
+            <div style="
+                color: #B59A60;
+                font-size: 16px;
+                letter-spacing: 5px;
+                margin-bottom: 25px;
+            ">
+                THE FIRST CHALLENGE
+            </div>
 
-            <p style="font-size: 22px;">
-                The classroom grows silent.
-                Strange equations begin appearing
+            <div style="
+                color: #F4F1EA;
+                font-family: 'Cinzel', serif;
+                font-size: 42px;
+                font-weight: bold;
+                margin-bottom: 25px;
+            ">
+                THE BLACKBOARD
+            </div>
+
+            <div style="
+                font-size: 22px;
+                line-height: 1.8;
+                color: #F4F1EA;
+            ">
+                The classroom grows silent.<br>
+                Strange equations begin appearing<br>
                 on the old blackboard.
-            </p>
+            </div>
 
-            <p style="font-size: 20px;">
-                <i>Your first test awaits.</i>
-            </p>
+            <div style="
+                font-size: 20px;
+                color: #B59A60;
+                font-style: italic;
+                margin-top: 30px;
+            ">
+                Your first test awaits.
+            </div>
+
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
 
     st.write("")
 
@@ -471,69 +495,6 @@ def cutscene_page():
 
             st.session_state.cutscene_start_new_game = False
             st.rerun()
-
-# ==========================================
-# HOMEPAGE
-# ==========================================
-
-def home_page():
-
-    design()
-
-    st.write("")
-    st.write("")
-
-    st.markdown("""
-        <div class="main-title">THE LOCKED CLASSROOM</div>
-        <div class="subtitle">A Differential Calculus Escape Game</div>
-        <div class="subtitle" style="font-size:18px;letter-spacing:3px">
-            FOUR ROOMS. TWELVE CHALLENGES. ONE WAY OUT.
-        </div>
-        <div class="gold-line"></div>
-    """, unsafe_allow_html=True)
-
-    left, center, right = st.columns([1, 5, 1])
-
-    with center:
-        with st.container(border=True):
-            st.markdown(
-                '<div class="section-title" style="text-align:center">OBJECTIVE</div>',
-                unsafe_allow_html=True
-            )
-
-            st.write("")
-
-            st.markdown(
-                '<div class="story-text" style="text-align:center">'
-                'Solve Differential Calculus challenges to escape the locked classroom.'
-                '<br>Can you complete all four rooms before time runs out?'
-                '</div>',
-                unsafe_allow_html=True
-            )
-
-    st.write("")
-
-    left, play, gap, instructions, right = st.columns(
-        [1.5, 2.5, 0.3, 2.5, 1.5]
-    )
-
-    with play:
-        if st.button("PLAY", type="primary", use_container_width=True):
-            st.session_state.page = "story"
-            st.rerun()
-
-    with instructions:
-        if st.button("HOW TO PLAY", type="secondary", use_container_width=True):
-            st.session_state.page = "instructions"
-            st.rerun()
-
-    st.markdown(
-        '<div class="subtitle" style="font-size:17px;margin-top:40px">'
-        'THINK CAREFULLY. SOLVE WISELY. ESCAPE.'
-        '</div>',
-        unsafe_allow_html=True
-    )
-
 
 # ==========================================
 # STORY PAGE
