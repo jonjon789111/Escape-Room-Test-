@@ -426,59 +426,31 @@ def key_inventory():
 # ==========================================
 
 
+
 def cutscene_page():
 
     design()
 
     st.markdown("""
-        <div style="
-            background-color: #101827;
-            padding: 60px 45px;
-            border: 2px solid #B59A60;
-            border-radius: 15px;
-            text-align: center;
-            color: #F4F1EA;
-        ">
+    <div class="cutscene-box">
 
-            <div style="
-                color: #B59A60;
-                font-size: 16px;
-                letter-spacing: 5px;
-                margin-bottom: 25px;
-            ">
-                THE FIRST CHALLENGE
-            </div>
-
-            <div style="
-                color: #F4F1EA;
-                font-family: 'Cinzel', serif;
-                font-size: 42px;
-                font-weight: bold;
-                margin-bottom: 25px;
-            ">
-                THE BLACKBOARD
-            </div>
-
-            <div style="
-                font-size: 22px;
-                line-height: 1.8;
-                color: #F4F1EA;
-            ">
-                The classroom grows silent.<br>
-                Strange equations begin appearing<br>
-                on the old blackboard.
-            </div>
-
-            <div style="
-                font-size: 20px;
-                color: #B59A60;
-                font-style: italic;
-                margin-top: 30px;
-            ">
-                Your first test awaits.
-            </div>
-
+        <div class="cutscene-label">
+            THE FIRST CHALLENGE
         </div>
+
+        <h1>THE BLACKBOARD</h1>
+
+        <p style="font-size: 22px;">
+            The classroom grows silent.
+            Strange equations begin appearing
+            on the old blackboard.
+        </p>
+
+        <p style="font-size: 20px;">
+            <i>Your first test awaits.</i>
+        </p>
+
+    </div>
     """, unsafe_allow_html=True)
 
     st.write("")
