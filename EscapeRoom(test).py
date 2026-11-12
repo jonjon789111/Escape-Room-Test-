@@ -43,10 +43,10 @@ for key, value in defaults.items():
 # ==========================================
 
 def design():
-     # Check if the current page needs a blurred background
+     # Blur background on pages other than Home
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
 
-    # Load and encode the background image
+    # Load background image
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
@@ -56,6 +56,7 @@ def design():
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
     /* BACKGROUND */
+
     .stApp {{
         background: transparent;
         color: #F4F1EA;
@@ -79,6 +80,7 @@ def design():
     }}
 
     /* PAGE SPACING */
+
     .block-container {{
         max-width: 1150px;
         padding-top: 3.5rem !important;
@@ -86,6 +88,7 @@ def design():
     }}
 
     /* MAIN TITLE */
+
     .main-title {{
         font-family: Cinzel, serif;
         font-size: clamp(40px, 5vw, 68px);
@@ -96,6 +99,7 @@ def design():
     }}
 
     /* SUBTITLE */
+
     .subtitle {{
         font-family: 'Cormorant Garamond', serif;
         font-size: 24px;
@@ -104,6 +108,7 @@ def design():
     }}
 
     /* GOLD DIVIDER */
+
     .gold-line {{
         width: 75%;
         height: 1px;
@@ -117,6 +122,7 @@ def design():
     }}
 
     /* SECTION TITLE */
+
     .section-title {{
         font-family: Cinzel, serif;
         color: #D8B96F;
@@ -125,6 +131,7 @@ def design():
     }}
 
     /* STORY TEXT */
+
     .story-text {{
         font-family: 'Cormorant Garamond', serif;
         color: #E0E3E8;
@@ -133,6 +140,7 @@ def design():
     }}
 
     /* BUTTONS */
+
     div[data-testid="stButton"] button {{
         height: 52px;
         border-radius: 8px;
@@ -142,6 +150,7 @@ def design():
     }}
 
     /* PLAY BUTTON */
+
     div[data-testid="stButton"] button[kind="primary"] {{
         background: #476B56 !important;
         color: white !important;
@@ -149,10 +158,49 @@ def design():
     }}
 
     /* SECONDARY BUTTONS */
+
     div[data-testid="stButton"] button[kind="secondary"] {{
         background: #B59A60 !important;
         color: #17202B !important;
         border: 1px solid #D9C28C !important;
+    }}
+
+    /* GAME HUD */
+
+    .hud-container {{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px auto;
+        max-width: 750px;
+    }}
+
+    .hud-item {{
+        flex: 1;
+        background: rgba(23, 34, 51, 0.90);
+        border: 1px solid #8C774D;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+    }}
+
+    .hud-icon {{
+        font-size: 25px;
+        color: #D8B96F;
+    }}
+
+    .hud-label {{
+        font-family: Cinzel, serif;
+        font-size: 12px;
+        color: #C6B78E;
+        letter-spacing: 2px;
+    }}
+
+    .hud-value {{
+        font-family: Cinzel, serif;
+        font-size: 27px;
+        font-weight: bold;
+        color: #F4F1EA;
     }}
 
     </style>
@@ -234,37 +282,44 @@ def use_hint(message):
 
 
 @st.fragment(run_every="1s")
-def live_timer():
+def game_status():
 
     if st.session_state.start_time is None:
-        return
-
-    elapsed = time.time() - st.session_state.start_time
-    remaining = max(0, int(st.session_state.time_limit - elapsed))
+        remaining = st.session_state.time_limit
+    else:
+        elapsed = time.time() - st.session_state.start_time
+        remaining = max(0, int(st.session_state.time_limit - elapsed))
 
     minutes, seconds = divmod(remaining, 60)
-    st.metric("TIME", f"{minutes:02d}:{seconds:02d}")
+
+    st.markdown(f"""
+    <div class="hud-container">
+
+        <div class="hud-item">
+            <div class="hud-icon">♥</div>
+            <div class="hud-label">LIVES</div>
+            <div class="hud-value">{st.session_state.lives}</div>
+        </div>
+
+        <div class="hud-item">
+            <div class="hud-icon">✦</div>
+            <div class="hud-label">HINTS</div>
+            <div class="hud-value">{st.session_state.hints}</div>
+        </div>
+
+        <div class="hud-item">
+            <div class="hud-icon">◷</div>
+            <div class="hud-label">TIME LEFT</div>
+            <div class="hud-value">{minutes:02d}:{seconds:02d}</div>
+        </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
     if remaining <= 0:
         st.session_state.game_over = True
         st.rerun()
 
-
-def game_status():
-
-    # Center the three status indicators
-    left, lives, hints, timer, right = st.columns(
-        [1, 2, 2, 2, 1]
-    )
-
-    with lives:
-        st.metric("LIVES", st.session_state.lives)
-
-    with hints:
-        st.metric("HINTS", st.session_state.hints)
-
-    with timer:
-        live_timer()
 
 
 # ==========================================
