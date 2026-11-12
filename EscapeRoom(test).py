@@ -27,6 +27,9 @@ defaults = {
     "room3_cleared": False,
     "room4_cleared": False,
 
+    # KEY COLLECTION
+    "keys_collected": [],
+
     # GAME STATUS
     "game_over": False,
     "feedback": "",
@@ -226,6 +229,7 @@ def reset_game():
     st.session_state.time_limit = 600
     st.session_state.start_time = None
     st.session_state.question_number = 0
+    st.session_state.keys_collected = []
 
     # ROOM PROGRESS
     st.session_state.room1_cleared = False
@@ -310,6 +314,26 @@ def game_status():
         st.session_state.game_over = True
         st.rerun()
 
+def key_inventory():
+
+    st.markdown("### 🔑 KEY INVENTORY")
+
+    keys = {
+        "Bronze Key": "Room 1",
+        "Silver Key": "Room 2",
+        "Gold Key": "Room 3",
+        "Crystal Key": "Room 4"
+    }
+
+    st.write(f"Keys Collected: {len(st.session_state.keys_collected)}/4")
+
+    for key, room in keys.items():
+
+        if key in st.session_state.keys_collected:
+            st.success(f"🔓 {key} — Collected")
+        else:
+            st.info(f"🔒 {key} — Locked")
+            
 # ==========================================
 # HOMEPAGE
 # ==========================================
@@ -664,6 +688,7 @@ def room1():
         return
 
     game_status()
+    key_inventory()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
@@ -787,22 +812,27 @@ def room1():
     # FEEDBACK
     if st.session_state.feedback == "correct":
 
-        st.success("Correct! You solved the challenge.")
+    st.success("Correct! You solved the challenge.")
 
-        if st.button("CONTINUE", type="primary"):
+    if st.button("CONTINUE", type="primary"):
 
-            st.session_state.question_number += 1
-            st.session_state.feedback = ""
-            st.session_state.hint_message = ""
-            st.session_state.hint_used_this_question = False
+        st.session_state.question_number += 1
+        st.session_state.feedback = ""
+        st.session_state.hint_message = ""
+        st.session_state.hint_used_this_question = False
 
-            if st.session_state.question_number == 3:
+        if st.session_state.question_number == 3:
 
-                st.session_state.room1_cleared = True
-                st.session_state.question_number = 0
-                st.session_state.page = "story"
+            st.session_state.room1_cleared = True
 
-            st.rerun()
+            # COLLECT BRONZE KEY
+            if "Bronze Key" not in st.session_state.keys_collected:
+                st.session_state.keys_collected.append("Bronze Key")
+
+            st.session_state.question_number = 0
+            st.session_state.page = "story"
+
+        st.rerun()
 
     elif st.session_state.feedback == "wrong":
 
