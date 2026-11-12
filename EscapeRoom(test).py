@@ -45,8 +45,10 @@ for key, value in defaults.items():
 # SHARED DESIGN
 # ==========================================
 
+
 def design():
-     # Background blur
+
+    # Background blur
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
 
     # Load background image
@@ -58,26 +60,17 @@ def design():
 
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
-    /* BACKGROUND */
-
     .stApp {{
         background: transparent;
         color: #F4F1EA;
-        position: relative;
-        isolation: isolate;
     }}
-
-    /* SCROLLING CLASSROOM BACKGROUND */
 
     .stApp::before {{
         content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        min-height: 100%;
-        z-index: -1;
+        position: fixed;
+        inset: -10px;
+        z-index: 0;
+        pointer-events: none;
 
         background-image:
             linear-gradient(
@@ -87,21 +80,24 @@ def design():
             url("data:image/jpeg;base64,{encoded_image}");
 
         background-size: cover;
-        background-position: center top;
+        background-position: center;
         background-repeat: no-repeat;
-
         filter: {blur};
     }}
 
-    /* PAGE SPACING */
+    /* KEEP PAGE CONTENT ABOVE BACKGROUND */
+
+    .stApp > header,
+    .stApp > div,
+    [data-testid="stAppViewContainer"] {{
+        position: relative;
+    }}
 
     .block-container {{
         max-width: 1150px;
         padding-top: 3.5rem !important;
         padding-bottom: 3rem !important;
     }}
-
-    /* MAIN TITLE */
 
     .main-title {{
         font-family: Cinzel, serif;
@@ -112,16 +108,12 @@ def design():
         text-align: center;
     }}
 
-    /* SUBTITLE */
-
     .subtitle {{
         font-family: 'Cormorant Garamond', serif;
         font-size: 24px;
         color: #C6B78E;
         text-align: center;
     }}
-
-    /* GOLD DIVIDER */
 
     .gold-line {{
         width: 75%;
@@ -135,8 +127,6 @@ def design():
         );
     }}
 
-    /* SECTION TITLE */
-
     .section-title {{
         font-family: Cinzel, serif;
         color: #D8B96F;
@@ -144,16 +134,12 @@ def design():
         letter-spacing: 3px;
     }}
 
-    /* STORY TEXT */
-
     .story-text {{
         font-family: 'Cormorant Garamond', serif;
         color: #E0E3E8;
         font-size: 21px;
         line-height: 1.7;
     }}
-
-    /* BUTTONS */
 
     div[data-testid="stButton"] button {{
         height: 52px;
@@ -163,23 +149,17 @@ def design():
         letter-spacing: 2px;
     }}
 
-    /* PLAY BUTTON */
-
     div[data-testid="stButton"] button[kind="primary"] {{
         background: #476B56 !important;
         color: white !important;
         border: 1px solid #78947E !important;
     }}
 
-    /* SECONDARY BUTTONS */
-
     div[data-testid="stButton"] button[kind="secondary"] {{
         background: #B59A60 !important;
         color: #17202B !important;
         border: 1px solid #D9C28C !important;
     }}
-
-    /* GAME HUD */
 
     .hud-container {{
         display: flex;
@@ -219,6 +199,7 @@ def design():
 
     </style>
     """, unsafe_allow_html=True)
+
 
 def header(label, title, subtitle):
 
