@@ -63,22 +63,33 @@ def design():
     .stApp {{
         background: transparent;
         color: #F4F1EA;
+        position: relative;
+        isolation: isolate;
     }}
+
+    /* SCROLLING CLASSROOM BACKGROUND */
 
     .stApp::before {{
         content: "";
-        position: fixed;
-        inset: -10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        min-height: 100%;
         z-index: -1;
+
         background-image:
             linear-gradient(
                 rgba(16, 24, 39, 0.65),
                 rgba(16, 24, 39, 0.65)
             ),
             url("data:image/jpeg;base64,{encoded_image}");
+
         background-size: cover;
-        background-position: center;
+        background-position: center top;
         background-repeat: no-repeat;
+
         filter: {blur};
     }}
 
