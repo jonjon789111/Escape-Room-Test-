@@ -282,29 +282,29 @@ def game_status():
 
     minutes, seconds = divmod(remaining, 60)
 
-    st.markdown(f"""
-    <div class="hud-container">
+    st.markdown("---")
 
-        <div class="hud-item">
-            <div class="hud-icon">♥</div>
-            <div class="hud-label">LIVES</div>
-            <div class="hud-value">{st.session_state.lives}</div>
-        </div>
+    col1, col2, col3 = st.columns(3)
 
-        <div class="hud-item">
-            <div class="hud-icon">✦</div>
-            <div class="hud-label">HINTS</div>
-            <div class="hud-value">{st.session_state.hints}</div>
-        </div>
+    with col1:
+        st.metric(
+            label="♥ LIVES",
+            value=st.session_state.lives
+        )
 
-        <div class="hud-item">
-            <div class="hud-icon">◷</div>
-            <div class="hud-label">TIME LEFT</div>
-            <div class="hud-value">{minutes:02d}:{seconds:02d}</div>
-        </div>
+    with col2:
+        st.metric(
+            label="✦ HINTS",
+            value=st.session_state.hints
+        )
 
-    </div>
-    """, unsafe_allow_html=True)
+    with col3:
+        st.metric(
+            label="◷ TIME LEFT",
+            value=f"{minutes:02d}:{seconds:02d}"
+        )
+
+    st.markdown("---")
 
     if remaining <= 0:
         st.session_state.game_over = True
