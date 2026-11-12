@@ -427,31 +427,45 @@ def key_inventory():
 
 
 
+
 def cutscene_page():
 
     design()
 
-    st.markdown("""
-    <div class="cutscene-box">
+    st.write("")
+    st.write("")
 
-        <div class="cutscene-label">
-            THE FIRST CHALLENGE
-        </div>
+    left, center, right = st.columns([1, 5, 1])
 
-        <h1>THE BLACKBOARD</h1>
+    with center:
+        with st.container(border=True):
 
-        <p style="font-size: 22px;">
-            The classroom grows silent.
-            Strange equations begin appearing
-            on the old blackboard.
-        </p>
+            st.write("")
+            st.write("")
 
-        <p style="font-size: 20px;">
-            <i>Your first test awaits.</i>
-        </p>
+            st.markdown(
+                "<div style='text-align:center'>",
+                unsafe_allow_html=True
+            )
 
-    </div>
-    """, unsafe_allow_html=True)
+            st.caption("THE FIRST CHALLENGE")
+
+            st.title("THE BLACKBOARD")
+
+            st.write("")
+            st.write("")
+
+            st.write("The classroom grows silent.")
+            st.write("Strange equations begin appearing")
+            st.write("on the old blackboard.")
+
+            st.write("")
+            st.markdown("*Your first test awaits.*")
+
+            st.write("")
+            st.write("")
+
+            st.markdown("</div>", unsafe_allow_html=True)
 
     st.write("")
 
