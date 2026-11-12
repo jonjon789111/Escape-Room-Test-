@@ -43,7 +43,7 @@ for key, value in defaults.items():
 # ==========================================
 
 def design():
-     # Check background blur
+     # Background blur
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
 
     # Load background image
@@ -55,6 +55,7 @@ def design():
 
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
+    /* BACKGROUND */
     .stApp {{
         background: transparent;
         color: #F4F1EA;
@@ -66,7 +67,10 @@ def design():
         inset: -10px;
         z-index: -1;
         background-image:
-            linear-gradient(rgba(16, 24, 39, 0.65), rgba(16, 24, 39, 0.65)),
+            linear-gradient(
+                rgba(16, 24, 39, 0.65),
+                rgba(16, 24, 39, 0.65)
+            ),
             url("data:image/jpeg;base64,{encoded_image}");
         background-size: cover;
         background-position: center;
@@ -74,6 +78,7 @@ def design():
         filter: {blur};
     }}
 
+    /* PAGE SPACING */
     .block-container {{
         max-width: 1150px;
         padding-top: 3.5rem !important;
@@ -86,40 +91,46 @@ def design():
         font-size: clamp(40px, 5vw, 68px);
         font-weight: 800;
         letter-spacing: 5px;
-        color: #F4F1EA;
         text-align: center;
-        text-shadow: 0 2px 3px #650B12;
+        color: #F4F1EA;
+        filter: drop-shadow(0 3px 3px #650B12);
     }}
 
-    /* BLOOD DRIPS */
+    /* BLOOD DRIPPING LETTERS */
     .blood-title {{
         display: inline-block;
         position: relative;
-        padding-bottom: 30px;
-        background: linear-gradient(to bottom, #F4F1EA 0%, #F4F1EA 72%, #9B1720 86%, #650B12 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 3px 2px rgba(100, 0, 0, 0.7));
     }}
 
-    .blood-title::after {{
+    .blood-letter {{
+        display: inline-block;
+        position: relative;
+        color: #F4F1EA;
+        overflow: visible;
+    }}
+
+    .blood-letter::before {{
         content: "";
         position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 30px;
+        top: 0;
+        left: 20%;
+        width: 65%;
+        height: var(--blood-height, 25px);
         background:
-            radial-gradient(ellipse 5px 15px at 8% 0%, #8F111B 98%, transparent 100%),
-            radial-gradient(ellipse 4px 22px at 23% 0%, #760D16 98%, transparent 100%),
-            radial-gradient(ellipse 5px 12px at 39% 0%, #A51B24 98%, transparent 100%),
-            radial-gradient(ellipse 4px 19px at 57% 0%, #760D16 98%, transparent 100%),
-            radial-gradient(ellipse 5px 25px at 74% 0%, #8F111B 98%, transparent 100%),
-            radial-gradient(ellipse 4px 14px at 91% 0%, #A51B24 98%, transparent 100%);
-        background-repeat: no-repeat;
+            radial-gradient(ellipse at 20% 0%, #A71924 0 5px, transparent 6px),
+            radial-gradient(ellipse at 55% 0%, #8F111B 0 7px, transparent 8px),
+            linear-gradient(to bottom, #A71924, #650B12);
+        clip-path: polygon(
+            0 0, 100% 0, 100% 55%,
+            75% 55%, 75% 100%, 60% 100%,
+            60% 65%, 35% 65%, 35% 85%,
+            20% 85%, 20% 55%, 0 55%
+        );
+        z-index: 2;
+        pointer-events: none;
     }}
 
+    /* SUBTITLE */
     .subtitle {{
         font-family: 'Cormorant Garamond', serif;
         font-size: 24px;
@@ -127,6 +138,7 @@ def design():
         text-align: center;
     }}
 
+    /* GOLD DIVIDER */
     .gold-line {{
         width: 75%;
         height: 1px;
@@ -134,6 +146,7 @@ def design():
         background: linear-gradient(to right, transparent, #B59A60, transparent);
     }}
 
+    /* SECTION TITLE */
     .section-title {{
         font-family: Cinzel, serif;
         color: #D8B96F;
@@ -141,6 +154,7 @@ def design():
         letter-spacing: 3px;
     }}
 
+    /* STORY TEXT */
     .story-text {{
         font-family: 'Cormorant Garamond', serif;
         color: #E0E3E8;
@@ -148,6 +162,7 @@ def design():
         line-height: 1.7;
     }}
 
+    /* BUTTONS */
     div[data-testid="stButton"] button {{
         height: 52px;
         border-radius: 8px;
@@ -156,12 +171,14 @@ def design():
         letter-spacing: 2px;
     }}
 
+    /* PLAY BUTTON */
     div[data-testid="stButton"] button[kind="primary"] {{
         background: #476B56 !important;
         color: white !important;
         border: 1px solid #78947E !important;
     }}
 
+    /* SECONDARY BUTTONS */
     div[data-testid="stButton"] button[kind="secondary"] {{
         background: #B59A60 !important;
         color: #17202B !important;
@@ -171,8 +188,6 @@ def design():
     </style>
     """, unsafe_allow_html=True)
 
-
-    
 def header(label, title, subtitle):
 
     st.markdown(f"""
@@ -280,6 +295,18 @@ def game_status():
 def home_page():
 
     design()
+
+    st.markdown("""
+    <div style="text-align:center;">
+        <div class="main-title blood-title">
+            <span class="blood-letter" style="--blood-height:30px">T</span><span class="blood-letter">H</span><span class="blood-letter" style="--blood-height:35px">E</span>
+            &nbsp;
+            <span class="blood-letter" style="--blood-height:40px">L</span><span class="blood-letter">O</span><span class="blood-letter" style="--blood-height:25px">C</span><span class="blood-letter">K</span><span class="blood-letter" style="--blood-height:32px">E</span><span class="blood-letter">D</span>
+            &nbsp;
+            <span class="blood-letter" style="--blood-height:35px">C</span><span class="blood-letter">L</span><span class="blood-letter" style="--blood-height:28px">A</span><span class="blood-letter">S</span><span class="blood-letter" style="--blood-height:40px">S</span><span class="blood-letter">R</span><span class="blood-letter" style="--blood-height:30px">O</span><span class="blood-letter">O</span><span class="blood-letter" style="--blood-height:25px">M</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.write("")
     st.write("")
