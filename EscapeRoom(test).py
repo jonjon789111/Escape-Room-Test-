@@ -43,7 +43,7 @@ for key, value in defaults.items():
 # ==========================================
 
 def design():
-     # Blur background on pages other than Home
+     # Background blur
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
 
     # Load background image
@@ -167,40 +167,30 @@ def design():
 
     /* GAME HUD */
 
-    .hud-container {{
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin: 20px auto;
-        max-width: 750px;
-    }}
-
-    .hud-item {{
-        flex: 1;
+    div[data-testid="stVerticalBlockBorderWrapper"] {{
         background: rgba(23, 34, 51, 0.90);
         border: 1px solid #8C774D;
         border-radius: 10px;
-        padding: 15px;
-        text-align: center;
+        padding: 12px;
     }}
 
-    .hud-icon {{
-        font-size: 25px;
-        color: #D8B96F;
-    }}
-
-    .hud-label {{
+    div[data-testid="stMetricLabel"] {{
         font-family: Cinzel, serif;
-        font-size: 12px;
         color: #C6B78E;
         letter-spacing: 2px;
+        justify-content: center;
     }}
 
-    .hud-value {{
+    div[data-testid="stMetricValue"] {{
         font-family: Cinzel, serif;
-        font-size: 27px;
-        font-weight: bold;
         color: #F4F1EA;
+        font-size: 27px;
+    }}
+
+    div[data-testid="stVerticalBlockBorderWrapper"] h3 {{
+        color: #D8B96F;
+        text-align: center;
+        font-family: Cinzel, serif;
     }}
 
     </style>
@@ -292,35 +282,26 @@ def game_status():
 
     minutes, seconds = divmod(remaining, 60)
 
-    st.markdown(f"""
-    <div class="hud-container">
+    col1, col2, col3 = st.columns(3)
 
-        <div class="hud-item">
-            <div class="hud-icon">♥</div>
-            <div class="hud-label">LIVES</div>
-            <div class="hud-value">{st.session_state.lives}</div>
-        </div>
+    with col1:
+        with st.container(border=True):
+            st.markdown("### ♥")
+            st.metric("LIVES", st.session_state.lives)
 
-        <div class="hud-item">
-            <div class="hud-icon">✦</div>
-            <div class="hud-label">HINTS</div>
-            <div class="hud-value">{st.session_state.hints}</div>
-        </div>
+    with col2:
+        with st.container(border=True):
+            st.markdown("### ✦")
+            st.metric("HINTS", st.session_state.hints)
 
-        <div class="hud-item">
-            <div class="hud-icon">◷</div>
-            <div class="hud-label">TIME LEFT</div>
-            <div class="hud-value">{minutes:02d}:{seconds:02d}</div>
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+    with col3:
+        with st.container(border=True):
+            st.markdown("### ◷")
+            st.metric("TIME LEFT", f"{minutes:02d}:{seconds:02d}")
 
     if remaining <= 0:
         st.session_state.game_over = True
         st.rerun()
-
-
 
 # ==========================================
 # HOMEPAGE
