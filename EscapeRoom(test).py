@@ -740,15 +740,12 @@ def room2():
     header(
         "ROOM 02",
         "THE TEACHER'S DESK",
-        "Basic Derivatives — Power Rule"
+        "The second challenge — Basic Derivatives"
     )
 
-    if not st.session_state.room1_cleared:
-        st.warning("Complete Room 1 first.")
-        return
-
     if st.session_state.game_over:
-        st.error("GAME OVER! You have run out of lives or time.")
+
+        st.error("GAME OVER! You ran out of lives or time.")
 
         if st.button("RETURN TO MENU"):
             st.session_state.page = "home"
@@ -760,17 +757,157 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
-    # ROOM 2 QUESTIONS WILL BE ADDED HERE
+    # CHALLENGE 1 (Drawer 1 - Power Rule)
+    if st.session_state.question_number == 0:
 
-    with st.container(border=True):
-        st.markdown(
-            '<div class="section-title">ROOM 02 UNLOCKED</div>',
-            unsafe_allow_html=True
-        )
+        with st.container(border=True):
 
-        st.write("The Teacher's Desk is ready for its challenges.")
-        st.info("Room 2 questions and gameplay have not been added yet.")
+            st.markdown(
+                '<div class="section-title">DRAWER 1 OF 3 — POWER RULE</div>',
+                unsafe_allow_html=True
+            )
 
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = 4x^3")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 2x^2)", key="r2_answer1")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if answer.replace(" ", "").lower() == "12x^2":
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Apply the Power Rule: bring down the exponent 3, multiply by 4, and subtract 1 from the exponent.")
+
+                    st.rerun()
+
+    # CHALLENGE 2 (Drawer 2 - Constant, Sum, and Difference Rules)
+    elif st.session_state.question_number == 1:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">DRAWER 2 OF 3 — SUM & DIFFERENCE RULES</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = 5x^2 - 3x + 7")
+
+            answer = st.text_input("YOUR ANSWER", key="r2_answer2")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if answer.replace(" ", "").lower() == "10x-3":
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Differentiate each term separately. Remember that the derivative of a constant (7) is 0.")
+
+                    st.rerun()
+
+    # CHALLENGE 3 (Drawer 3 - Combination of Basic Rules)
+    elif st.session_state.question_number == 2:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">DRAWER 3 OF 3 — COMBINATION OF BASIC RULES</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = 10x^4 + 9x^3 + 4x^2 + x + 67")
+
+            answer = st.text_input("YOUR ANSWER", key="r2_answer3")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if answer.replace(" ", "").lower() == "40x^3+27x^2+8x+1":
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Apply the Power Rule to each term: the derivative of x is 1, and the derivative of 67 is 0.")
+
+                    st.rerun()
+
+    # FEEDBACK
+    if st.session_state.feedback == "correct":
+
+        st.success("Correct! You unlocked the drawer.")
+
+        if st.button("CONTINUE", type="primary"):
+
+            st.session_state.question_number += 1
+            st.session_state.feedback = ""
+            st.session_state.hint_message = ""
+            st.session_state.hint_used_this_question = False
+
+            if st.session_state.question_number == 3:
+
+                st.session_state.room2_cleared = True
+                st.session_state.question_number = 0
+                st.session_state.page = "story"
+
+            st.rerun()
+
+    elif st.session_state.feedback == "wrong":
+
+        st.error("Incorrect! One life and five seconds deducted.")
+
+        st.session_state.feedback = ""
+
+        if st.session_state.game_over:
+            st.rerun()
+
+    # HINT MESSAGE
+    if st.session_state.hint_message:
+        st.info(st.session_state.hint_message)
+
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
 # ==========================================
 # PAGE NAVIGATION
