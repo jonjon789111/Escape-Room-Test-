@@ -452,7 +452,6 @@ def cutscene_page():
         color: #B59A60;
         font-size: 15px;
         letter-spacing: 5px;
-        animation: fadeIn 2s ease;
     }
 
     .cutscene-title {
@@ -462,7 +461,6 @@ def cutscene_page():
         font-weight: 800;
         letter-spacing: 4px;
         margin-top: 25px;
-        animation: fadeIn 3s ease;
     }
 
     .cutscene-story {
@@ -472,7 +470,6 @@ def cutscene_page():
         line-height: 1.8;
         max-width: 750px;
         margin-top: 25px;
-        animation: fadeIn 4s ease;
     }
 
     @keyframes fadeIn {
@@ -480,6 +477,7 @@ def cutscene_page():
             opacity: 0;
             transform: translateY(15px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -543,7 +541,6 @@ def cutscene_page():
 
             st.session_state.cutscene_start_new_game = False
             st.rerun()
-
 
 # ==========================================
 # HOMEPAGE
