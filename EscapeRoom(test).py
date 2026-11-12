@@ -1,6 +1,7 @@
 
 import streamlit as st
 import time
+import base64
 
 # ==========================================
 # PAGE CONFIGURATION
@@ -43,88 +44,90 @@ for key, value in defaults.items():
 
 def design():
 
-    st.markdown("""
+    with open("klasrum.jpg", "rb") as image:
+        encoded_image = base64.b64encode(image.read()).decode()
+
+    st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
 
-    .stApp {
+    .stApp {{
         background:
             linear-gradient(
-                rgba(16, 24, 39, 0.82),
-                rgba(16, 24, 39, 0.82)
+                rgba(16, 24, 39, 0.65),
+                rgba(16, 24, 39, 0.65)
             ),
-            url("klasrum.jpg");
+            url("data:image/jpeg;base64,{encoded_image}");
 
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-
         color: #F4F1EA;
-    }
+    }}
 
-    .block-container {
+    .block-container {{
         max-width: 1150px;
         padding-top: 3.5rem !important;
         padding-bottom: 3rem !important;
-    }
+    }}
 
-    .main-title {
+    .main-title {{
         font-family: Cinzel, serif;
         font-size: clamp(40px, 5vw, 68px);
         font-weight: 800;
         letter-spacing: 5px;
         color: #F4F1EA;
         text-align: center;
-    }
+    }}
 
-    .subtitle {
+    .subtitle {{
         font-family: 'Cormorant Garamond', serif;
         font-size: 24px;
         color: #C6B78E;
         text-align: center;
-    }
+    }}
 
-    .gold-line {
+    .gold-line {{
         width: 75%;
         height: 1px;
         margin: 25px auto;
         background: linear-gradient(to right, transparent, #B59A60, transparent);
-    }
+    }}
 
-    .section-title {
+    .section-title {{
         font-family: Cinzel, serif;
         color: #D8B96F;
         font-size: 18px;
         letter-spacing: 3px;
-    }
+    }}
 
-    .story-text {
+    .story-text {{
         font-family: 'Cormorant Garamond', serif;
         color: #E0E3E8;
         font-size: 21px;
         line-height: 1.7;
-    }
+    }}
 
-    div[data-testid="stButton"] button {
+    div[data-testid="stButton"] button {{
         height: 52px;
         border-radius: 8px;
         font-family: Cinzel, serif;
         font-weight: bold;
         letter-spacing: 2px;
-    }
+    }}
 
-    div[data-testid="stButton"] button[kind="primary"] {
+    div[data-testid="stButton"] button[kind="primary"] {{
         background: #476B56 !important;
         color: white !important;
         border: 1px solid #78947E !important;
-    }
+    }}
 
-    div[data-testid="stButton"] button[kind="secondary"] {
+    div[data-testid="stButton"] button[kind="secondary"] {{
         background: #B59A60 !important;
         color: #17202B !important;
         border: 1px solid #D9C28C !important;
-    }
+    }}
 
     </style>
     """, unsafe_allow_html=True)
