@@ -767,6 +767,7 @@ def room1():
         st.error("GAME OVER! You ran out of lives or time.")
 
         if st.button("RETURN TO MENU"):
+            reset_game()
             st.session_state.page = "home"
             st.rerun()
 
@@ -951,6 +952,7 @@ def room2():
         st.error("GAME OVER! You ran out of lives or time.")
 
         if st.button("RETURN TO MENU"):
+            reset_game()
             st.session_state.page = "home"
             st.rerun()
 
