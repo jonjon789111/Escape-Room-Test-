@@ -20,6 +20,8 @@ defaults = {
     "time_limit": 600,
     "start_time": None,
     "question_number": 0,
+    "cutscene_next_page": "room1",
+    "cutscene_start_new_game": False
 
     # ROOM PROGRESS
     "room1_cleared": False,
@@ -44,8 +46,6 @@ for key, value in defaults.items():
 # ==========================================
 # SHARED DESIGN
 # ==========================================
-
-
 
 def design():
 
@@ -420,7 +420,131 @@ def key_inventory():
     scrolling=False,
     tab_index=None
 )
-            
+
+# ==========================================
+# CUTSCENE SYSTEM
+# ==========================================
+
+def cutscene_page():
+
+    design()
+
+    st.markdown("""
+    <style>
+
+    .cutscene-box {
+        min-height: 480px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(8, 13, 23, 0.92);
+        border: 1px solid rgba(181, 154, 96, 0.55);
+        border-radius: 16px;
+        padding: 50px 35px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+        animation: fadeIn 2s ease;
+    }
+
+    .cutscene-label {
+        font-family: Cinzel, serif;
+        color: #B59A60;
+        font-size: 15px;
+        letter-spacing: 5px;
+        animation: fadeIn 2s ease;
+    }
+
+    .cutscene-title {
+        font-family: Cinzel, serif;
+        color: #F4F1EA;
+        font-size: clamp(30px, 5vw, 55px);
+        font-weight: 800;
+        letter-spacing: 4px;
+        margin-top: 25px;
+        animation: fadeIn 3s ease;
+    }
+
+    .cutscene-story {
+        font-family: 'Cormorant Garamond', serif;
+        color: #D5D8DF;
+        font-size: 23px;
+        line-height: 1.8;
+        max-width: 750px;
+        margin-top: 25px;
+        animation: fadeIn 4s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    st.markdown("""
+    <div class="cutscene-box">
+
+        <div class="cutscene-label">
+            THE FIRST CHALLENGE
+        </div>
+
+        <div class="cutscene-title">
+            THE BLACKBOARD
+        </div>
+
+        <div class="cutscene-story">
+            The classroom grows silent.
+
+            <br><br>
+
+            Strange equations begin appearing on the
+            old blackboard. A message slowly emerges:
+
+            <br><br>
+
+            <i>"Your first test awaits.
+            Find the answers hidden within the limits."</i>
+
+            <br><br>
+
+            Three challenges stand between you
+            and the first key.
+        </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    left, center, right = st.columns([2, 3, 2])
+
+    with center:
+
+        if st.button(
+            "CONTINUE →",
+            type="primary",
+            use_container_width=True
+        ):
+
+            if st.session_state.cutscene_start_new_game:
+                start_game()
+            else:
+                st.session_state.page = st.session_state.cutscene_next_page
+
+            st.session_state.cutscene_start_new_game = False
+            st.rerun()
+
+
 # ==========================================
 # HOMEPAGE
 # ==========================================
@@ -518,27 +642,39 @@ def story_page():
     # ROOM 1
     with col1:
         with st.container(border=True):
+
             st.markdown("### 🖍️ The Blackboard")
             st.caption("Room 1 — Limits")
 
             if st.session_state.room1_cleared:
                 st.success("COMPLETED")
 
-            if st.button("ENTER ROOM 1 →", type="primary", use_container_width=True):
+            if st.button(
+                "ENTER ROOM 1 →",
+                type="primary",
+                use_container_width=True
+            ):
+
+                st.session_state.cutscene_next_page = "room1"
+
                 if st.session_state.start_time is None:
-                    start_game()
+                    st.session_state.cutscene_start_new_game = True
                 else:
-                    st.session_state.page = "room1"
+                    st.session_state.cutscene_start_new_game = False
+
+                st.session_state.page = "cutscene"
                 st.rerun()
 
     # ROOM 2
     with col2:
         with st.container(border=True):
+
             st.markdown("### 🪑 The Teacher's Desk")
             st.caption("Room 2 — Basic Derivatives (Power Rule)")
 
             if st.session_state.room2_cleared:
                 st.success("COMPLETED")
+
             elif not st.session_state.room1_cleared:
                 st.warning("🔒 LOCKED")
 
@@ -547,17 +683,20 @@ def story_page():
                 disabled=not st.session_state.room1_cleared,
                 use_container_width=True
             ):
+
                 st.session_state.page = "room2"
                 st.rerun()
 
     # ROOM 3
     with col1:
         with st.container(border=True):
+
             st.markdown("### 🗄️ The Storage Cabinet")
             st.caption("Room 3 — Product, Quotient, and Chain Rules")
 
             if st.session_state.room3_cleared:
                 st.success("COMPLETED")
+
             elif not st.session_state.room2_cleared:
                 st.warning("🔒 LOCKED")
 
@@ -566,17 +705,20 @@ def story_page():
                 disabled=not st.session_state.room2_cleared,
                 use_container_width=True
             ):
+
                 st.session_state.page = "room3"
                 st.rerun()
 
     # ROOM 4
     with col2:
         with st.container(border=True):
+
             st.markdown("### 🚪 The Exit Door")
             st.caption("Room 4 — Trigonometric Derivatives")
 
             if st.session_state.room4_cleared:
                 st.success("COMPLETED")
+
             elif not st.session_state.room3_cleared:
                 st.warning("🔒 LOCKED")
 
@@ -585,6 +727,7 @@ def story_page():
                 disabled=not st.session_state.room3_cleared,
                 use_container_width=True
             ):
+
                 st.session_state.page = "room4"
                 st.rerun()
 
@@ -618,10 +761,9 @@ def story_page():
     st.write("")
 
     if st.button("← BACK TO MENU", use_container_width=True):
+
         st.session_state.page = "home"
         st.rerun()
-
-
 
 # ==========================================
 # INSTRUCTIONS PAGE
@@ -1130,6 +1272,9 @@ elif st.session_state.page == "story":
 elif st.session_state.page == "instructions":
     instructions_page()
 
+elif st.session_state.page == "cutscene":
+    cutscene_page()
+    
 elif st.session_state.page == "room1":
     room1()
 
