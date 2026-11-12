@@ -43,10 +43,8 @@ for key, value in defaults.items():
 # ==========================================
 
 def design():
-     # Check if the current page needs a blurred background
-    blur = "blur(6px)" if st.session_state.page != "home" else "none"
+     blur = "blur(6px)" if st.session_state.page != "home" else "none"
 
-    # Load and encode the background image
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
@@ -94,29 +92,44 @@ def design():
         color: #F4F1EA;
         text-align: center;
         text-shadow:
-            0 2px 3px #6B1018,
-            0 5px 8px rgba(100, 0, 0, 0.5);
+            0 2px 3px #650B12,
+            0 4px 8px rgba(100, 0, 0, 0.6);
     }}
 
-    /* BLOOD DRIP EFFECT */
+    /* BLOOD DRIPPING LETTERS */
     .blood-title {{
-        position: relative;
         display: inline-block;
+        position: relative;
+        padding-bottom: 30px;
+        background:
+            linear-gradient(
+                to bottom,
+                #F4F1EA 0%,
+                #F4F1EA 72%,
+                #9B1720 86%,
+                #650B12 100%
+            );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 3px 2px rgba(100, 0, 0, 0.7));
     }}
 
     .blood-title::after {{
         content: "";
         position: absolute;
-        left: 8%;
-        bottom: -13px;
-        width: 84%;
-        height: 18px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 30px;
 
         background:
-            radial-gradient(ellipse at 15% 0%, #7D1018 0 5px, transparent 6px),
-            radial-gradient(ellipse at 43% 0%, #8F111B 0 4px, transparent 5px),
-            radial-gradient(ellipse at 75% 0%, #650B12 0 6px, transparent 7px);
-
+            radial-gradient(ellipse 5px 15px at 8% 0%, #8F111B 98%, transparent 100%),
+            radial-gradient(ellipse 4px 22px at 23% 0%, #760D16 98%, transparent 100%),
+            radial-gradient(ellipse 5px 12px at 39% 0%, #A51B24 98%, transparent 100%),
+            radial-gradient(ellipse 4px 19px at 57% 0%, #760D16 98%, transparent 100%),
+            radial-gradient(ellipse 5px 25px at 74% 0%, #8F111B 98%, transparent 100%),
+            radial-gradient(ellipse 4px 14px at 91% 0%, #A51B24 98%, transparent 100%);
         background-repeat: no-repeat;
     }}
 
