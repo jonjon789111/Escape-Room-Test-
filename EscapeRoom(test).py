@@ -877,9 +877,13 @@ def room1():
 
                     if answer.strip() == "10":
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
