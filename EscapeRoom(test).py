@@ -780,12 +780,13 @@ def room1():
     # CHALLENGE 1
     if st.session_state.question_number == 0:
 
-        with st.container(border=True):
+        st.markdown("""
+            <div class="question-box">
+                <div class="question-title">CHALLENGE 1 OF 3</div>
+            </div>
+        """, unsafe_allow_html=True)
 
-            st.markdown(
-                '<div class="section-title">CHALLENGE 1 OF 3</div>',
-                unsafe_allow_html=True
-            )
+        with st.container(border=False):
 
             st.write("Find the limit:")
             st.latex(r"\lim_{x\to2}(3x+4)")
@@ -810,7 +811,6 @@ def room1():
 
                     if st.session_state.hint_used_this_question:
                         st.session_state.hint_message = "You can only use a hint once per challenge!"
-
                     else:
                         use_hint("Substitute x = 2 into the expression.")
 
@@ -819,12 +819,13 @@ def room1():
     # CHALLENGE 2
     elif st.session_state.question_number == 1:
 
-        with st.container(border=True):
+        st.markdown("""
+            <div class="question-box">
+                <div class="question-title">CHALLENGE 2 OF 3</div>
+            </div>
+        """, unsafe_allow_html=True)
 
-            st.markdown(
-                '<div class="section-title">CHALLENGE 2 OF 3</div>',
-                unsafe_allow_html=True
-            )
+        with st.container(border=False):
 
             st.write("Evaluate the following limit:")
             st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
@@ -849,7 +850,6 @@ def room1():
 
                     if st.session_state.hint_used_this_question:
                         st.session_state.hint_message = "You can only use a hint once per challenge!"
-
                     else:
                         use_hint("Factor the numerator into (x - 2)(x + 2).")
 
@@ -858,12 +858,13 @@ def room1():
     # CHALLENGE 3
     elif st.session_state.question_number == 2:
 
-        with st.container(border=True):
+        st.markdown("""
+            <div class="question-box">
+                <div class="question-title">CHALLENGE 3 OF 3</div>
+            </div>
+        """, unsafe_allow_html=True)
 
-            st.markdown(
-                '<div class="section-title">CHALLENGE 3 OF 3</div>',
-                unsafe_allow_html=True
-            )
+        with st.container(border=False):
 
             st.write("Find the limit:")
             st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
@@ -888,7 +889,6 @@ def room1():
 
                     if st.session_state.hint_used_this_question:
                         st.session_state.hint_message = "You can only use a hint once per challenge!"
-
                     else:
                         use_hint("Factor the numerator into (x - 1)(x + 4).")
 
