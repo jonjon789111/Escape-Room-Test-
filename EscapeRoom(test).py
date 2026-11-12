@@ -47,10 +47,6 @@ def design():
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
-blur = ""
-
-if st.session_state.page != "home":
-    blur = "blur(6px)"
 
     st.markdown(f"""
     <style>
