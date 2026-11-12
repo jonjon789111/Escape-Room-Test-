@@ -415,10 +415,11 @@ def key_inventory():
     """
 
     st.components.v1.html(
-        html,
-        height=320,
-        scrolling=False
-    )
+    html,
+    height=350,
+    scrolling=False,
+    tab_index=None
+)
             
 # ==========================================
 # HOMEPAGE
