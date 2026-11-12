@@ -93,6 +93,31 @@ def design():
         letter-spacing: 5px;
         color: #F4F1EA;
         text-align: center;
+        text-shadow:
+            0 2px 3px #6B1018,
+            0 5px 8px rgba(100, 0, 0, 0.5);
+    }}
+
+    /* BLOOD DRIP EFFECT */
+    .blood-title {{
+        position: relative;
+        display: inline-block;
+    }}
+
+    .blood-title::after {{
+        content: "";
+        position: absolute;
+        left: 8%;
+        bottom: -13px;
+        width: 84%;
+        height: 18px;
+
+        background:
+            radial-gradient(ellipse at 15% 0%, #7D1018 0 5px, transparent 6px),
+            radial-gradient(ellipse at 43% 0%, #8F111B 0 4px, transparent 5px),
+            radial-gradient(ellipse at 75% 0%, #650B12 0 6px, transparent 7px);
+
+        background-repeat: no-repeat;
     }}
 
     /* SUBTITLE */
@@ -157,6 +182,7 @@ def design():
 
     </style>
     """, unsafe_allow_html=True)
+
     
 def header(label, title, subtitle):
 
