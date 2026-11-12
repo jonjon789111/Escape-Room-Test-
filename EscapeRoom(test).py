@@ -429,110 +429,40 @@ def cutscene_page():
 
     design()
 
-    st.markdown("""
-    <style>
+    st.markdown(
+        """
+        <div style="
+            background-color: #101827;
+            padding: 60px;
+            border: 2px solid #B59A60;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+        ">
+            <h2 style="color: #B59A60;">THE FIRST CHALLENGE</h2>
 
-    .cutscene-box {
-        min-height: 480px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        background: rgba(8, 13, 23, 0.92);
-        border: 1px solid rgba(181, 154, 96, 0.55);
-        border-radius: 16px;
-        padding: 50px 35px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-        animation: fadeIn 2s ease;
-    }
+            <h1>THE BLACKBOARD</h1>
 
-    .cutscene-label {
-        font-family: Cinzel, serif;
-        color: #B59A60;
-        font-size: 15px;
-        letter-spacing: 5px;
-    }
+            <p style="font-size: 22px;">
+                The classroom grows silent.
+                Strange equations begin appearing
+                on the old blackboard.
+            </p>
 
-    .cutscene-title {
-        font-family: Cinzel, serif;
-        color: #F4F1EA;
-        font-size: clamp(30px, 5vw, 55px);
-        font-weight: 800;
-        letter-spacing: 4px;
-        margin-top: 25px;
-    }
-
-    .cutscene-story {
-        font-family: 'Cormorant Garamond', serif;
-        color: #D5D8DF;
-        font-size: 23px;
-        line-height: 1.8;
-        max-width: 750px;
-        margin-top: 25px;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    </style>
-    """, unsafe_allow_html=True)
-
-    st.write("")
-
-    st.markdown("""
-    <div class="cutscene-box">
-
-        <div class="cutscene-label">
-            THE FIRST CHALLENGE
+            <p style="font-size: 20px;">
+                <i>Your first test awaits.</i>
+            </p>
         </div>
-
-        <div class="cutscene-title">
-            THE BLACKBOARD
-        </div>
-
-        <div class="cutscene-story">
-            The classroom grows silent.
-
-            <br><br>
-
-            Strange equations begin appearing on the
-            old blackboard. A message slowly emerges:
-
-            <br><br>
-
-            <i>"Your first test awaits.
-            Find the answers hidden within the limits."</i>
-
-            <br><br>
-
-            Three challenges stand between you
-            and the first key.
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
     st.write("")
 
     left, center, right = st.columns([2, 3, 2])
 
     with center:
-
-        if st.button(
-            "CONTINUE →",
-            type="primary",
-            use_container_width=True
-        ):
+        if st.button("CONTINUE →", type="primary", use_container_width=True):
 
             if st.session_state.cutscene_start_new_game:
                 start_game()
