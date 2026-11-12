@@ -43,10 +43,10 @@ for key, value in defaults.items():
 # ==========================================
 
 def design():
-     # Background blur
+     # Check if the current page needs a blurred background
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
 
-    # Load background image
+    # Load and encode the background image
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
@@ -91,43 +91,8 @@ def design():
         font-size: clamp(40px, 5vw, 68px);
         font-weight: 800;
         letter-spacing: 5px;
+        color: #F4F1EA;
         text-align: center;
-        color: #F4F1EA;
-        filter: drop-shadow(0 3px 3px #650B12);
-    }}
-
-    /* BLOOD DRIPPING LETTERS */
-    .blood-title {{
-        display: inline-block;
-        position: relative;
-    }}
-
-    .blood-letter {{
-        display: inline-block;
-        position: relative;
-        color: #F4F1EA;
-        overflow: visible;
-    }}
-
-    .blood-letter::before {{
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 20%;
-        width: 65%;
-        height: var(--blood-height, 25px);
-        background:
-            radial-gradient(ellipse at 20% 0%, #A71924 0 5px, transparent 6px),
-            radial-gradient(ellipse at 55% 0%, #8F111B 0 7px, transparent 8px),
-            linear-gradient(to bottom, #A71924, #650B12);
-        clip-path: polygon(
-            0 0, 100% 0, 100% 55%,
-            75% 55%, 75% 100%, 60% 100%,
-            60% 65%, 35% 65%, 35% 85%,
-            20% 85%, 20% 55%, 0 55%
-        );
-        z-index: 2;
-        pointer-events: none;
     }}
 
     /* SUBTITLE */
@@ -143,7 +108,12 @@ def design():
         width: 75%;
         height: 1px;
         margin: 25px auto;
-        background: linear-gradient(to right, transparent, #B59A60, transparent);
+        background: linear-gradient(
+            to right,
+            transparent,
+            #B59A60,
+            transparent
+        );
     }}
 
     /* SECTION TITLE */
@@ -186,6 +156,15 @@ def design():
     }}
 
     </style>
+    """, unsafe_allow_html=True)
+    
+def header(label, title, subtitle):
+
+    st.markdown(f"""
+        <div class="section-title" style="text-align:center">{label}</div>
+        <div class="main-title">{title}</div>
+        <div class="subtitle">{subtitle}</div>
+        <div class="gold-line"></div>
     """, unsafe_allow_html=True)
 
 def header(label, title, subtitle):
@@ -295,18 +274,6 @@ def game_status():
 def home_page():
 
     design()
-
-    st.markdown("""
-    <div style="text-align:center;">
-        <div class="main-title blood-title">
-            <span class="blood-letter" style="--blood-height:30px">T</span><span class="blood-letter">H</span><span class="blood-letter" style="--blood-height:35px">E</span>
-            &nbsp;
-            <span class="blood-letter" style="--blood-height:40px">L</span><span class="blood-letter">O</span><span class="blood-letter" style="--blood-height:25px">C</span><span class="blood-letter">K</span><span class="blood-letter" style="--blood-height:32px">E</span><span class="blood-letter">D</span>
-            &nbsp;
-            <span class="blood-letter" style="--blood-height:35px">C</span><span class="blood-letter">L</span><span class="blood-letter" style="--blood-height:28px">A</span><span class="blood-letter">S</span><span class="blood-letter" style="--blood-height:40px">S</span><span class="blood-letter">R</span><span class="blood-letter" style="--blood-height:30px">O</span><span class="blood-letter">O</span><span class="blood-letter" style="--blood-height:25px">M</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
 
     st.write("")
     st.write("")
