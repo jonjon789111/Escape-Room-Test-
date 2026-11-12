@@ -877,7 +877,7 @@ def room2():
     # FEEDBACK
     if st.session_state.feedback == "correct":
 
-        st.success("Correct! You unlocked the drawer.")
+        st.success("Correct! You solved the challenge.")
 
         if st.button("CONTINUE", type="primary"):
 
