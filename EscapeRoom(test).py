@@ -49,10 +49,8 @@ for key, value in defaults.items():
 
 def design():
 
-    # Background blur
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
 
-    # Load background image
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
@@ -64,41 +62,25 @@ def design():
     /* BACKGROUND */
 
     .stApp {{
-        position: relative;
-        background: transparent !important;
+        background: transparent;
         color: #F4F1EA;
     }}
 
     .stApp::before {{
         content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        min-height: 100%;
-        z-index: 0;
-        pointer-events: none;
-
+        position: fixed;
+        inset: -10px;
+        z-index: -1;
         background-image:
             linear-gradient(
                 rgba(16, 24, 39, 0.65),
                 rgba(16, 24, 39, 0.65)
             ),
             url("data:image/jpeg;base64,{encoded_image}");
-
         background-size: cover;
-        background-position: center top;
-        background-repeat: repeat-y;
+        background-position: center;
+        background-repeat: no-repeat;
         filter: {blur};
-    }}
-
-    /* KEEP CONTENT ABOVE BACKGROUND */
-
-    .stApp > header,
-    .stApp > div {{
-        position: relative;
-        z-index: 1;
     }}
 
     /* PAGE SPACING */
