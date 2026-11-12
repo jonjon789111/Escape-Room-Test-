@@ -316,32 +316,108 @@ def game_status():
 
 def key_inventory():
 
-    keys = [
-        "Bronze Key",
-        "Silver Key",
-        "Gold Key",
-        "Crystal Key"
-    ]
+    keys = {
+        "Bronze Key": "Room 1",
+        "Silver Key": "Room 2",
+        "Gold Key": "Room 3",
+        "Crystal Key": "Room 4"
+    }
 
     collected = len(st.session_state.keys_collected)
 
-    st.markdown('<div class="key-inventory-box">', unsafe_allow_html=True)
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+        html, body {{
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: Arial, sans-serif;
+        }}
 
-    st.markdown(
-        '<div class="section-title">🔑 KEY INVENTORY</div>',
-        unsafe_allow_html=True
-    )
+        .key-inventory {{
+            background: rgba(12, 18, 30, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 16px;
+            padding: 22px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+        }}
 
-    st.caption(f"{collected}/4 KEYS COLLECTED")
+        .key-title {{
+            font-size: 22px;
+            font-weight: bold;
+            color: #f5d58a;
+            margin-bottom: 8px;
+        }}
+
+        .key-count {{
+            color: #cccccc;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }}
+
+        .key-item {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px;
+            margin-top: 9px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 14px;
+        }}
+
+        .key-collected {{
+            color: #8ee6a1;
+            font-weight: bold;
+        }}
+
+        .key-locked {{
+            color: #bbbbbb;
+        }}
+    </style>
+    </head>
+
+    <body>
+        <div class="key-inventory">
+            <div class="key-title">🔑 KEY INVENTORY</div>
+
+            <div class="key-count">
+                {collected}/4 KEYS COLLECTED
+            </div>
+    """
 
     for key in keys:
-
         if key in st.session_state.keys_collected:
-            st.success(f"🔓 {key} — COLLECTED")
+            status = "🔓 COLLECTED"
+            css_class = "key-collected"
         else:
-            st.info(f"🔒 {key} — LOCKED")
+            status = "🔒 LOCKED"
+            css_class = "key-locked"
 
-    st.markdown("</div>", unsafe_allow_html=True)
+        html += f"""
+            <div class="key-item">
+                <span>{key}</span>
+                <span class="{css_class}">{status}</span>
+            </div>
+        """
+
+    html += """
+        </div>
+    </body>
+    </html>
+    """
+
+    st.components.v1.html(
+        html,
+        height=320,
+        scrolling=False
+    )
             
 # ==========================================
 # HOMEPAGE
