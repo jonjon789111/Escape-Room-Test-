@@ -316,85 +316,32 @@ def game_status():
 
 def key_inventory():
 
-    keys = {
-        "Bronze Key": "Room 1",
-        "Silver Key": "Room 2",
-        "Gold Key": "Room 3",
-        "Crystal Key": "Room 4"
-    }
+    keys = [
+        "Bronze Key",
+        "Silver Key",
+        "Gold Key",
+        "Crystal Key"
+    ]
 
     collected = len(st.session_state.keys_collected)
 
-    html = f"""
-    <style>
-    .key-inventory {{
-        background: rgba(15, 20, 30, 0.92);
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 15px;
-        padding: 22px;
-        margin: 15px 0;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-        color: white;
-    }}
+    st.markdown('<div class="key-inventory-box">', unsafe_allow_html=True)
 
-    .key-title {{
-        font-size: 22px;
-        font-weight: bold;
-        color: #f5d58a;
-    }}
+    st.markdown(
+        '<div class="section-title">🔑 KEY INVENTORY</div>',
+        unsafe_allow_html=True
+    )
 
-    .key-count {{
-        color: #cccccc;
-        font-size: 13px;
-        margin: 8px 0 18px 0;
-    }}
-
-    .key-item {{
-        display: flex;
-        justify-content: space-between;
-        padding: 12px;
-        margin-top: 8px;
-        border-radius: 8px;
-        background: rgba(255,255,255,0.08);
-    }}
-
-    .key-collected {{
-        color: #8ee6a1;
-    }}
-
-    .key-locked {{
-        color: #bbbbbb;
-    }}
-    </style>
-
-    <div class="key-inventory">
-
-        <div class="key-title">🔑 KEY INVENTORY</div>
-
-        <div class="key-count">
-            {collected}/4 KEYS COLLECTED
-        </div>
-    """
+    st.caption(f"{collected}/4 KEYS COLLECTED")
 
     for key in keys:
 
         if key in st.session_state.keys_collected:
-            status = "🔓 COLLECTED"
-            css_class = "key-collected"
+            st.success(f"🔓 {key} — COLLECTED")
         else:
-            status = "🔒 LOCKED"
-            css_class = "key-locked"
+            st.info(f"🔒 {key} — LOCKED")
 
-        html += f"""
-        <div class="key-item">
-            <span>{key}</span>
-            <span class="{css_class}">{status}</span>
-        </div>
-        """
-
-    html += "</div>"
-
-    st.markdown(html, unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
             
 # ==========================================
 # HOMEPAGE
