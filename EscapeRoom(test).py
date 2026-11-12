@@ -47,6 +47,11 @@ def design():
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
+    blur = ""
+
+if st.session_state.page != "home":
+    blur = "blur(6px)"
+
     st.markdown(f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
