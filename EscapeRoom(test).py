@@ -48,153 +48,153 @@ def design():
     with open("klasrum.jpg", "rb") as image:
         encoded_image = base64.b64encode(image.read()).decode()
 
-    st.markdown(f"""
-    <style>
-
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
-
-    /* BACKGROUND */
-    .stApp {{
-        background: transparent;
-        color: #F4F1EA;
-    }}
-
-    .stApp::before {{
-        content: "";
-        position: fixed;
-        inset: -10px;
-        z-index: -1;
-        background-image:
-            linear-gradient(
-                rgba(16, 24, 39, 0.65),
-                rgba(16, 24, 39, 0.65)
-            ),
-            url("data:image/jpeg;base64,{encoded_image}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        filter: {blur};
-    }}
-
-    /* PAGE SPACING */
-    .block-container {{
-        max-width: 1150px;
-        padding-top: 3.5rem !important;
-        padding-bottom: 3rem !important;
-    }}
-
-    /* MAIN TITLE */
-    .main-title {{
-        font-family: Cinzel, serif;
-        font-size: clamp(40px, 5vw, 68px);
-        font-weight: 800;
-        letter-spacing: 5px;
-        color: #F4F1EA;
-        text-align: center;
-        text-shadow:
-            0 2px 3px #650B12,
-            0 4px 8px rgba(100, 0, 0, 0.6);
-    }}
-
-    /* BLOOD DRIPPING LETTERS */
-    .blood-title {{
-        display: inline-block;
-        position: relative;
-        padding-bottom: 30px;
-        background:
-            linear-gradient(
-                to bottom,
-                #F4F1EA 0%,
-                #F4F1EA 72%,
-                #9B1720 86%,
-                #650B12 100%
+        st.markdown(f"""
+        <style>
+    
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+    
+        /* BACKGROUND */
+        .stApp {{
+            background: transparent;
+            color: #F4F1EA;
+        }}
+    
+        .stApp::before {{
+            content: "";
+            position: fixed;
+            inset: -10px;
+            z-index: -1;
+            background-image:
+                linear-gradient(
+                    rgba(16, 24, 39, 0.65),
+                    rgba(16, 24, 39, 0.65)
+                ),
+                url("data:image/jpeg;base64,{encoded_image}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: {blur};
+        }}
+    
+        /* PAGE SPACING */
+        .block-container {{
+            max-width: 1150px;
+            padding-top: 3.5rem !important;
+            padding-bottom: 3rem !important;
+        }}
+    
+        /* MAIN TITLE */
+        .main-title {{
+            font-family: Cinzel, serif;
+            font-size: clamp(40px, 5vw, 68px);
+            font-weight: 800;
+            letter-spacing: 5px;
+            color: #F4F1EA;
+            text-align: center;
+            text-shadow:
+                0 2px 3px #650B12,
+                0 4px 8px rgba(100, 0, 0, 0.6);
+        }}
+    
+        /* BLOOD DRIPPING LETTERS */
+        .blood-title {{
+            display: inline-block;
+            position: relative;
+            padding-bottom: 30px;
+            background:
+                linear-gradient(
+                    to bottom,
+                    #F4F1EA 0%,
+                    #F4F1EA 72%,
+                    #9B1720 86%,
+                    #650B12 100%
+                );
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 3px 2px rgba(100, 0, 0, 0.7));
+        }}
+    
+        .blood-title::after {{
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 30px;
+    
+            background:
+                radial-gradient(ellipse 5px 15px at 8% 0%, #8F111B 98%, transparent 100%),
+                radial-gradient(ellipse 4px 22px at 23% 0%, #760D16 98%, transparent 100%),
+                radial-gradient(ellipse 5px 12px at 39% 0%, #A51B24 98%, transparent 100%),
+                radial-gradient(ellipse 4px 19px at 57% 0%, #760D16 98%, transparent 100%),
+                radial-gradient(ellipse 5px 25px at 74% 0%, #8F111B 98%, transparent 100%),
+                radial-gradient(ellipse 4px 14px at 91% 0%, #A51B24 98%, transparent 100%);
+            background-repeat: no-repeat;
+        }}
+    
+        /* SUBTITLE */
+        .subtitle {{
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: #C6B78E;
+            text-align: center;
+        }}
+    
+        /* GOLD DIVIDER */
+        .gold-line {{
+            width: 75%;
+            height: 1px;
+            margin: 25px auto;
+            background: linear-gradient(
+                to right,
+                transparent,
+                #B59A60,
+                transparent
             );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 3px 2px rgba(100, 0, 0, 0.7));
-    }}
-
-    .blood-title::after {{
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 30px;
-
-        background:
-            radial-gradient(ellipse 5px 15px at 8% 0%, #8F111B 98%, transparent 100%),
-            radial-gradient(ellipse 4px 22px at 23% 0%, #760D16 98%, transparent 100%),
-            radial-gradient(ellipse 5px 12px at 39% 0%, #A51B24 98%, transparent 100%),
-            radial-gradient(ellipse 4px 19px at 57% 0%, #760D16 98%, transparent 100%),
-            radial-gradient(ellipse 5px 25px at 74% 0%, #8F111B 98%, transparent 100%),
-            radial-gradient(ellipse 4px 14px at 91% 0%, #A51B24 98%, transparent 100%);
-        background-repeat: no-repeat;
-    }}
-
-    /* SUBTITLE */
-    .subtitle {{
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 24px;
-        color: #C6B78E;
-        text-align: center;
-    }}
-
-    /* GOLD DIVIDER */
-    .gold-line {{
-        width: 75%;
-        height: 1px;
-        margin: 25px auto;
-        background: linear-gradient(
-            to right,
-            transparent,
-            #B59A60,
-            transparent
-        );
-    }}
-
-    /* SECTION TITLE */
-    .section-title {{
-        font-family: Cinzel, serif;
-        color: #D8B96F;
-        font-size: 18px;
-        letter-spacing: 3px;
-    }}
-
-    /* STORY TEXT */
-    .story-text {{
-        font-family: 'Cormorant Garamond', serif;
-        color: #E0E3E8;
-        font-size: 21px;
-        line-height: 1.7;
-    }}
-
-    /* BUTTONS */
-    div[data-testid="stButton"] button {{
-        height: 52px;
-        border-radius: 8px;
-        font-family: Cinzel, serif;
-        font-weight: bold;
-        letter-spacing: 2px;
-    }}
-
-    /* PLAY BUTTON */
-    div[data-testid="stButton"] button[kind="primary"] {{
-        background: #476B56 !important;
-        color: white !important;
-        border: 1px solid #78947E !important;
-    }}
-
-    /* SECONDARY BUTTONS */
-    div[data-testid="stButton"] button[kind="secondary"] {{
-        background: #B59A60 !important;
-        color: #17202B !important;
-        border: 1px solid #D9C28C !important;
-    }}
-
-    </style>
-    """, unsafe_allow_html=True)
+        }}
+    
+        /* SECTION TITLE */
+        .section-title {{
+            font-family: Cinzel, serif;
+            color: #D8B96F;
+            font-size: 18px;
+            letter-spacing: 3px;
+        }}
+    
+        /* STORY TEXT */
+        .story-text {{
+            font-family: 'Cormorant Garamond', serif;
+            color: #E0E3E8;
+            font-size: 21px;
+            line-height: 1.7;
+        }}
+    
+        /* BUTTONS */
+        div[data-testid="stButton"] button {{
+            height: 52px;
+            border-radius: 8px;
+            font-family: Cinzel, serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }}
+    
+        /* PLAY BUTTON */
+        div[data-testid="stButton"] button[kind="primary"] {{
+            background: #476B56 !important;
+            color: white !important;
+            border: 1px solid #78947E !important;
+        }}
+    
+        /* SECONDARY BUTTONS */
+        div[data-testid="stButton"] button[kind="secondary"] {{
+            background: #B59A60 !important;
+            color: #17202B !important;
+            border: 1px solid #D9C28C !important;
+        }}
+    
+        </style>
+        """, unsafe_allow_html=True)
 
     
 def header(label, title, subtitle):
