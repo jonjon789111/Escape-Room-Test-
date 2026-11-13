@@ -1662,6 +1662,7 @@ def room4():
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
 
+
 # ==========================================
 # ENDING PAGE
 # ==========================================
@@ -1673,6 +1674,7 @@ def ending_page():
     st.write("")
     st.write("")
 
+    # ENDING TITLE
     st.markdown("""
         <div class="section-title" style="text-align:center">
             THE FINAL MOMENT
@@ -1691,6 +1693,7 @@ def ending_page():
 
     st.write("")
 
+    # ENDING STORY
     left, center, right = st.columns([1, 5, 1])
 
     with center:
@@ -1700,24 +1703,21 @@ def ending_page():
                 <div class="section-title" style="text-align:center">
                     ✦ THE EXIT IS OPEN ✦
                 </div>
+            """, unsafe_allow_html=True)
 
+            st.write("")
+
+            st.markdown("""
                 <div class="story-text" style="text-align:center">
-                    The final lock clicks open.
-
-                    <br><br>
-
                     The classroom doors slowly swing open.
+                    <br><br>
                     After solving every challenge and collecting
                     all four keys, you have finally found your way out.
-
                     <br><br>
-
                     The silence is broken.
                     The test is over.
-
                     <br><br>
-
-                    <i>You have successfully escaped the classroom.</i>
+                    <em>You have successfully escaped the classroom.</em>
                 </div>
             """, unsafe_allow_html=True)
 
@@ -1730,7 +1730,9 @@ def ending_page():
             """, unsafe_allow_html=True)
 
     st.write("")
+    st.write("")
 
+    # CONGRATULATIONS MESSAGE
     st.markdown("""
         <div class="section-title" style="text-align:center">
             CONGRATULATIONS, ESCAPE COMPLETE!
@@ -1739,6 +1741,7 @@ def ending_page():
 
     st.write("")
 
+    # ENDING BUTTONS
     left, again, gap, menu, right = st.columns(
         [1, 2.5, 0.3, 2.5, 1]
     )
@@ -1762,8 +1765,7 @@ def ending_page():
             reset_game()
             st.session_state.page = "home"
             st.rerun()
-
-
+            
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
