@@ -1079,9 +1079,14 @@ def room2():
 
                     if answer.replace(" ", "").lower() == "12x^2":
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
@@ -1118,9 +1123,14 @@ def room2():
 
                     if answer.replace(" ", "").lower() == "10x-3":
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
@@ -1157,9 +1167,14 @@ def room2():
 
                     if answer.replace(" ", "").lower() == "40x^3+27x^2+8x+1":
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
@@ -1189,6 +1204,14 @@ def room2():
             if st.session_state.question_number == 3:
 
                 st.session_state.room2_cleared = True
+
+                # COLLECT SILVER KEY
+                if "Silver Key" not in st.session_state.keys_collected:
+                    st.session_state.keys_collected.append("Silver Key")
+
+                st.session_state.notification = "🔑 SILVER KEY COLLECTED!"
+                st.session_state.notification_type = "warning"
+
                 st.session_state.question_number = 0
                 st.session_state.page = "story"
 
