@@ -227,9 +227,13 @@ def floating_notification():
 
     color = colors.get(notification_type, "#d9a441")
 
+    # UNIQUE ID FOR EVERY RENDER
+    unique_id = time.time_ns()
+
     st.markdown(f"""
         <style>
-        .floating-notification {{
+
+        .floating-notification-{unique_id} {{
             position: fixed;
             top: 25px;
             right: 25px;
@@ -241,12 +245,15 @@ def floating_notification():
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.5);
             font-size: 16px;
-            animation: notificationSlide 0.5s ease,
-                       notificationFade 0.5s ease 2.5s forwards;
+
+            animation:
+                notifSlide{unique_id} 0.5s ease,
+                notifFade{unique_id} 0.5s ease 2.5s forwards;
+
             pointer-events: none;
         }}
 
-        @keyframes notificationSlide {{
+        @keyframes notifSlide{unique_id} {{
             from {{
                 opacity: 0;
                 transform: translateX(100px);
@@ -257,14 +264,15 @@ def floating_notification():
             }}
         }}
 
-        @keyframes notificationFade {{
+        @keyframes notifFade{unique_id} {{
             to {{
                 opacity: 0;
             }}
         }}
+
         </style>
 
-        <div class="floating-notification">
+        <div class="floating-notification-{unique_id}">
             {notification}
         </div>
     """, unsafe_allow_html=True)
