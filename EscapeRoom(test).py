@@ -1440,6 +1440,190 @@ def room3():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
+def room4():
+    
+    design()
+    header(
+        "ROOM 04",
+        "THE EXIT DOOR",
+        "The fourth challenge — Trigonometric Derivatives"
+    )
+
+    if st.session_state.game_over:
+
+        st.error("GAME OVER! You ran out of lives or time.")
+
+        if st.button("RETURN TO MENU"):
+            st.session_state.page = "home"
+            st.rerun()
+
+        return
+
+    game_status()
+    progress_bar()
+    floating_notification()
+    key_inventory()
+
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    
+    # Challenge 1
+    if st.session_state.question_number == 0:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 1 OF 3 — TRIGONOMETRIC FUNCTION WITH CHAIN RULE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = sin(2x)")
+
+            answer = st.text_input("YOUR ANSWER", key="r3_answer1")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if clean_answer(answer) in ["2cos(2x)", "2cos2x"]:
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Apply the Chain Rule: differentiate the outer sine function first, then multiply by the derivative of the inner function (2x).")
+
+                    st.rerun()
+
+# CHALLENGE 2 
+    elif st.session_state.question_number == 1:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 2 OF 3 — EXPONENTIAL FUNCTIONS</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = 5^u")
+
+            answer = st.text_input("YOUR ANSWER", key="r3_answer2")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if clean_answer(answer) in ["5^u*ln(5)", "5^u ln(5)", "5^uln(5)"]:
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Formula: d/du(a^u) = a^u ln(a)")
+
+                    st.rerun()
+
+ # CHALLENGE 3 
+    elif st.session_state.question_number == 2:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 3 OF 3 — BASIC INVERSE TRIGONOMETRIC FUNCTION</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = e^x tan x")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 6(3x+1)^1)", key="r3_answer3")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if clean_answer(answer) in ["e^x*tan(x)+e^x*sec^2(x)", "e^x(sec^2(x)+tan(x))"]:
+                        st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Apply the Product Rule: (uv)' = u'v + uv'.")
+
+                    st.rerun()
+
+    # FEEDBACK
+    if st.session_state.feedback == "correct":
+
+        st.success("Correct! You found the hidden book.")
+
+        if st.button("CONTINUE", type="primary"):
+            st.session_state.notification = ""
+            st.session_state.notification_type = ""
+
+            st.session_state.question_number += 1
+            st.session_state.feedback = ""
+            st.session_state.hint_message = ""
+            st.session_state.hint_used_this_question = False
+
+            if st.session_state.question_number == 3:
+
+                st.session_state.room3_cleared = True
+                st.session_state.question_number = 0
+                st.session_state.page = "story"
+
+            st.rerun()
+
+    elif st.session_state.feedback == "wrong":
+
+        st.error("Incorrect! One life and five seconds deducted.")
+
+        st.session_state.feedback = ""
+
+        if st.session_state.game_over:
+            st.rerun()
+
+    # HINT MESSAGE
+    if st.session_state.hint_message:
+        st.info(st.session_state.hint_message)
+
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
@@ -1461,3 +1645,6 @@ elif st.session_state.page == "room2":
     
 elif st.session_state.page == "room3":
     room3()
+    
+elif st.session_state.page == "room4":
+    room4()
