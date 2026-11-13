@@ -1257,6 +1257,13 @@ def clean_answer(text):
 
 def room3():
 
+    def clean_answer(text):
+    # Normalizes input so "8 * (2x + 3)^3" and "8(2x+3)^3" are treated the same
+    return text.replace(" ", "").replace("*", "").replace("**", "^").lower()
+
+
+def room3():
+
     design()
 
     header(
@@ -1304,9 +1311,13 @@ def room3():
 
                     if clean_answer(answer) in ["9x^2+2x", "2x+9x^2"]:
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
@@ -1343,9 +1354,13 @@ def room3():
 
                     if clean_answer(answer) in ["1/(x+1)^2", "1/(1+x)^2", "1/(x+1)²"]:
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
@@ -1419,7 +1434,14 @@ def room3():
 
             if st.session_state.question_number == 3:
 
-                st.session_state.room3_cleared = True
+                st.session_state.room4_cleared = True
+                
+                 # COLLECT GOLD KEY
+                if "Bronze Key" not in st.session_state.keys_collected:
+                    st.session_state.keys_collected.append("Gold Key")
+
+                st.session_state.notification = "🔑 GOLD KEY COLLECTED!"
+                st.session_state.notification_type = "warning"
                 st.session_state.question_number = 0
                 st.session_state.page = "story"
 
@@ -1440,8 +1462,9 @@ def room3():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
+
 def room4():
-    
+
     design()
     header(
         "ROOM 04",
@@ -1465,8 +1488,8 @@ def room4():
     key_inventory()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-    
-    # Challenge 1
+
+    # CHALLENGE 1
     if st.session_state.question_number == 0:
 
         with st.container(border=True):
@@ -1479,7 +1502,7 @@ def room4():
             st.write("Find the derivative of the function:")
             st.latex(r"f(x) = sin(2x)")
 
-            answer = st.text_input("YOUR ANSWER", key="r3_answer1")
+            answer = st.text_input("YOUR ANSWER", key="r4_answer1")
 
             left, right = st.columns(2)
 
@@ -1488,9 +1511,14 @@ def room4():
 
                     if clean_answer(answer) in ["2cos(2x)", "2cos2x"]:
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
@@ -1505,7 +1533,7 @@ def room4():
 
                     st.rerun()
 
-# CHALLENGE 2 
+    # CHALLENGE 2
     elif st.session_state.question_number == 1:
 
         with st.container(border=True):
@@ -1516,20 +1544,25 @@ def room4():
             )
 
             st.write("Find the derivative of the function:")
-            st.latex(r"f(x) = 5^u")
+            st.latex(r"f(u) = 5^u")
 
-            answer = st.text_input("YOUR ANSWER", key="r3_answer2")
+            answer = st.text_input("YOUR ANSWER", key="r4_answer2")
 
             left, right = st.columns(2)
 
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if clean_answer(answer) in ["5^u*ln(5)", "5^u ln(5)", "5^uln(5)"]:
+                    if clean_answer(answer) in ["5^uln(5)"]:
                         st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
 
                     st.rerun()
 
@@ -1544,30 +1577,34 @@ def room4():
 
                     st.rerun()
 
- # CHALLENGE 3 
+    # CHALLENGE 3
     elif st.session_state.question_number == 2:
 
         with st.container(border=True):
 
             st.markdown(
-                '<div class="section-title">SHELF 3 OF 3 — BASIC INVERSE TRIGONOMETRIC FUNCTION</div>',
+                '<div class="section-title">SHELF 3 OF 3 — PRODUCT RULE WITH EXPONENTIAL AND TRIGONOMETRIC FUNCTIONS</div>',
                 unsafe_allow_html=True
             )
 
             st.write("Find the derivative of the function:")
             st.latex(r"f(x) = e^x tan x")
 
-            answer = st.text_input("YOUR ANSWER (e.g. 6(3x+1)^1)", key="r3_answer3")
+            answer = st.text_input("YOUR ANSWER", key="r4_answer3")
 
             left, right = st.columns(2)
 
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if clean_answer(answer) in ["e^x*tan(x)+e^x*sec^2(x)", "e^x(sec^2(x)+tan(x))"]:
+                    if clean_answer(answer) in [
+                        "e^xtan(x)+e^xsec^2(x)",
+                        "e^x(sec^2(x)+tan(x))"
+                    ]:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -1593,6 +1630,7 @@ def room4():
         st.success("Correct! You found the hidden book.")
 
         if st.button("CONTINUE", type="primary"):
+
             st.session_state.notification = ""
             st.session_state.notification_type = ""
 
@@ -1601,11 +1639,16 @@ def room4():
             st.session_state.hint_message = ""
             st.session_state.hint_used_this_question = False
 
+            # ROOM 4 COMPLETED
             if st.session_state.question_number == 3:
 
-                st.session_state.room3_cleared = True
+                st.session_state.room4_cleared = True
+
+                if "Crystal Key" not in st.session_state.keys_collected:
+                    st.session_state.keys_collected.append("Crystal Key")
+
                 st.session_state.question_number = 0
-                st.session_state.page = "story"
+                st.session_state.page = "ending"
 
             st.rerun()
 
@@ -1623,27 +1666,12 @@ def room4():
         st.info(st.session_state.hint_message)
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-    
+
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
-
-if st.session_state.page == "home":
-    home_page()
-
-elif st.session_state.page == "story":
-    story_page()
-
-elif st.session_state.page == "instructions":
-    instructions_page()
-
-elif st.session_state.page == "room1":
-    room1()
-
-elif st.session_state.page == "room2":
-    room2()
     
-elif st.session_state.page == "room3":
+if st.session_state.page == "room3":
     room3()
     
 elif st.session_state.page == "room4":
