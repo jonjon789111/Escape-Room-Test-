@@ -243,8 +243,7 @@ def floating_notification():
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.5);
             font-size: 16px;
-            animation: notificationSlide 0.5s ease,
-                       notificationFade 0.5s ease 2.5s forwards;
+            animation: notificationSlide 0.5s ease;
         }}
 
         @keyframes notificationSlide {{
@@ -255,13 +254,6 @@ def floating_notification():
             to {{
                 opacity: 1;
                 transform: translateX(0);
-            }}
-        }}
-
-        @keyframes notificationFade {{
-            to {{
-                opacity: 0;
-                visibility: hidden;
             }}
         }}
         </style>
