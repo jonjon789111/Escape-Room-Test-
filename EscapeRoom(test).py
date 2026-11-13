@@ -1661,6 +1661,109 @@ def room4():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
+
+# ==========================================
+# ENDING PAGE
+# ==========================================
+
+def ending_page():
+
+    design()
+
+    st.write("")
+    st.write("")
+
+    st.markdown("""
+        <div class="section-title" style="text-align:center">
+            THE FINAL MOMENT
+        </div>
+
+        <div class="main-title">
+            YOU ESCAPED
+        </div>
+
+        <div class="subtitle">
+            The Locked Classroom
+        </div>
+
+        <div class="gold-line"></div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    left, center, right = st.columns([1, 5, 1])
+
+    with center:
+        with st.container(border=True):
+
+            st.markdown("""
+                <div class="section-title" style="text-align:center">
+                    ✦ THE EXIT IS OPEN ✦
+                </div>
+
+                <div class="story-text" style="text-align:center">
+                    The final lock clicks open.
+
+                    <br><br>
+
+                    The classroom doors slowly swing open.
+                    After solving every challenge and collecting
+                    all four keys, you have finally found your way out.
+
+                    <br><br>
+
+                    The silence is broken.
+                    The test is over.
+
+                    <br><br>
+
+                    <i>You have successfully escaped the classroom.</i>
+                </div>
+            """, unsafe_allow_html=True)
+
+            st.write("")
+
+            st.markdown("""
+                <div class="subtitle" style="text-align:center">
+                    4 ROOMS CLEARED • 12 CHALLENGES SOLVED
+                </div>
+            """, unsafe_allow_html=True)
+
+    st.write("")
+
+    st.markdown("""
+        <div class="section-title" style="text-align:center">
+            CONGRATULATIONS, ESCAPE COMPLETE!
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    left, again, gap, menu, right = st.columns(
+        [1, 2.5, 0.3, 2.5, 1]
+    )
+
+    with again:
+        if st.button(
+            "PLAY AGAIN",
+            type="primary",
+            use_container_width=True
+        ):
+            reset_game()
+            st.session_state.page = "story"
+            st.rerun()
+
+    with menu:
+        if st.button(
+            "MAIN MENU",
+            type="secondary",
+            use_container_width=True
+        ):
+            reset_game()
+            st.session_state.page = "home"
+            st.rerun()
+
+
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
@@ -1684,4 +1787,6 @@ elif st.session_state.page == "room3":
     
 elif st.session_state.page == "room4":
     room4()
-
+    
+elif st.session_state.page == "ending":
+    ending_page()
