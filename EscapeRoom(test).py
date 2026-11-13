@@ -1254,14 +1254,6 @@ def clean_answer(text):
     # Normalizes input so "8 * (2x + 3)^3" and "8(2x+3)^3" are treated the same
     return text.replace(" ", "").replace("*", "").replace("**", "^").lower()
 
-
-def room3():
-
-    def clean_answer(text):
-    # Normalizes input so "8 * (2x + 3)^3" and "8(2x+3)^3" are treated the same
-    return text.replace(" ", "").replace("*", "").replace("**", "^").lower()
-
-
 def room3():
 
     design()
@@ -1678,12 +1670,6 @@ elif st.session_state.page == "story":
 
 elif st.session_state.page == "instructions":
     instructions_page()
-
-elif st.session_state.page == "room1":
-    room1()
-
-elif st.session_state.page == "room2":
-    room2()
     
 elif st.session_state.page == "room3":
     room3()
