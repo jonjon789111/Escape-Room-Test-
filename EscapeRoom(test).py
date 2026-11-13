@@ -44,8 +44,6 @@ for key, value in defaults.items():
 # SHARED DESIGN
 # ==========================================
 
-
-
 def design():
 
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
@@ -229,9 +227,7 @@ def floating_notification():
 
     color = colors.get(notification_type, "#d9a441")
 
-    notification_box = st.empty()
-
-    notification_box.markdown(f"""
+    st.markdown(f"""
         <style>
         .floating-notification {{
             position: fixed;
@@ -245,7 +241,9 @@ def floating_notification():
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.5);
             font-size: 16px;
-            animation: notificationSlide 0.5s ease;
+            animation: notificationSlide 0.5s ease,
+                       notificationFade 0.5s ease 2.5s forwards;
+            pointer-events: none;
         }}
 
         @keyframes notificationSlide {{
@@ -258,21 +256,18 @@ def floating_notification():
                 transform: translateX(0);
             }}
         }}
+
+        @keyframes notificationFade {{
+            to {{
+                opacity: 0;
+            }}
+        }}
         </style>
 
         <div class="floating-notification">
             {notification}
         </div>
     """, unsafe_allow_html=True)
-
-    time.sleep(3)
-
-    notification_box.empty()
-
-    st.session_state.notification = ""
-    st.session_state.notification_type = ""
-
-    st.rerun()
 
 def header(label, title, subtitle):
 
