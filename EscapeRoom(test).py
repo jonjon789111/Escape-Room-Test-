@@ -1001,6 +1001,8 @@ def room1():
         st.success("Correct! You solved the challenge.")
 
         if st.button("CONTINUE", type="primary"):
+            st.session_state.notification = ""
+            st.session_state.notification_type = ""
 
             st.session_state.question_number += 1
             st.session_state.feedback = ""
@@ -1209,6 +1211,8 @@ def room2():
         st.success("Correct! You solved the challenge.")
 
         if st.button("CONTINUE", type="primary"):
+            st.session_state.notification = ""
+            st.session_state.notification_type = ""
 
             st.session_state.question_number += 1
             st.session_state.feedback = ""
