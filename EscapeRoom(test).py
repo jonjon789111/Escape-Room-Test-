@@ -1670,6 +1670,12 @@ elif st.session_state.page == "story":
 
 elif st.session_state.page == "instructions":
     instructions_page()
+
+elif st.session_state.page == "room1":
+    room1()
+
+elif st.session_state.page == "room2":
+    room2()
     
 elif st.session_state.page == "room3":
     room3()
