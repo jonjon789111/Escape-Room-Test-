@@ -1426,16 +1426,18 @@ def room3():
 
             if st.session_state.question_number == 3:
 
-                st.session_state.room4_cleared = True
-                
-                 # COLLECT GOLD KEY
-                if "Bronze Key" not in st.session_state.keys_collected:
+                st.session_state.room3_cleared = True
+            
+                # COLLECT GOLD KEY
+                if "Gold Key" not in st.session_state.keys_collected:
                     st.session_state.keys_collected.append("Gold Key")
-
+            
                 st.session_state.notification = "🔑 GOLD KEY COLLECTED!"
                 st.session_state.notification_type = "warning"
+            
                 st.session_state.question_number = 0
                 st.session_state.page = "story"
+
 
             st.rerun()
 
