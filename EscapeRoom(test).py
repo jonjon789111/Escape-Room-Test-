@@ -1789,6 +1789,7 @@ def ending_page():
 # ==========================================
 
 
+
 def achievements_page():
 
     design()
@@ -1893,7 +1894,7 @@ def achievements_page():
                     border_color = "#555555"
                     opacity = "0.55"
 
-                st.markdown(f"""
+                card_html = f"""
                     <div style="
                         border:1px solid {border_color};
                         border-radius:12px;
@@ -1903,8 +1904,8 @@ def achievements_page():
                         background:rgba(0,0,0,0.55);
                         opacity:{opacity};
                         min-height:190px;
+                        font-family:Arial, sans-serif;
                     ">
-
                         <div style="
                             font-size:42px;
                             margin-bottom:10px;
@@ -1936,12 +1937,16 @@ def achievements_page():
                         ">
                             {status}
                         </div>
-
                     </div>
-                """, unsafe_allow_html=True)
+                """
+
+                st.html(card_html)
 
     st.write("")
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
 
     # BACK TO ENDING BUTTON
     left, center, right = st.columns([1, 2, 1])
@@ -1953,7 +1958,7 @@ def achievements_page():
         ):
             st.session_state.page = "ending"
             st.rerun()
-
+            
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
