@@ -1413,7 +1413,7 @@ def room3():
     # FEEDBACK
     if st.session_state.feedback == "correct":
 
-        st.success("Correct! You found the hidden book.")
+        st.success("Correct! You completed the challenge.")
 
         if st.button("CONTINUE", type="primary"):
             st.session_state.notification = ""
@@ -1621,7 +1621,7 @@ def room4():
     # FEEDBACK
     if st.session_state.feedback == "correct":
 
-        st.success("Correct! You found the hidden book.")
+        st.success("Correct! You completed the challenge.")
 
         if st.button("CONTINUE", type="primary"):
 
