@@ -1670,8 +1670,16 @@ def room4():
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
+if st.session_state.page == "home":
+    home_page()
+
+elif st.session_state.page == "story":
+    story_page()
+
+elif st.session_state.page == "instructions":
+    instructions_page()
     
-if st.session_state.page == "room3":
+elif st.session_state.page == "room3":
     room3()
     
 elif st.session_state.page == "room4":
