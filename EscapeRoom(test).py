@@ -16,7 +16,7 @@ defaults = {
     "page": "home",
     "lives": 3,
     "hints": 2,
-    "time_limit": 600,
+    "time_limit": 1200,
     "start_time": None,
     "question_number": 0,
 
@@ -294,7 +294,7 @@ def reset_game():
 
     st.session_state.lives = 3
     st.session_state.hints = 2
-    st.session_state.time_limit = 600
+    st.session_state.time_limit = 1200
     st.session_state.start_time = None
     st.session_state.question_number = 0
     st.session_state.keys_collected = []
