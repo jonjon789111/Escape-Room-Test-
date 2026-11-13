@@ -1788,6 +1788,7 @@ def ending_page():
 # ACHIEVEMENTS PAGE
 # ==========================================
 
+
 def achievements_page():
 
     design()
@@ -1795,6 +1796,7 @@ def achievements_page():
     st.write("")
     st.write("")
 
+    # PAGE TITLE
     st.markdown("""
         <div class="section-title" style="text-align:center">
             YOUR FINAL REWARDS
@@ -1813,8 +1815,7 @@ def achievements_page():
 
     st.write("")
 
-    # CHECK ACHIEVEMENT CONDITIONS
-
+    # ACHIEVEMENT DATA
     achievements = [
         {
             "name": "KEY COLLECTOR",
@@ -1853,8 +1854,7 @@ def achievements_page():
         }
     ]
 
-    # COUNT UNLOCKED ACHIEVEMENTS
-
+    # UNLOCKED COUNT
     unlocked_count = sum(
         achievement["unlocked"]
         for achievement in achievements
@@ -1873,7 +1873,6 @@ def achievements_page():
     """, unsafe_allow_html=True)
 
     # ACHIEVEMENT CARDS
-
     for i in range(0, len(achievements), 2):
 
         col1, col2 = st.columns(2)
@@ -1886,13 +1885,10 @@ def achievements_page():
             with col:
 
                 if achievement["unlocked"]:
-
                     status = "✓ UNLOCKED"
                     border_color = "#D4AF37"
                     opacity = "1"
-
                 else:
-
                     status = "🔒 LOCKED"
                     border_color = "#555555"
                     opacity = "0.55"
@@ -1909,7 +1905,10 @@ def achievements_page():
                         min-height:190px;
                     ">
 
-                        <div style="font-size:42px;">
+                        <div style="
+                            font-size:42px;
+                            margin-bottom:10px;
+                        ">
                             {achievement["icon"]}
                         </div>
 
@@ -1917,7 +1916,7 @@ def achievements_page():
                             font-size:19px;
                             font-weight:bold;
                             color:#D4AF37;
-                            margin-top:10px;
+                            margin-bottom:10px;
                         ">
                             {achievement["name"]}
                         </div>
@@ -1925,7 +1924,7 @@ def achievements_page():
                         <div style="
                             font-size:14px;
                             color:#FFFFFF;
-                            margin:10px 0;
+                            margin-bottom:15px;
                         ">
                             {achievement["description"]}
                         </div>
@@ -1945,16 +1944,13 @@ def achievements_page():
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
     # BACK TO ENDING BUTTON
-
     left, center, right = st.columns([1, 2, 1])
 
     with center:
-
         if st.button(
             "← BACK TO ENDING",
             use_container_width=True
         ):
-
             st.session_state.page = "ending"
             st.rerun()
 
