@@ -1250,6 +1250,196 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
+def clean_answer(text):
+    # Normalizes input so "8 * (2x + 3)^3" and "8(2x+3)^3" are treated the same
+    return text.replace(" ", "").replace("*", "").replace("**", "^").lower()
+
+
+def room3():
+
+    design()
+
+    header(
+        "ROOM 03",
+        "THE LIBRARY",
+        "The third challenge — Product, Quotient & Chain Rules"
+    )
+
+    if st.session_state.game_over:
+
+        st.error("GAME OVER! You ran out of lives or time.")
+
+        if st.button("RETURN TO MENU"):
+            st.session_state.page = "home"
+            st.rerun()
+
+        return
+
+    game_status()
+    progress_bar()
+    floating_notification()
+    key_inventory()
+
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
+    # CHALLENGE 1 (Shelf 1 - Product Rule)
+    if st.session_state.question_number == 0:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 1 OF 3 — PRODUCT RULE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = x^2(3x + 1)")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 2x^2+3x)", key="r3_answer1")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if clean_answer(answer) in ["9x^2+2x", "2x+9x^2"]:
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Product Rule: (uv)' = u'v + uv'. Let u = x^2 and v = 3x + 1.")
+
+                    st.rerun()
+
+    # CHALLENGE 2 (Shelf 2 - Quotient Rule)
+    elif st.session_state.question_number == 1:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 2 OF 3 — QUOTIENT RULE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = \frac{x}{x + 1}")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 1/(x+2)^2)", key="r3_answer2")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if clean_answer(answer) in ["1/(x+1)^2", "1/(1+x)^2", "1/(x+1)²"]:
+                        st.session_state.feedback = "correct"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Quotient Rule: (u/v)' = (u'v - uv') / v^2. Let u = x and v = x + 1.")
+
+                    st.rerun()
+
+    # CHALLENGE 3 (Shelf 3 - Chain Rule)
+    elif st.session_state.question_number == 2:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 3 OF 3 — CHAIN RULE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = (2x + 3)^4")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 6(3x+1)^1)", key="r3_answer3")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    if clean_answer(answer) in ["8(2x+3)^3", "8(3+2x)^3"]:
+                        st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Chain Rule: differentiate the outer power first, then multiply by the derivative of the inside (2x + 3).")
+
+                    st.rerun()
+
+    # FEEDBACK
+    if st.session_state.feedback == "correct":
+
+        st.success("Correct! You found the hidden book.")
+
+        if st.button("CONTINUE", type="primary"):
+            st.session_state.notification = ""
+            st.session_state.notification_type = ""
+
+            st.session_state.question_number += 1
+            st.session_state.feedback = ""
+            st.session_state.hint_message = ""
+            st.session_state.hint_used_this_question = False
+
+            if st.session_state.question_number == 3:
+
+                st.session_state.room3_cleared = True
+                st.session_state.question_number = 0
+                st.session_state.page = "story"
+
+            st.rerun()
+
+    elif st.session_state.feedback == "wrong":
+
+        st.error("Incorrect! One life and five seconds deducted.")
+
+        st.session_state.feedback = ""
+
+        if st.session_state.game_over:
+            st.rerun()
+
+    # HINT MESSAGE
+    if st.session_state.hint_message:
+        st.info(st.session_state.hint_message)
+
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
@@ -1268,3 +1458,6 @@ elif st.session_state.page == "room1":
 
 elif st.session_state.page == "room2":
     room2()
+    
+elif st.session_state.page == "room3":
+    room3()
