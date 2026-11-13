@@ -229,7 +229,9 @@ def floating_notification():
 
     color = colors.get(notification_type, "#d9a441")
 
-    st.markdown(f"""
+    notification_box = st.empty()
+
+    notification_box.markdown(f"""
         <style>
         .floating-notification {{
             position: fixed;
@@ -263,6 +265,14 @@ def floating_notification():
         </div>
     """, unsafe_allow_html=True)
 
+    time.sleep(3)
+
+    notification_box.empty()
+
+    st.session_state.notification = ""
+    st.session_state.notification_type = ""
+
+    st.rerun()
 
 def header(label, title, subtitle):
 
