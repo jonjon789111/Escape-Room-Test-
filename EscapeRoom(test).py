@@ -19,7 +19,7 @@ defaults = {
     "time_limit": 1200,
     "start_time": None,
     "question_number": 0,
-
+    
     # ROOM PROGRESS
     "room1_cleared": False,
     "room2_cleared": False,
@@ -33,7 +33,10 @@ defaults = {
     "game_over": False,
     "feedback": "",
     "hint_message": "",
-    "hint_used_this_question": False
+    "hint_used_this_question": False,
+    "wrong_answers": 0,
+    "hints_used": 0,
+    "end_time": None
 }
 
 for key, value in defaults.items():
@@ -310,25 +313,25 @@ def reset_game():
     st.session_state.feedback = ""
     st.session_state.hint_message = ""
     st.session_state.hint_used_this_question = False
-
-
-
+    st.session_state.wrong_answers = 0
+    st.session_state.hints_used = 0
+    st.session_state.end_time = None
+    
 def start_game():
 
     reset_game()
     st.session_state.start_time = time.time()
     st.session_state.page = "room1"
-
-
+    
 def wrong_answer():
 
     st.session_state.lives -= 1
     st.session_state.start_time -= 5
+    st.session_state.wrong_answers += 1
 
     if st.session_state.lives <= 0:
         st.session_state.game_over = True
-
-
+        
 def use_hint(message):
 
     if st.session_state.hint_used_this_question:
@@ -338,6 +341,7 @@ def use_hint(message):
         st.session_state.hints -= 1
         st.session_state.hint_used_this_question = True
         st.session_state.hint_message = message
+        st.session_state.hints_used += 1
 
     else:
         st.warning("No hints remaining.")
@@ -1635,8 +1639,9 @@ def room4():
 
             # ROOM 4 COMPLETED
             if st.session_state.question_number == 3:
-
+            
                 st.session_state.room4_cleared = True
+                st.session_state.end_time = time.time()
 
                 if "Crystal Key" not in st.session_state.keys_collected:
                     st.session_state.keys_collected.append("Crystal Key")
@@ -1661,11 +1666,10 @@ def room4():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
-
-
 # ==========================================
 # ENDING PAGE
 # ==========================================
+
 
 def ending_page():
 
@@ -1741,6 +1745,20 @@ def ending_page():
 
     st.write("")
 
+    # SEE ACHIEVEMENTS BUTTON
+    left, center, right = st.columns([1, 2, 1])
+
+    with center:
+        if st.button(
+            "🏆 SEE ACHIEVEMENTS",
+            type="primary",
+            use_container_width=True
+        ):
+            st.session_state.page = "achievements"
+            st.rerun()
+
+    st.write("")
+
     # ENDING BUTTONS
     left, again, gap, menu, right = st.columns(
         [1, 2.5, 0.3, 2.5, 1]
@@ -1749,7 +1767,7 @@ def ending_page():
     with again:
         if st.button(
             "PLAY AGAIN",
-            type="primary",
+            type="secondary",
             use_container_width=True
         ):
             reset_game()
@@ -1765,7 +1783,181 @@ def ending_page():
             reset_game()
             st.session_state.page = "home"
             st.rerun()
-            
+
+# ==========================================
+# ACHIEVEMENTS PAGE
+# ==========================================
+
+def achievements_page():
+
+    design()
+
+    st.write("")
+    st.write("")
+
+    st.markdown("""
+        <div class="section-title" style="text-align:center">
+            YOUR FINAL REWARDS
+        </div>
+
+        <div class="main-title">
+            ACHIEVEMENTS
+        </div>
+
+        <div class="subtitle">
+            The Locked Classroom
+        </div>
+
+        <div class="gold-line"></div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    # CHECK ACHIEVEMENT CONDITIONS
+
+    achievements = [
+        {
+            "name": "KEY COLLECTOR",
+            "icon": "🔑",
+            "description": "Collect all four keys.",
+            "unlocked": len(st.session_state.keys_collected) == 4
+        },
+        {
+            "name": "UNTOUCHABLE",
+            "icon": "❤️",
+            "description": "Finish the game with all three lives.",
+            "unlocked": st.session_state.lives == 3
+        },
+        {
+            "name": "INDEPENDENT THINKER",
+            "icon": "💡",
+            "description": "Complete the game without using hints.",
+            "unlocked": st.session_state.hints_used == 0
+        },
+        {
+            "name": "PERFECT RUN",
+            "icon": "🎯",
+            "description": "Complete the game without incorrect answers.",
+            "unlocked": st.session_state.wrong_answers == 0
+        },
+        {
+            "name": "ESCAPE MASTER",
+            "icon": "🎓",
+            "description": "Complete all twelve challenges.",
+            "unlocked": (
+                st.session_state.room1_cleared
+                and st.session_state.room2_cleared
+                and st.session_state.room3_cleared
+                and st.session_state.room4_cleared
+            )
+        }
+    ]
+
+    # COUNT UNLOCKED ACHIEVEMENTS
+
+    unlocked_count = sum(
+        achievement["unlocked"]
+        for achievement in achievements
+    )
+
+    st.markdown(f"""
+        <div style="
+            text-align:center;
+            font-size:20px;
+            font-weight:bold;
+            margin:15px 0 25px 0;
+            color:#D4AF37;
+        ">
+            {unlocked_count} / {len(achievements)} ACHIEVEMENTS UNLOCKED
+        </div>
+    """, unsafe_allow_html=True)
+
+    # ACHIEVEMENT CARDS
+
+    for i in range(0, len(achievements), 2):
+
+        col1, col2 = st.columns(2)
+
+        for col, achievement in zip(
+            [col1, col2],
+            achievements[i:i + 2]
+        ):
+
+            with col:
+
+                if achievement["unlocked"]:
+
+                    status = "✓ UNLOCKED"
+                    border_color = "#D4AF37"
+                    opacity = "1"
+
+                else:
+
+                    status = "🔒 LOCKED"
+                    border_color = "#555555"
+                    opacity = "0.55"
+
+                st.markdown(f"""
+                    <div style="
+                        border:1px solid {border_color};
+                        border-radius:12px;
+                        padding:25px 15px;
+                        margin-bottom:18px;
+                        text-align:center;
+                        background:rgba(0,0,0,0.55);
+                        opacity:{opacity};
+                        min-height:190px;
+                    ">
+
+                        <div style="font-size:42px;">
+                            {achievement["icon"]}
+                        </div>
+
+                        <div style="
+                            font-size:19px;
+                            font-weight:bold;
+                            color:#D4AF37;
+                            margin-top:10px;
+                        ">
+                            {achievement["name"]}
+                        </div>
+
+                        <div style="
+                            font-size:14px;
+                            color:#FFFFFF;
+                            margin:10px 0;
+                        ">
+                            {achievement["description"]}
+                        </div>
+
+                        <div style="
+                            font-size:12px;
+                            font-weight:bold;
+                            color:{border_color};
+                        ">
+                            {status}
+                        </div>
+
+                    </div>
+                """, unsafe_allow_html=True)
+
+    st.write("")
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
+    # BACK TO ENDING BUTTON
+
+    left, center, right = st.columns([1, 2, 1])
+
+    with center:
+
+        if st.button(
+            "← BACK TO ENDING",
+            use_container_width=True
+        ):
+
+            st.session_state.page = "ending"
+            st.rerun()
+
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
@@ -1792,3 +1984,6 @@ elif st.session_state.page == "room4":
     
 elif st.session_state.page == "ending":
     ending_page()
+    
+elif st.session_state.page == "achievements":
+    achievements_page()
