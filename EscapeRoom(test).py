@@ -800,7 +800,7 @@ def instructions_page():
         ("ROOM 01", "BLACKBOARD", "Limits"),
         ("ROOM 02", "TEACHER'S DESK", "Power Rule"),
         ("ROOM 03", "STORAGE CABINET", "Product, Quotient, Chain Rules"),
-        ("ROOM 04", "EXIT DOOR", "Trigonometric Derivatives")
+        ("ROOM 04", "EXIT DOOR", "Trigonometric Derivatives, Exponential Function, Inverse Trigonometric Derivative")
     ]
 
     for col, room in zip(cols, rooms):
