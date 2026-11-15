@@ -1472,12 +1472,186 @@ def room3():
             left, right = st.columns(2)
 
             with left:
+def room3():
+
+    design()
+
+    header(
+        "ROOM 03",
+        "THE LIBRARY",
+        "The third challenge — Product, Quotient & Chain Rules"
+    )
+
+    if st.session_state.game_over:
+
+        st.error("GAME OVER! You ran out of lives or time.")
+
+        if st.button("RETURN TO MENU"):
+            st.session_state.page = "home"
+            st.rerun()
+
+        return
+
+    game_status()
+    progress_bar()
+    floating_notification()
+    key_inventory()
+
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
+    # CHALLENGE 1 (Shelf 1 - Product Rule)
+    if st.session_state.question_number == 0:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 1 OF 3 — PRODUCT RULE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = x^2(3x + 1)")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 2x^2+3x)", key="r3_answer1")
+
+            left, right = st.columns(2)
+
+            with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if clean_answer(answer) in ["8(2x+3)^3", "8(3+2x)^3"]:
+                    is_correct = clean_answer(answer) in ["9x^2+2x", "2x+9x^2"]
+
+                    save_attempt(
+                        "ROOM 3 - LIBRARY",
+                        1,
+                        "f(x) = x^2(3x + 1)",
+                        answer,
+                        "9x^2+2x",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Product Rule: (uv)' = u'v + uv'. Let u = x^2 and v = 3x + 1.")
+
+                    st.rerun()
+
+    # CHALLENGE 2 (Shelf 2 - Quotient Rule)
+    elif st.session_state.question_number == 1:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 2 OF 3 — QUOTIENT RULE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = \frac{x}{x + 1}")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 1/(x+2)^2)", key="r3_answer2")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    is_correct = clean_answer(answer) in [
+                        "1/(x+1)^2",
+                        "1/(1+x)^2",
+                        "1/(x+1)²"
+                    ]
+
+                    save_attempt(
+                        "ROOM 3 - LIBRARY",
+                        2,
+                        "f(x) = x/(x + 1)",
+                        answer,
+                        "1/(x+1)^2",
+                        is_correct
+                    )
+
+                    if is_correct:
+                        st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+
+                    else:
+                        wrong_answer()
+                        st.session_state.feedback = "wrong"
+                        st.session_state.notification = "✕ INCORRECT ANSWER!"
+                        st.session_state.notification_type = "error"
+
+                    st.rerun()
+
+            with right:
+                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                    if st.session_state.hint_used_this_question:
+                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                    else:
+                        use_hint("Quotient Rule: (u/v)' = (u'v - uv') / v^2. Let u = x and v = x + 1.")
+
+                    st.rerun()
+
+    # CHALLENGE 3 (Shelf 3 - Chain Rule)
+    elif st.session_state.question_number == 2:
+
+        with st.container(border=True):
+
+            st.markdown(
+                '<div class="section-title">SHELF 3 OF 3 — CHAIN RULE</div>',
+                unsafe_allow_html=True
+            )
+
+            st.write("Find the derivative of the function:")
+            st.latex(r"f(x) = (2x + 3)^4")
+
+            answer = st.text_input("YOUR ANSWER (e.g. 6(3x+1)^1)", key="r3_answer3")
+
+            left, right = st.columns(2)
+
+            with left:
+                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                    is_correct = clean_answer(answer) in [
+                        "8(2x+3)^3",
+                        "8(3+2x)^3"
+                    ]
+
+                    save_attempt(
+                        "ROOM 3 - LIBRARY",
+                        3,
+                        "f(x) = (2x + 3)^4",
+                        answer,
+                        "8(2x+3)^3",
+                        is_correct
+                    )
+
+                    if is_correct:
+                        st.session_state.feedback = "correct"
+                        st.session_state.notification = "✓ CORRECT ANSWER!"
+                        st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -1514,17 +1688,16 @@ def room3():
             if st.session_state.question_number == 3:
 
                 st.session_state.room3_cleared = True
-            
+
                 # COLLECT GOLD KEY
                 if "Gold Key" not in st.session_state.keys_collected:
                     st.session_state.keys_collected.append("Gold Key")
-            
+
                 st.session_state.notification = "🔑 GOLD KEY COLLECTED!"
                 st.session_state.notification_type = "warning"
-            
+
                 st.session_state.question_number = 0
                 st.session_state.page = "story"
-
 
             st.rerun()
 
@@ -1547,6 +1720,7 @@ def room3():
 def room4():
 
     design()
+
     header(
         "ROOM 04",
         "THE EXIT DOOR",
@@ -1590,7 +1764,21 @@ def room4():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if clean_answer(answer) in ["2cos(2x)", "2cos2x"]:
+                    is_correct = clean_answer(answer) in [
+                        "2cos(2x)",
+                        "2cos2x"
+                    ]
+
+                    save_attempt(
+                        "ROOM 4 - EXIT DOOR",
+                        1,
+                        "f(x) = sin(2x)",
+                        answer,
+                        "2cos(2x)",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -1634,7 +1822,18 @@ def room4():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if clean_answer(answer) in ["5^uln(5)"]:
+                    is_correct = clean_answer(answer) in ["5^uln(5)"]
+
+                    save_attempt(
+                        "ROOM 4 - EXIT DOOR",
+                        2,
+                        "f(u) = 5^u",
+                        answer,
+                        "5^u ln(5)",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -1678,10 +1877,21 @@ def room4():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if clean_answer(answer) in [
+                    is_correct = clean_answer(answer) in [
                         "e^xtan(x)+e^xsec^2(x)",
                         "e^x(sec^2(x)+tan(x))"
-                    ]:
+                    ]
+
+                    save_attempt(
+                        "ROOM 4 - EXIT DOOR",
+                        3,
+                        "f(x) = e^x tan x",
+                        answer,
+                        "e^x tan(x)+e^x sec^2(x)",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -1722,7 +1932,7 @@ def room4():
 
             # ROOM 4 COMPLETED
             if st.session_state.question_number == 3:
-            
+
                 st.session_state.room4_cleared = True
                 st.session_state.end_time = time.time()
 
@@ -1748,7 +1958,7 @@ def room4():
         st.info(st.session_state.hint_message)
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-
+    
 # ==========================================
 # ENDING PAGE
 # ==========================================
