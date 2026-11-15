@@ -1722,9 +1722,6 @@ def room4():
 
 def ending_page():
 
-    
-def ending_page():
-
     design()
 
     st.write("")
