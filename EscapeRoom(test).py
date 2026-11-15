@@ -921,6 +921,9 @@ def instructions_page():
 
 def room1():
 
+    
+def room1():
+
     design()
 
     header(
@@ -951,12 +954,6 @@ def room1():
     # CHALLENGE 1
     if st.session_state.question_number == 0:
 
-        add_clue(
-            "ROOM 1 - BLACKBOARD",
-            "Challenge 1: Direct Substitution",
-            "Try substituting the given value of x directly into the expression."
-        )
-
         with st.container(border=True):
 
             st.markdown(
@@ -966,6 +963,16 @@ def room1():
 
             st.write("Find the limit:")
             st.latex(r"\lim_{x\to2}(3x+4)")
+
+            # DISCOVER CLUE
+            if st.button("🔍 INSPECT BLACKBOARD", key="clue1"):
+                add_clue(
+                    "ROOM 1 - BLACKBOARD",
+                    "Challenge 1: Direct Substitution",
+                    "Try substituting the given value of x directly into the expression."
+                )
+
+                st.success("New clue added to your journal!")
 
             answer = st.text_input("YOUR ANSWER", key="answer1")
 
@@ -999,12 +1006,6 @@ def room1():
     # CHALLENGE 2
     elif st.session_state.question_number == 1:
 
-        add_clue(
-            "ROOM 1 - BLACKBOARD",
-            "Challenge 2: Factoring",
-            "When direct substitution gives an indeterminate form, try factoring the numerator and simplifying."
-        )
-
         with st.container(border=True):
 
             st.markdown(
@@ -1014,6 +1015,16 @@ def room1():
 
             st.write("Evaluate the following limit:")
             st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
+
+            # DISCOVER CLUE
+            if st.button("🔍 INSPECT BLACKBOARD", key="clue2"):
+                add_clue(
+                    "ROOM 1 - BLACKBOARD",
+                    "Challenge 2: Factoring",
+                    "When direct substitution gives an indeterminate form, try factoring the numerator and simplifying."
+                )
+
+                st.success("New clue added to your journal!")
 
             answer = st.text_input("YOUR ANSWER", key="answer2")
 
@@ -1047,12 +1058,6 @@ def room1():
     # CHALLENGE 3
     elif st.session_state.question_number == 2:
 
-        add_clue(
-            "ROOM 1 - BLACKBOARD",
-            "Challenge 3: Factoring Trinomials",
-            "Look for two factors of the numerator. Factor first, then simplify before evaluating the limit."
-        )
-
         with st.container(border=True):
 
             st.markdown(
@@ -1062,6 +1067,16 @@ def room1():
 
             st.write("Find the limit:")
             st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
+
+            # DISCOVER CLUE
+            if st.button("🔍 INSPECT BLACKBOARD", key="clue3"):
+                add_clue(
+                    "ROOM 1 - BLACKBOARD",
+                    "Challenge 3: Factoring Trinomials",
+                    "Look for two factors of the numerator. Factor first, then simplify before evaluating the limit."
+                )
+
+                st.success("New clue added to your journal!")
 
             answer = st.text_input("YOUR ANSWER", key="answer3")
 
@@ -1136,7 +1151,7 @@ def room1():
         st.info(st.session_state.hint_message)
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-
+    
 # ==========================================
 # ROOM 2 — THE TEACHER'S DESK
 # ==========================================
