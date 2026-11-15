@@ -34,9 +34,11 @@ defaults = {
     "feedback": "",
     "hint_message": "",
     "hint_used_this_question": False,
+    "answer_history": [],
     "wrong_answers": 0,
     "hints_used": 0,
-    "end_time": None
+    "end_time": None,
+    
 }
 
 for key, value in defaults.items():
@@ -301,6 +303,7 @@ def reset_game():
     st.session_state.start_time = None
     st.session_state.question_number = 0
     st.session_state.keys_collected = []
+    st.session_state.answer_history = []
 
     # ROOM PROGRESS
     st.session_state.room1_cleared = False
@@ -331,6 +334,19 @@ def wrong_answer():
 
     if st.session_state.lives <= 0:
         st.session_state.game_over = True
+
+def save_attempt(room, challenge, question, answer, correct_answer, is_correct):
+
+    attempt = {
+        "room": room,
+        "challenge": challenge,
+        "question": question,
+        "your_answer": answer,
+        "correct_answer": correct_answer,
+        "is_correct": is_correct
+    }
+
+    st.session_state.answer_history.append(attempt)
         
 def use_hint(message):
 
@@ -845,6 +861,7 @@ def instructions_page():
 # ROOM 1 — THE BLACKBOARD
 # ==========================================
 
+
 def room1():
 
     design()
@@ -893,7 +910,18 @@ def room1():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if answer.strip() == "10":
+                    is_correct = answer.strip() == "10"
+
+                    save_attempt(
+                        "ROOM 1 - BLACKBOARD",
+                        1,
+                        r"\lim_{x\to2}(3x+4)",
+                        answer,
+                        "10",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -935,7 +963,18 @@ def room1():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if answer.strip() == "4":
+                    is_correct = answer.strip() == "4"
+
+                    save_attempt(
+                        "ROOM 1 - BLACKBOARD",
+                        2,
+                        r"\lim_{x\to2}\frac{x^2-4}{x-2}",
+                        answer,
+                        "4",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -977,7 +1016,18 @@ def room1():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if answer.strip() == "5":
+                    is_correct = answer.strip() == "5"
+
+                    save_attempt(
+                        "ROOM 1 - BLACKBOARD",
+                        3,
+                        r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}",
+                        answer,
+                        "5",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -1043,7 +1093,6 @@ def room1():
         st.info(st.session_state.hint_message)
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-
 
 # ==========================================
 # ROOM 2 — THE TEACHER'S DESK
@@ -1958,7 +2007,104 @@ def achievements_page():
         ):
             st.session_state.page = "ending"
             st.rerun()
-            
+
+
+def review_answers():
+
+    design()
+
+    header(
+        "REVIEW",
+        "ANSWER HISTORY",
+        "Review your submitted answers"
+    )
+
+    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
+    rooms = [
+        {
+            "name": "ROOM 1 - BLACKBOARD",
+            "questions": [
+                r"\lim_{x\to2}(3x+4)",
+                r"\lim_{x\to2}\frac{x^2-4}{x-2}",
+                r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}"
+            ]
+        },
+        {
+            "name": "ROOM 2 - TEACHER'S DESK",
+            "questions": [
+                r"f(x)=4x^3",
+                r"f(x)=5x^2-3x+7",
+                r"f(x)=10x^4+9x^3+4x^2+x+67"
+            ]
+        },
+        {
+            "name": "ROOM 3 - LIBRARY",
+            "questions": [
+                r"f(x)=x^2(3x+1)",
+                r"f(x)=\frac{x}{x+1}",
+                r"f(x)=(2x+3)^4"
+            ]
+        },
+        {
+            "name": "ROOM 4 - EXIT DOOR",
+            "questions": [
+                r"f(x)=\sin(2x)",
+                r"f(u)=5^u",
+                r"f(x)=e^x\tan(x)"
+            ]
+        }
+    ]
+
+    for room_index, room in enumerate(rooms):
+
+        st.markdown(f"### {room['name']}")
+
+        for challenge_index, question in enumerate(room["questions"], start=1):
+
+            attempts = [
+                item for item in st.session_state.answer_history
+                if item["room"] == room["name"]
+                and item["challenge"] == challenge_index
+            ]
+
+            with st.expander(f"CHALLENGE {challenge_index}"):
+
+                st.write("**Question:**")
+                st.latex(question)
+
+                if not attempts:
+
+                    st.warning("Not Attempted")
+
+                else:
+
+                    for attempt_number, attempt in enumerate(attempts, start=1):
+
+                        st.markdown(f"**Attempt {attempt_number}**")
+
+                        st.write(f"Your Answer: {attempt['your_answer']}")
+
+                        if attempt["is_correct"]:
+
+                            st.success("Correct!")
+
+                        else:
+
+                            st.error("Incorrect!")
+                            st.write(
+                                f"Correct Answer: {attempt['correct_answer']}"
+                            )
+
+                        st.markdown("---")
+
+        st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
+    if st.button("BACK TO ENDING", type="primary", use_container_width=True):
+
+        st.session_state.page = "ending"
+        st.rerun()
+
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
@@ -1988,3 +2134,6 @@ elif st.session_state.page == "ending":
     
 elif st.session_state.page == "achievements":
     achievements_page()
+    
+elif st.session_state.page == "review":
+    review_answers()
