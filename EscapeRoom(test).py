@@ -1722,6 +1722,9 @@ def room4():
 
 def ending_page():
 
+    
+def ending_page():
+
     design()
 
     st.write("")
@@ -1794,10 +1797,12 @@ def ending_page():
 
     st.write("")
 
-    # SEE ACHIEVEMENTS BUTTON
-    left, center, right = st.columns([1, 2, 1])
+    # ACHIEVEMENTS AND REVIEW ANSWERS BUTTONS
+    left, achievements, review, right = st.columns(
+        [1, 2.5, 2.5, 1]
+    )
 
-    with center:
+    with achievements:
         if st.button(
             "🏆 SEE ACHIEVEMENTS",
             type="primary",
@@ -1806,6 +1811,16 @@ def ending_page():
             st.session_state.page = "achievements"
             st.rerun()
 
+    with review:
+        if st.button(
+            "📖 REVIEW ANSWERS",
+            type="primary",
+            use_container_width=True
+        ):
+            st.session_state.page = "review"
+            st.rerun()
+
+    st.write("")
     st.write("")
 
     # ENDING BUTTONS
