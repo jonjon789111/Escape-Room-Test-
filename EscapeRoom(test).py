@@ -664,7 +664,7 @@ def story_page():
     with col2:
         with st.container(border=True):
             st.markdown("### 🚪 The Exit Door")
-            st.caption("Room 4 — Trigonometric Derivatives")
+            st.caption("Room 4 — Trigonometric Derivative, Exponential Function, Inverse Trigonometric Derivative")
 
             if st.session_state.room4_cleared:
                 st.success("COMPLETED")
