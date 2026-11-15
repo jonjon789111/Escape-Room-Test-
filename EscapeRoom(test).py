@@ -1098,6 +1098,7 @@ def room1():
 # ROOM 2 — THE TEACHER'S DESK
 # ==========================================
 
+
 def room2():
 
     design()
@@ -1146,7 +1147,18 @@ def room2():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if answer.replace(" ", "").lower() == "12x^2":
+                    is_correct = answer.replace(" ", "").lower() == "12x^2"
+
+                    save_attempt(
+                        "ROOM 2 - TEACHER'S DESK",
+                        1,
+                        "f(x) = 4x^3",
+                        answer,
+                        "12x^2",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -1190,7 +1202,18 @@ def room2():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if answer.replace(" ", "").lower() == "10x-3":
+                    is_correct = answer.replace(" ", "").lower() == "10x-3"
+
+                    save_attempt(
+                        "ROOM 2 - TEACHER'S DESK",
+                        2,
+                        "f(x) = 5x^2 - 3x + 7",
+                        answer,
+                        "10x-3",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -1234,7 +1257,18 @@ def room2():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    if answer.replace(" ", "").lower() == "40x^3+27x^2+8x+1":
+                    is_correct = answer.replace(" ", "").lower() == "40x^3+27x^2+8x+1"
+
+                    save_attempt(
+                        "ROOM 2 - TEACHER'S DESK",
+                        3,
+                        "f(x) = 10x^4 + 9x^3 + 4x^2 + x + 67",
+                        answer,
+                        "40x^3+27x^2+8x+1",
+                        is_correct
+                    )
+
+                    if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
@@ -1718,7 +1752,6 @@ def room4():
 # ==========================================
 # ENDING PAGE
 # ==========================================
-
 
 def ending_page():
 
