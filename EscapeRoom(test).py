@@ -921,9 +921,6 @@ def instructions_page():
 
 def room1():
 
-    
-def room1():
-
     design()
 
     header(
