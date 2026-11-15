@@ -36,7 +36,9 @@ defaults = {
     "hint_used_this_question": False,
     "wrong_answers": 0,
     "hints_used": 0,
-    "end_time": None
+    "end_time": None,
+    "clue_journal_open": False,
+    "clues_found": []
 }
 
 for key, value in defaults.items():
@@ -316,6 +318,8 @@ def reset_game():
     st.session_state.wrong_answers = 0
     st.session_state.hints_used = 0
     st.session_state.end_time = None
+    st.session_state.clue_journal_open = False
+    st.session_state.clues_found = []
     
 def start_game():
 
@@ -491,6 +495,75 @@ def key_inventory():
     scrolling=False,
     tab_index=None
 )
+
+def add_clue(room, title, clue):
+
+    new_clue = {
+        "room": room,
+        "title": title,
+        "clue": clue
+    }
+
+    # Prevent duplicate clues
+    if new_clue not in st.session_state.clues_found:
+        st.session_state.clues_found.append(new_clue)
+
+
+def clue_journal():
+
+    st.write("")
+
+    # JOURNAL BUTTON
+    if st.button(
+        "📖 CLUE JOURNAL",
+        use_container_width=True
+    ):
+        st.session_state.clue_journal_open = (
+            not st.session_state.clue_journal_open
+        )
+        st.rerun()
+
+    # JOURNAL PANEL
+    if st.session_state.clue_journal_open:
+
+        with st.container(border=True):
+
+            st.markdown("""
+                <div style="
+                    text-align:center;
+                    color:#D4AF37;
+                    font-size:22px;
+                    font-weight:bold;
+                ">
+                    📖 CLUE JOURNAL
+                </div>
+            """, unsafe_allow_html=True)
+
+            st.caption(
+                f"{len(st.session_state.clues_found)} CLUES DISCOVERED"
+            )
+
+            st.markdown("---")
+
+            if len(st.session_state.clues_found) == 0:
+
+                st.info(
+                    "No clues discovered yet. Explore the rooms to find clues."
+                )
+
+            else:
+
+                for clue in st.session_state.clues_found:
+
+                    st.markdown(f"""
+                        **{clue["room"]}**
+
+                        **{clue["title"]}**
+
+                        {clue["clue"]}
+                    """)
+
+                    st.markdown("---")
 
 def progress_bar():
 
@@ -845,6 +918,7 @@ def instructions_page():
 # ROOM 1 — THE BLACKBOARD
 # ==========================================
 
+
 def room1():
 
     design()
@@ -870,11 +944,18 @@ def room1():
     progress_bar()
     floating_notification()
     key_inventory()
+    clue_journal()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
     # CHALLENGE 1
     if st.session_state.question_number == 0:
+
+        add_clue(
+            "ROOM 1 - BLACKBOARD",
+            "Challenge 1: Direct Substitution",
+            "Try substituting the given value of x directly into the expression."
+        )
 
         with st.container(border=True):
 
@@ -918,6 +999,12 @@ def room1():
     # CHALLENGE 2
     elif st.session_state.question_number == 1:
 
+        add_clue(
+            "ROOM 1 - BLACKBOARD",
+            "Challenge 2: Factoring",
+            "When direct substitution gives an indeterminate form, try factoring the numerator and simplifying."
+        )
+
         with st.container(border=True):
 
             st.markdown(
@@ -959,6 +1046,12 @@ def room1():
 
     # CHALLENGE 3
     elif st.session_state.question_number == 2:
+
+        add_clue(
+            "ROOM 1 - BLACKBOARD",
+            "Challenge 3: Factoring Trinomials",
+            "Look for two factors of the numerator. Factor first, then simplify before evaluating the limit."
+        )
 
         with st.container(border=True):
 
@@ -1044,7 +1137,6 @@ def room1():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
-
 # ==========================================
 # ROOM 2 — THE TEACHER'S DESK
 # ==========================================
@@ -1074,6 +1166,7 @@ def room2():
     progress_bar()
     floating_notification()
     key_inventory()
+    clue_journal()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
@@ -1282,6 +1375,7 @@ def room3():
     progress_bar()
     floating_notification()
     key_inventory()
+    clue_journal()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
@@ -1484,6 +1578,7 @@ def room4():
     progress_bar()
     floating_notification()
     key_inventory()
+    clue_journal()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
