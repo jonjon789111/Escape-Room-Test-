@@ -291,23 +291,46 @@ def header(label, title, subtitle):
         <div class="gold-line"></div>
     """, unsafe_allow_html=True)
 
+
 def presenter_mode():
 
-    design()
-    
     if "presenter_unlocked" not in st.session_state:
         st.session_state.presenter_unlocked = False
 
     with st.sidebar:
-        st.markdown("### Presenter Access")
+
+        # PRESENTER MODE DESIGN
+        st.markdown("""
+            <div style="
+                background: linear-gradient(135deg, #172554, #1e40af);
+                padding: 14px;
+                border-radius: 12px;
+                margin-bottom: 15px;
+                border: 1px solid #3b82f6;
+            ">
+                <div style="font-size: 20px; font-weight: bold; color: white;">
+                    🎮 Presenter Mode
+                </div>
+                <div style="font-size: 11px; color: #bfdbfe;">
+                    THE LOCKED CLASSROOM
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
         if not st.session_state.presenter_unlocked:
+
+            st.caption("🔐 PRESENTER ACCESS")
+
             password = st.text_input(
-                "Enter presenter password",
-                type="password"
+                "Enter password",
+                type="password",
+                key="presenter_password"
             )
 
-            if st.button("Unlock Presenter Mode"):
+            if st.button(
+                "Unlock Presenter Mode",
+                use_container_width=True
+            ):
                 if password == st.secrets["PRESENTER_PASSWORD"]:
                     st.session_state.presenter_unlocked = True
                     st.rerun()
@@ -315,31 +338,47 @@ def presenter_mode():
                     st.error("Incorrect password.")
 
         else:
+
             st.success("Presenter Mode Active")
 
+            st.markdown("##### 🏫 ROOM NAVIGATION")
+
             pages = {
-                "Home Page": "home",
-                "Story": "story",
-                "Room 1": "room1",
-                "Room 2": "room2",
-                "Room 3": "room3",
-                "Room 4": "room4",
-                "Achievements": "achievements",
-                "Answer History": "review"
+                "01 | Blackboard": "room1",
+                "02 | Teacher's Desk": "room2",
+                "03 | Library": "room3",
+                "04 | Exit Door": "room4"
             }
 
             for name, page in pages.items():
 
                 if st.button(name, use_container_width=True):
 
-                    if page.startswith("room"):
-                        start_presenter_room(page)
+                    start_presenter_room(page)
 
-                    else:
-                        st.session_state.page = page
-                        st.rerun()
+            st.markdown("##### 📂 OTHER PAGES")
 
-            if st.button("Exit Presenter Mode"):
+            other_pages = {
+                "🏠 Home Page": "home",
+                "📖 Story": "story",
+                "🏆 Achievements": "achievements",
+                "📋 Answer History": "review"
+            }
+
+            for name, page in other_pages.items():
+
+                if st.button(name, use_container_width=True):
+
+                    st.session_state.page = page
+                    st.rerun()
+
+            st.divider()
+
+            if st.button(
+                "🔒 Exit Presenter Mode",
+                use_container_width=True,
+                type="secondary"
+            ):
                 st.session_state.presenter_unlocked = False
                 st.session_state.page = "home"
                 st.rerun()
