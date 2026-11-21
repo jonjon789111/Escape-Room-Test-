@@ -326,9 +326,15 @@ def presenter_mode():
             }
 
             for name, page in pages.items():
+
                 if st.button(name, use_container_width=True):
-                    st.session_state.page = page
-                    st.rerun()
+
+                    if page.startswith("room"):
+                        start_presenter_room(page)
+
+                    else:
+                        st.session_state.page = page
+                        st.rerun()
 
             if st.button("Exit Presenter Mode"):
                 st.session_state.presenter_unlocked = False
@@ -363,6 +369,17 @@ def reset_game():
     st.session_state.wrong_answers = 0
     st.session_state.hints_used = 0
     st.session_state.end_time = None
+
+def start_presenter_room(room):
+
+    reset_game()
+
+    st.session_state.page = room
+
+    # Start the timer immediately
+    st.session_state.start_time = time.time()
+
+    st.rerun()
     
 def start_game():
 
