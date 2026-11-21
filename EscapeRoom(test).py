@@ -1797,7 +1797,7 @@ def room4():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    is_correct = clean_answer(answer) in ["5^uln(5)"]
+                    is_correct = clean_answer(answer) in ["5^uln(5), 5^uln5"]
 
                     save_attempt(
                         "ROOM 4 - EXIT DOOR",
