@@ -1805,6 +1805,7 @@ def room4():
                         "f(u) = 5^u",
                         answer,
                         "5^u ln(5)",
+                        "5^uln5",
                         is_correct
                     )
 
