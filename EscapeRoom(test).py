@@ -291,6 +291,49 @@ def header(label, title, subtitle):
         <div class="gold-line"></div>
     """, unsafe_allow_html=True)
 
+def presenter_mode():
+    if "presenter_unlocked" not in st.session_state:
+        st.session_state.presenter_unlocked = False
+
+    with st.sidebar:
+        st.markdown("### Presenter Access")
+
+        if not st.session_state.presenter_unlocked:
+            password = st.text_input(
+                "Enter presenter password",
+                type="password"
+            )
+
+            if st.button("Unlock Presenter Mode"):
+                if password == st.secrets["PRESENTER_PASSWORD"]:
+                    st.session_state.presenter_unlocked = True
+                    st.rerun()
+                else:
+                    st.error("Incorrect password.")
+
+        else:
+            st.success("Presenter Mode Active")
+
+            pages = {
+                "Home Page": "home",
+                "Story": "story",
+                "Room 1": "room1",
+                "Room 2": "room2",
+                "Room 3": "room3",
+                "Room 4": "room4",
+                "Achievements": "achievements",
+                "Answer History": "review"
+            }
+
+            for name, page in pages.items():
+                if st.button(name, use_container_width=True):
+                    st.session_state.page = page
+                    st.rerun()
+
+            if st.button("Exit Presenter Mode"):
+                st.session_state.presenter_unlocked = False
+                st.rerun()
+                
 # ==========================================
 # GAME FUNCTIONS
 # ==========================================
@@ -2233,6 +2276,8 @@ def review_answers():
 # ==========================================
 # PAGE NAVIGATION
 # ==========================================
+presenter_mode()
+
 if st.session_state.page == "home":
     home_page()
 
