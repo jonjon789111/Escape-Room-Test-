@@ -332,8 +332,9 @@ def presenter_mode():
 
             if st.button("Exit Presenter Mode"):
                 st.session_state.presenter_unlocked = False
+                st.session_state.page = "home"
                 st.rerun()
-                
+                            
 # ==========================================
 # GAME FUNCTIONS
 # ==========================================
