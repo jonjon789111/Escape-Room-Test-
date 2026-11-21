@@ -305,7 +305,7 @@ def presenter_mode():
             )
 
             if st.button("Unlock Presenter Mode"):
-                if password == st.secrets["jonjon789111"]:
+                if password == st.secrets["PRESENTER_PASSWORD"]:
                     st.session_state.presenter_unlocked = True
                     st.rerun()
                 else:
