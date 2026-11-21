@@ -372,8 +372,10 @@ def start_game():
 def wrong_answer():
 
     st.session_state.lives -= 1
-    st.session_state.start_time -= 5
     st.session_state.wrong_answers += 1
+
+    if "start_time" in st.session_state:
+        st.session_state.start_time -= 5
 
     if st.session_state.lives <= 0:
         st.session_state.game_over = True
