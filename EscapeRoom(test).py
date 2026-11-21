@@ -1790,7 +1790,7 @@ def room4():
             st.write("Find the derivative of the function:")
             st.latex(r"f(u) = 5^u")
 
-            answer = st.text_input("YOUR ANSWER", key="r4_answer2")
+            answer = st.text_input("YOUR ANSWER ex.(3^xln(3))", key="r4_answer2")
 
             left, right = st.columns(2)
 
