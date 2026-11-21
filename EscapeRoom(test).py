@@ -1797,7 +1797,7 @@ def room4():
             with left:
                 if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    is_correct = clean_answer(answer) in ["5^uln(5), 5^uln5"]
+                    is_correct = clean_answer(answer) in ["5^uln(5)"]
 
                     save_attempt(
                         "ROOM 4 - EXIT DOOR",
@@ -1805,7 +1805,6 @@ def room4():
                         "f(u) = 5^u",
                         answer,
                         "5^u ln(5)",
-                        "5^uln5",
                         is_correct
                     )
 
