@@ -292,6 +292,9 @@ def header(label, title, subtitle):
     """, unsafe_allow_html=True)
 
 def presenter_mode():
+
+    design()
+    
     if "presenter_unlocked" not in st.session_state:
         st.session_state.presenter_unlocked = False
 
