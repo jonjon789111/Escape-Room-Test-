@@ -2409,7 +2409,10 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
    
+
 def room3():
+
+    design()
 
     # INITIALIZE ROOM 3 SELECTION STATE
     if "room3_object" not in st.session_state:
@@ -2557,7 +2560,6 @@ def room3():
         st.stop()
 
     # ROOM DESIGN AND HEADER
-    design()
 
     header(
         "ROOM 03",
@@ -2580,6 +2582,104 @@ def room3():
     floating_notification()
     key_inventory()
 
+    # ROOM 3 SHELF BUTTON DESIGN
+    st.html("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
+
+    div[class*="st-key-room3_shelf1"] button,
+    div[class*="st-key-room3_shelf2"] button,
+    div[class*="st-key-room3_shelf3"] button {
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(115,77,39,0.25),
+                transparent 35%,
+                rgba(0,0,0,0.3)
+            ),
+            linear-gradient(
+                135deg,
+                #49301E 0%,
+                #2B1B12 48%,
+                #1A100B 100%
+            ) !important;
+
+        border: 2px solid #A77B3D !important;
+        border-radius: 10px !important;
+
+        min-height: 82px !important;
+
+        color: #EBD09A !important;
+        font-family: 'Cinzel', serif !important;
+        font-size: 16px !important;
+        font-weight: 900 !important;
+        letter-spacing: 1.2px !important;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255,225,170,0.18),
+            inset 0 0 0 4px rgba(198,154,69,0.08),
+            0 6px 15px rgba(0,0,0,0.45) !important;
+
+        transition: all 0.25s ease !important;
+    }
+
+    div[class*="st-key-room3_shelf1"] button:hover:not(:disabled),
+    div[class*="st-key-room3_shelf2"] button:hover:not(:disabled),
+    div[class*="st-key-room3_shelf3"] button:hover:not(:disabled) {
+
+        background:
+            linear-gradient(
+                135deg,
+                #73502A,
+                #3F2918 50%,
+                #604323
+            ) !important;
+
+        border-color: #F0D18A !important;
+        color: #FFF0C2 !important;
+
+        box-shadow:
+            0 0 20px rgba(218,165,72,0.35),
+            inset 0 0 15px rgba(255,210,120,0.08) !important;
+
+        transform: translateY(-3px);
+    }
+
+    div[class*="st-key-room3_shelf1"] button:active,
+    div[class*="st-key-room3_shelf2"] button:active,
+    div[class*="st-key-room3_shelf3"] button:active {
+        transform: translateY(0px);
+    }
+
+    div[class*="st-key-room3_shelf1"] button:disabled,
+    div[class*="st-key-room3_shelf2"] button:disabled,
+    div[class*="st-key-room3_shelf3"] button:disabled {
+
+        background:
+            linear-gradient(
+                135deg,
+                #241B14,
+                #17100B
+            ) !important;
+
+        border: 2px solid #51402B !important;
+        color: #78664C !important;
+        opacity: 0.65 !important;
+        box-shadow: none !important;
+        cursor: not-allowed !important;
+    }
+
+    div[class*="st-key-room3_shelf1"] button p,
+    div[class*="st-key-room3_shelf2"] button p,
+    div[class*="st-key-room3_shelf3"] button p {
+        font-family: 'Cinzel', serif !important;
+        font-weight: 900 !important;
+    }
+
+    </style>
+    """)
+
     st.markdown(
         '<div class="gold-line"></div>',
         unsafe_allow_html=True
@@ -2601,7 +2701,7 @@ def room3():
 
         # SHELF 1
         if st.button(
-            "📚  SHELF 1 — PRODUCT RULE",
+            "📖   SHELF I — THE PRODUCT RULE   ➜",
             key="room3_shelf1",
             use_container_width=True,
             disabled=st.session_state.question_number > 0
@@ -2611,7 +2711,7 @@ def room3():
 
         # SHELF 2
         if st.button(
-            "📚  SHELF 2 — QUOTIENT RULE",
+            "📖   SHELF II — THE QUOTIENT RULE   ➜",
             key="room3_shelf2",
             use_container_width=True,
             disabled=st.session_state.question_number < 1
@@ -2621,7 +2721,7 @@ def room3():
 
         # SHELF 3
         if st.button(
-            "📚  SHELF 3 — CHAIN RULE",
+            "📖   SHELF III — THE CHAIN RULE   ➜",
             key="room3_shelf3",
             use_container_width=True,
             disabled=st.session_state.question_number < 2
@@ -2658,6 +2758,7 @@ def room3():
                 if st.button(
                     "SUBMIT ANSWER",
                     type="primary",
+                    key="r3_submit1",
                     use_container_width=True
                 ):
 
@@ -2697,6 +2798,7 @@ def room3():
             with right:
                 if st.button(
                     "USE HINT",
+                    key="r3_hint1",
                     type="secondary",
                     use_container_width=True
                 ):
@@ -2738,6 +2840,7 @@ def room3():
                 if st.button(
                     "SUBMIT ANSWER",
                     type="primary",
+                    key="r3_submit2",
                     use_container_width=True
                 ):
 
@@ -2778,6 +2881,7 @@ def room3():
             with right:
                 if st.button(
                     "USE HINT",
+                    key="r3_hint2",
                     type="secondary",
                     use_container_width=True
                 ):
@@ -2819,6 +2923,7 @@ def room3():
                 if st.button(
                     "SUBMIT ANSWER",
                     type="primary",
+                    key="r3_submit3",
                     use_container_width=True
                 ):
 
@@ -2858,6 +2963,7 @@ def room3():
             with right:
                 if st.button(
                     "USE HINT",
+                    key="r3_hint3",
                     type="secondary",
                     use_container_width=True
                 ):
@@ -2881,7 +2987,11 @@ def room3():
 
         st.success("Correct! You completed the challenge.")
 
-        if st.button("CONTINUE", type="primary"):
+        if st.button(
+            "CONTINUE",
+            key="r3_continue",
+            type="primary"
+        ):
 
             st.session_state.notification = ""
             st.session_state.notification_type = ""
