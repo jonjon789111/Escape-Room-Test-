@@ -50,6 +50,7 @@ for key, value in defaults.items():
 # SHARED DESIGN
 # ==========================================
 
+
 def design():
 
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
@@ -62,6 +63,7 @@ def design():
 
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
+
     /* =====================================
        GLOBAL APP
     ===================================== */
@@ -73,19 +75,25 @@ def design():
     }}
 
     /* =====================================
-       BACKGROUND
+       CINEMATIC BACKGROUND
     ===================================== */
 
     .stApp::before {{
         content: "";
         position: fixed;
-        inset: -10px;
-        z-index: -1;
+        inset: -15px;
+        z-index: -3;
 
         background-image:
             linear-gradient(
-                rgba(16, 24, 39, 0.65),
-                rgba(16, 24, 39, 0.65)
+                90deg,
+                rgba(9, 13, 21, 0.72),
+                rgba(16, 24, 39, 0.45),
+                rgba(9, 13, 21, 0.72)
+            ),
+            linear-gradient(
+                rgba(16, 24, 39, 0.35),
+                rgba(16, 24, 39, 0.72)
             ),
             url("data:image/jpeg;base64,{encoded_image}");
 
@@ -94,7 +102,51 @@ def design():
         background-repeat: no-repeat;
 
         filter: {blur};
+
+        animation: backgroundReveal 1.2s ease-out;
     }}
+
+    .stApp::after {{
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+
+        background:
+            radial-gradient(
+                ellipse at center,
+                transparent 25%,
+                rgba(0, 0, 0, 0.25) 65%,
+                rgba(0, 0, 0, 0.72) 120%
+            );
+    }}
+
+    @keyframes backgroundReveal {{
+        from {{
+            opacity: 0.5;
+            transform: scale(1.035);
+        }}
+        to {{
+            opacity: 1;
+            transform: scale(1);
+        }}
+    }}
+
+
+    /* =====================================
+       FLOATING DUST PARTICLES
+    ===================================== */
+
+    .stApp .block-container {{
+        position: relative;
+        z-index: 1;
+    }}
+
+    .stApp [data-testid="stHeader"] {{
+        background: transparent;
+    }}
+
 
     /* =====================================
        PAGE SPACING
@@ -105,6 +157,7 @@ def design():
         padding-top: 3.5rem !important;
         padding-bottom: 3rem !important;
     }}
+
 
     /* =====================================
        MAIN TITLE
@@ -122,8 +175,25 @@ def design():
 
         text-shadow:
             0 3px 5px rgba(0, 0, 0, 0.8),
-            0 0 20px rgba(181, 154, 96, 0.25);
+            0 0 20px rgba(181, 154, 96, 0.25),
+            0 0 45px rgba(181, 154, 96, 0.12);
+
+        animation: titleReveal 1s ease-out;
     }}
+
+    @keyframes titleReveal {{
+        from {{
+            opacity: 0;
+            transform: translateY(12px);
+            letter-spacing: 10px;
+        }}
+        to {{
+            opacity: 1;
+            transform: translateY(0);
+            letter-spacing: 5px;
+        }}
+    }}
+
 
     /* =====================================
        SUBTITLE
@@ -141,6 +211,7 @@ def design():
         text-shadow: 0 2px 5px rgba(0,0,0,0.7);
     }}
 
+
     /* =====================================
        GOLD DIVIDER
     ===================================== */
@@ -155,12 +226,17 @@ def design():
             transparent,
             #806333,
             #E2C47D,
+            #FFF0C9,
+            #E2C47D,
             #806333,
             transparent
         );
 
-        box-shadow: 0 0 8px rgba(181, 154, 96, 0.25);
+        box-shadow:
+            0 0 8px rgba(181, 154, 96, 0.35),
+            0 0 18px rgba(181, 154, 96, 0.12);
     }}
+
 
     /* =====================================
        SECTION TITLES
@@ -175,8 +251,11 @@ def design():
         letter-spacing: 2.5px;
         line-height: 1.5;
 
-        text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+        text-shadow:
+            0 2px 5px rgba(0,0,0,0.6),
+            0 0 12px rgba(226, 196, 125, 0.15);
     }}
+
 
     /* =====================================
        STORY TEXT
@@ -190,7 +269,10 @@ def design():
         font-weight: 500;
         line-height: 1.8;
         letter-spacing: 0.3px;
+
+        text-shadow: 0 2px 4px rgba(0,0,0,0.65);
     }}
+
 
     /* =====================================
        GENERAL TEXT
@@ -204,29 +286,124 @@ def design():
         line-height: 1.6;
     }}
 
+
     /* =====================================
-       CHALLENGE CONTAINERS
+       CINEMATIC CHALLENGE CONTAINERS
     ===================================== */
 
     div[data-testid="stVerticalBlockBorderWrapper"] {{
-        background: linear-gradient(
-            145deg,
-            rgba(39, 34, 27, 0.94),
-            rgba(20, 25, 34, 0.96)
-        );
+        position: relative;
+        overflow: hidden;
 
-        border: 1px solid rgba(181, 154, 96, 0.75) !important;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(48, 39, 29, 0.97),
+                rgba(25, 29, 38, 0.98) 55%,
+                rgba(15, 21, 31, 0.98)
+            );
+
+        border: 1px solid rgba(181, 154, 96, 0.85) !important;
         border-radius: 15px !important;
 
         box-shadow:
-            0 8px 22px rgba(0, 0, 0, 0.35),
-            inset 0 0 18px rgba(181, 154, 96, 0.04);
+            0 12px 32px rgba(0, 0, 0, 0.48),
+            inset 0 0 25px rgba(181, 154, 96, 0.06),
+            0 0 18px rgba(181, 154, 96, 0.06);
 
         padding: 10px;
+
+        transition:
+            border-color 0.3s ease,
+            box-shadow 0.3s ease;
     }}
+
+    div[data-testid="stVerticalBlockBorderWrapper"]:hover {{
+        border-color: #D8B96F !important;
+
+        box-shadow:
+            0 14px 35px rgba(0, 0, 0, 0.55),
+            inset 0 0 28px rgba(181, 154, 96, 0.09),
+            0 0 20px rgba(181, 154, 96, 0.12);
+    }}
+
+
+    /* =====================================
+       QUESTION TEXT
+    ===================================== */
+
+    div[data-testid="stVerticalBlockBorderWrapper"] .stMarkdown p {{
+        color: #E8DFCE;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 21px;
+        line-height: 1.7;
+    }}
+
+
+    /* =====================================
+       EQUATION PRESENTATION
+    ===================================== */
+
+    div[data-testid="stVerticalBlockBorderWrapper"] .stLatex {{
+        background:
+            linear-gradient(
+                135deg,
+                rgba(9, 15, 24, 0.92),
+                rgba(28, 30, 35, 0.96)
+            );
+
+        border: 1px solid rgba(181, 154, 96, 0.55);
+        border-radius: 12px;
+
+        padding: 22px 12px;
+        margin: 15px 0 22px 0;
+
+        box-shadow:
+            inset 0 0 20px rgba(0, 0, 0, 0.45),
+            0 0 15px rgba(181, 154, 96, 0.08);
+    }}
+
+
+    /* =====================================
+       ANSWER INPUT
+    ===================================== */
+
+    div[data-testid="stTextInput"] label {{
+        color: #D8B96F !important;
+        font-family: Cinzel, serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+    }}
+
+    div[data-testid="stTextInput"] input {{
+        background: rgba(13, 19, 29, 0.96);
+        color: #F4E5BF;
+
+        border: 1px solid #8C774D;
+        border-radius: 8px;
+
+        min-height: 48px;
+
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 19px;
+
+        box-shadow:
+            inset 0 2px 8px rgba(0,0,0,0.35);
+    }}
+
+    div[data-testid="stTextInput"] input:focus {{
+        border-color: #E2C47D;
+
+        box-shadow:
+            0 0 0 1px rgba(226, 196, 125, 0.3),
+            0 0 14px rgba(216, 185, 111, 0.18);
+    }}
+
 
     /* =====================================
        BUTTON BASE STYLE
+       PRESERVED ORIGINAL DESIGN
     ===================================== */
 
     div[data-testid="stButton"] button {{
@@ -244,8 +421,10 @@ def design():
             0 4px 10px rgba(0, 0, 0, 0.3);
     }}
 
+
     /* =====================================
        PRIMARY BUTTONS
+       PRESERVED ORIGINAL GRADIENT
     ===================================== */
 
     div[data-testid="stButton"] button[kind="primary"] {{
@@ -277,8 +456,10 @@ def design():
             0 6px 16px rgba(181, 154, 96, 0.3);
     }}
 
+
     /* =====================================
        SECONDARY BUTTONS
+       PRESERVED ORIGINAL GRADIENT
     ===================================== */
 
     div[data-testid="stButton"] button[kind="secondary"] {{
@@ -307,6 +488,7 @@ def design():
         transform: translateY(-2px);
     }}
 
+
     /* =====================================
        BUTTON FOCUS
     ===================================== */
@@ -316,8 +498,9 @@ def design():
         box-shadow: 0 0 0 2px rgba(216, 185, 111, 0.25);
     }}
 
+
     /* =====================================
-       GAME HUD
+       CINEMATIC GAME HUD
     ===================================== */
 
     .hud-container {{
@@ -334,8 +517,8 @@ def design():
 
         background: linear-gradient(
             145deg,
-            rgba(42, 39, 32, 0.96),
-            rgba(20, 27, 38, 0.96)
+            rgba(48, 42, 32, 0.97),
+            rgba(20, 27, 38, 0.98)
         );
 
         border: 1px solid #A88A51;
@@ -345,14 +528,17 @@ def design():
         text-align: center;
 
         box-shadow:
-            0 5px 15px rgba(0, 0, 0, 0.35),
-            inset 0 0 12px rgba(181, 154, 96, 0.05);
+            0 7px 20px rgba(0, 0, 0, 0.42),
+            inset 0 0 18px rgba(181, 154, 96, 0.07);
     }}
 
     .hud-icon {{
         font-size: 26px;
         color: #E2C47D;
         margin-bottom: 5px;
+
+        text-shadow:
+            0 0 12px rgba(226, 196, 125, 0.35);
     }}
 
     .hud-label {{
@@ -371,34 +557,35 @@ def design():
 
         color: #F4E5BF;
 
-        text-shadow: 0 0 8px rgba(226, 196, 125, 0.15);
+        text-shadow:
+            0 0 8px rgba(226, 196, 125, 0.2);
     }}
 
+
     /* =====================================
-       INPUT FIELDS
+       STREAMLIT ALERTS
     ===================================== */
 
-    div[data-testid="stTextInput"] input {{
-        background: rgba(18, 25, 35, 0.95);
-        color: #F4E5BF;
+    div[data-testid="stAlert"] {{
+        background: rgba(23, 29, 39, 0.96);
+        border: 1px solid rgba(181, 154, 96, 0.65);
+        border-radius: 10px;
 
-        border: 1px solid #8C774D;
-        border-radius: 8px;
-
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 19px;
+        box-shadow:
+            0 6px 18px rgba(0, 0, 0, 0.3);
     }}
 
-    div[data-testid="stTextInput"] input:focus {{
-        border-color: #D8B96F;
-        box-shadow: 0 0 8px rgba(216, 185, 111, 0.2);
-    }}
 
     /* =====================================
-       RESPONSIVE HUD
+       RESPONSIVE DESIGN
     ===================================== */
 
     @media (max-width: 600px) {{
+
+        .block-container {{
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }}
 
         .hud-container {{
             gap: 8px;
@@ -421,6 +608,24 @@ def design():
             font-size: 14px;
         }}
 
+        div[data-testid="stVerticalBlockBorderWrapper"] {{
+            padding: 8px;
+        }}
+
+    }}
+
+
+    /* =====================================
+       REDUCED MOTION ACCESSIBILITY
+    ===================================== */
+
+    @media (prefers-reduced-motion: reduce) {{
+        *,
+        *::before,
+        *::after {{
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
+        }}
     }}
 
     </style>
