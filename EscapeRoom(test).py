@@ -19,6 +19,7 @@ defaults = {
     "time_limit": 1200,
     "start_time": None,
     "question_number": 0,
+    "current_object": None,
     
     # ROOM PROGRESS
     "room1_cleared": False,
@@ -394,6 +395,7 @@ def reset_game():
     st.session_state.time_limit = 1200
     st.session_state.start_time = None
     st.session_state.question_number = 0
+    st.session_state.current_object = None
     st.session_state.keys_collected = []
     st.session_state.answer_history = []
 
@@ -962,10 +964,10 @@ def instructions_page():
             st.session_state.page="story"
             st.rerun()
 
+
 # ==========================================
 # ROOM 1 — THE BLACKBOARD
 # ==========================================
-
 
 def room1():
 
@@ -977,6 +979,11 @@ def room1():
         "The first challenge — Limits"
     )
 
+    # INITIALIZE CLASSROOM OBJECT
+    if "current_object" not in st.session_state:
+        st.session_state.current_object = None
+
+    # GAME OVER
     if st.session_state.game_over:
 
         st.error("GAME OVER! You ran out of lives or time.")
@@ -988,15 +995,121 @@ def room1():
 
         return
 
+    # GAME STATUS
     game_status()
     progress_bar()
     floating_notification()
     key_inventory()
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
 
-    # CHALLENGE 1
-    if st.session_state.question_number == 0:
+    # ==========================================
+    # CLASSROOM EXPLORATION
+    # ==========================================
+
+    if st.session_state.current_object is None:
+
+        st.markdown("### 🔎 EXPLORE THE CLASSROOM")
+
+        st.write(
+            "Investigate the available objects to uncover "
+            "the challenges hidden inside the classroom."
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        # BLACKBOARD
+        with col1:
+
+            if st.session_state.question_number == 0:
+                status = "🟢 AVAILABLE"
+                disabled = False
+            else:
+                status = "🔒 COMPLETED"
+                disabled = True
+
+            with st.container(border=True):
+
+                st.markdown("### 🖍️ BLACKBOARD")
+                st.caption(status)
+
+                st.write("A mathematical problem is written on the board.")
+
+                if st.button(
+                    "INSPECT",
+                    disabled=disabled,
+                    use_container_width=True,
+                    key="explore_blackboard"
+                ):
+                    st.session_state.current_object = "blackboard"
+                    st.rerun()
+
+        # TEACHER'S DESK
+        with col2:
+
+            if st.session_state.question_number == 1:
+                status = "🟢 AVAILABLE"
+                disabled = False
+            elif st.session_state.question_number > 1:
+                status = "🔒 COMPLETED"
+                disabled = True
+            else:
+                status = "🔒 LOCKED"
+                disabled = True
+
+            with st.container(border=True):
+
+                st.markdown("### 🗄️ TEACHER'S DESK")
+                st.caption(status)
+
+                st.write("Something important is waiting on the desk.")
+
+                if st.button(
+                    "INSPECT",
+                    disabled=disabled,
+                    use_container_width=True,
+                    key="explore_desk"
+                ):
+                    st.session_state.current_object = "desk"
+                    st.rerun()
+
+        # WALL NOTES
+        with col3:
+
+            if st.session_state.question_number == 2:
+                status = "🟢 AVAILABLE"
+                disabled = False
+            elif st.session_state.question_number > 2:
+                status = "🔒 COMPLETED"
+                disabled = True
+            else:
+                status = "🔒 LOCKED"
+                disabled = True
+
+            with st.container(border=True):
+
+                st.markdown("### 📌 WALL NOTES")
+                st.caption(status)
+
+                st.write("A set of notes contains the final challenge.")
+
+                if st.button(
+                    "INSPECT",
+                    disabled=disabled,
+                    use_container_width=True,
+                    key="explore_notes"
+                ):
+                    st.session_state.current_object = "notes"
+                    st.rerun()
+
+    # ==========================================
+    # CHALLENGE 1 — BLACKBOARD
+    # ==========================================
+
+    elif st.session_state.current_object == "blackboard":
 
         with st.container(border=True):
 
@@ -1005,15 +1118,26 @@ def room1():
                 unsafe_allow_html=True
             )
 
+            st.markdown("### 🖍️ Blackboard")
+
             st.write("Find the limit:")
+
             st.latex(r"\lim_{x\to2}(3x+4)")
 
-            answer = st.text_input("YOUR ANSWER", key="answer1")
+            answer = st.text_input(
+                "YOUR ANSWER",
+                key="answer1"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                if st.button(
+                    "SUBMIT ANSWER",
+                    type="primary",
+                    use_container_width=True
+                ):
 
                     is_correct = answer.strip() == "10"
 
@@ -1027,10 +1151,13 @@ def room1():
                     )
 
                     if is_correct:
+
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
                     else:
+
                         wrong_answer()
                         st.session_state.feedback = "wrong"
                         st.session_state.notification = "✕ INCORRECT ANSWER!"
@@ -1039,17 +1166,32 @@ def room1():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                if st.button(
+                    "USE HINT",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
+
                     else:
-                        use_hint("Substitute x = 2 into the expression.")
+
+                        use_hint(
+                            "Substitute x = 2 into the expression."
+                        )
 
                     st.rerun()
 
-    # CHALLENGE 2
-    elif st.session_state.question_number == 1:
+    # ==========================================
+    # CHALLENGE 2 — TEACHER'S DESK
+    # ==========================================
+
+    elif st.session_state.current_object == "desk":
 
         with st.container(border=True):
 
@@ -1058,15 +1200,26 @@ def room1():
                 unsafe_allow_html=True
             )
 
+            st.markdown("### 🗄️ Teacher's Desk")
+
             st.write("Evaluate the following limit:")
+
             st.latex(r"\lim_{x\to2}\frac{x^2-4}{x-2}")
 
-            answer = st.text_input("YOUR ANSWER", key="answer2")
+            answer = st.text_input(
+                "YOUR ANSWER",
+                key="answer2"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                if st.button(
+                    "SUBMIT ANSWER",
+                    type="primary",
+                    use_container_width=True
+                ):
 
                     is_correct = answer.strip() == "4"
 
@@ -1080,10 +1233,13 @@ def room1():
                     )
 
                     if is_correct:
+
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
                     else:
+
                         wrong_answer()
                         st.session_state.feedback = "wrong"
                         st.session_state.notification = "✕ INCORRECT ANSWER!"
@@ -1092,17 +1248,32 @@ def room1():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                if st.button(
+                    "USE HINT",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
+
                     else:
-                        use_hint("Factor the numerator into (x - 2)(x + 2).")
+
+                        use_hint(
+                            "Factor the numerator into (x - 2)(x + 2)."
+                        )
 
                     st.rerun()
 
-    # CHALLENGE 3
-    elif st.session_state.question_number == 2:
+    # ==========================================
+    # CHALLENGE 3 — WALL NOTES
+    # ==========================================
+
+    elif st.session_state.current_object == "notes":
 
         with st.container(border=True):
 
@@ -1111,15 +1282,26 @@ def room1():
                 unsafe_allow_html=True
             )
 
+            st.markdown("### 📌 Wall Notes")
+
             st.write("Find the limit:")
+
             st.latex(r"\lim_{x\to1}\frac{x^2+3x-4}{x-1}")
 
-            answer = st.text_input("YOUR ANSWER", key="answer3")
+            answer = st.text_input(
+                "YOUR ANSWER",
+                key="answer3"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+
+                if st.button(
+                    "SUBMIT ANSWER",
+                    type="primary",
+                    use_container_width=True
+                ):
 
                     is_correct = answer.strip() == "5"
 
@@ -1133,10 +1315,13 @@ def room1():
                     )
 
                     if is_correct:
+
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
                     else:
+
                         wrong_answer()
                         st.session_state.feedback = "wrong"
                         st.session_state.notification = "✕ INCORRECT ANSWER!"
@@ -1145,21 +1330,37 @@ def room1():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                if st.button(
+                    "USE HINT",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
+
                     else:
-                        use_hint("Factor the numerator into (x - 1)(x + 4).")
+
+                        use_hint(
+                            "Factor the numerator into (x - 1)(x + 4)."
+                        )
 
                     st.rerun()
 
+    # ==========================================
     # FEEDBACK
+    # ==========================================
+
     if st.session_state.feedback == "correct":
 
         st.success("Correct! You solved the challenge.")
 
         if st.button("CONTINUE", type="primary"):
+
             st.session_state.notification = ""
             st.session_state.notification_type = ""
 
@@ -1168,12 +1369,17 @@ def room1():
             st.session_state.hint_message = ""
             st.session_state.hint_used_this_question = False
 
+            # RETURN TO CLASSROOM EXPLORATION
+            st.session_state.current_object = None
+
+            # ROOM COMPLETED
             if st.session_state.question_number == 3:
 
                 st.session_state.room1_cleared = True
 
                 # COLLECT BRONZE KEY
                 if "Bronze Key" not in st.session_state.keys_collected:
+
                     st.session_state.keys_collected.append("Bronze Key")
 
                 st.session_state.notification = "🔑 BRONZE KEY COLLECTED!"
@@ -1193,11 +1399,19 @@ def room1():
         if st.session_state.game_over:
             st.rerun()
 
+    # ==========================================
     # HINT MESSAGE
+    # ==========================================
+
     if st.session_state.hint_message:
+
         st.info(st.session_state.hint_message)
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
+
 
 # ==========================================
 # ROOM 2 — THE TEACHER'S DESK
