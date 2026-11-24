@@ -3023,15 +3023,183 @@ def room3():
         unsafe_allow_html=True
     )
 
+
 def room4():
+
+    # ==========================================
+    # ROOM 4 INITIALIZATION
+    # ==========================================
+
+    if "room4_object" not in st.session_state:
+        st.session_state.room4_object = None
+
+    if "room4_completed" not in st.session_state:
+        st.session_state.room4_completed = []
+
+    if "room4_notice" not in st.session_state:
+        st.session_state.room4_notice = ""
+
+    if "room4_cleared" not in st.session_state:
+        st.session_state.room4_cleared = False
+
+    # ==========================================
+    # ROOM 4 COMPLETION SCREEN
+    # Only appears when revisiting a cleared room
+    # ==========================================
+
+    if st.session_state.room4_cleared:
+
+        try:
+            with open("crystal.png", "rb") as image_file:
+                crystal = base64.b64encode(
+                    image_file.read()
+                ).decode("utf-8")
+
+            crystal_image = (
+                '<img src="data:image/png;base64,'
+                + crystal +
+                '" class="key-image">'
+            )
+
+        except FileNotFoundError:
+            crystal_image = ""
+
+        completion_html = """
+        <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
+
+        .completed-room {
+            background:
+                radial-gradient(circle at top, #49351F 0%, #241A12 55%, #130E0A 100%);
+            border: 3px double #D8B66A;
+            border-radius: 18px;
+            padding: 38px 20px;
+            text-align: center;
+            color: #F4E6C4;
+            box-shadow: 0 0 25px rgba(218, 177, 87, 0.20);
+            font-family: 'Cinzel', serif;
+        }
+
+        .completed-room .chapter {
+            color: #D9B96E;
+            font-size: 13px;
+            letter-spacing: 5px;
+            font-weight: 800;
+        }
+
+        .completed-room h1 {
+            color: #F8E6B2;
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin: 12px 0;
+        }
+
+        .completed-room .room-name {
+            color: #D9B96E;
+            font-size: 16px;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .completed-room .key-image {
+            width: 145px;
+            height: 145px;
+            object-fit: contain;
+            margin: 12px auto;
+            filter: drop-shadow(0 0 15px rgba(130, 210, 255, 0.45));
+        }
+
+        .completed-room .key-title {
+            color: #A9E3FF;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin-top: 10px;
+        }
+
+        .completed-room .description {
+            color: #D8C9A7;
+            font-size: 13px;
+            margin: 15px 0;
+        }
+
+        .completed-room .progress {
+            color: #E8D7AC;
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-top: 25px;
+        }
+
+        </style>
+
+        <div class="completed-room">
+
+            <div class="chapter">FINAL CHAPTER</div>
+
+            <h1>EXIT UNLOCKED</h1>
+
+            <div class="room-name">
+                THE EXIT DOOR — FINAL CHALLENGE
+            </div>
+
+            CRYSTAL_IMAGE
+
+            <div class="key-title">
+                CRYSTAL KEY ACQUIRED
+            </div>
+
+            <div class="description">
+                You have successfully completed all three locks
+                and uncovered the final path.
+            </div>
+
+            <div class="progress">
+                3 / 3 CHALLENGES COMPLETED
+            </div>
+
+        </div>
+        """
+
+        completion_html = completion_html.replace(
+            "CRYSTAL_IMAGE",
+            crystal_image
+        )
+
+        st.html(completion_html)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        _, center, _ = st.columns([1, 2, 1])
+
+        with center:
+
+            if st.button(
+                "RETURN TO STORY",
+                key="room4_completed_return",
+                use_container_width=True
+            ):
+                st.session_state.page = "story"
+                st.rerun()
+
+        st.stop()
+
+    # ==========================================
+    # ROOM DESIGN
+    # ==========================================
 
     design()
 
     header(
         "ROOM 04",
         "THE EXIT DOOR",
-        "The fourth challenge — Trigonometric Derivatives"
+        "The final challenge — Unlock your way out"
     )
+
+    # ==========================================
+    # GAME OVER
+    # ==========================================
 
     if st.session_state.game_over:
 
@@ -3043,34 +3211,228 @@ def room4():
 
         return
 
+    # ==========================================
+    # GAME STATUS
+    # ==========================================
+
     game_status()
     progress_bar()
     floating_notification()
     key_inventory()
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
 
-    # CHALLENGE 1
-    if st.session_state.question_number == 0:
+    # ==========================================
+    # CHALLENGE SELECTION
+    # ==========================================
+
+    if st.session_state.room4_object is None:
+
+        st.markdown(
+            """
+            <div style="
+                text-align:center;
+                padding:15px 5px 20px 5px;
+            ">
+                <h2 style="
+                    font-family:Cinzel, serif;
+                    color:#E5C77D;
+                    letter-spacing:3px;
+                ">
+                    THE THREE LOCKS
+                </h2>
+
+                <p style="
+                    color:#C9B994;
+                    font-size:14px;
+                ">
+                    Solve each lock to unlock the exit door.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            """
+            <style>
+
+            div[class*="st-key-room4_lock"] button {
+                background: linear-gradient(
+                    145deg,
+                    #49351F,
+                    #241A12
+                );
+                border: 2px solid #B99450;
+                border-radius: 12px;
+                color: #F5E4B8;
+                min-height: 105px;
+                font-family: Cinzel, serif;
+                font-weight: 800;
+                letter-spacing: 1px;
+                transition: 0.2s ease;
+            }
+
+            div[class*="st-key-room4_lock"] button:hover {
+                border-color: #FFE09A;
+                background: linear-gradient(
+                    145deg,
+                    #70502A,
+                    #342315
+                );
+                color: #FFFFFF;
+                transform: translateY(-3px);
+            }
+
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        # LOCK 1
+        with col1:
+
+            if st.button(
+                "🔐 LOCK I\n\nTRIGONOMETRIC",
+                key="room4_lock1",
+                use_container_width=True
+            ):
+
+                if "lock1" in st.session_state.room4_completed:
+
+                    st.session_state.room4_notice = (
+                        "✓ YOU HAVE ALREADY COMPLETED LOCK 1!"
+                    )
+
+                else:
+
+                    st.session_state.room4_notice = ""
+                    st.session_state.room4_object = "lock1"
+                    st.rerun()
+
+        # LOCK 2
+        with col2:
+
+            if st.button(
+                "🔐 LOCK II\n\nEXPONENTIAL",
+                key="room4_lock2",
+                use_container_width=True
+            ):
+
+                if "lock2" in st.session_state.room4_completed:
+
+                    st.session_state.room4_notice = (
+                        "✓ YOU HAVE ALREADY COMPLETED LOCK 2!"
+                    )
+
+                elif "lock1" not in st.session_state.room4_completed:
+
+                    st.session_state.room4_notice = (
+                        "🔒 COMPLETE LOCK 1 FIRST!"
+                    )
+
+                else:
+
+                    st.session_state.room4_notice = ""
+                    st.session_state.room4_object = "lock2"
+                    st.rerun()
+
+        # LOCK 3
+        with col3:
+
+            if st.button(
+                "🔐 LOCK III\n\nPRODUCT RULE",
+                key="room4_lock3",
+                use_container_width=True
+            ):
+
+                if "lock3" in st.session_state.room4_completed:
+
+                    st.session_state.room4_notice = (
+                        "✓ YOU HAVE ALREADY COMPLETED LOCK 3!"
+                    )
+
+                elif "lock2" not in st.session_state.room4_completed:
+
+                    st.session_state.room4_notice = (
+                        "🔒 COMPLETE LOCK 2 FIRST!"
+                    )
+
+                else:
+
+                    st.session_state.room4_notice = ""
+                    st.session_state.room4_object = "lock3"
+                    st.rerun()
+
+        if st.session_state.room4_notice:
+            st.warning(st.session_state.room4_notice)
+
+        # LOCK STATUS
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        st.markdown(
+            """
+            <div style="
+                background:rgba(40,29,18,0.7);
+                border:1px solid #806333;
+                border-radius:12px;
+                padding:15px;
+                text-align:center;
+                color:#DCC99B;
+                font-size:13px;
+            ">
+                COMPLETE ALL THREE LOCKS TO ESCAPE
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    # ==========================================
+    # CHALLENGE 1 — TRIGONOMETRIC
+    # ==========================================
+
+    elif st.session_state.room4_object == "lock1":
 
         with st.container(border=True):
 
             st.markdown(
-                '<div class="section-title">SHELF 1 OF 3 — TRIGONOMETRIC FUNCTION WITH CHAIN RULE</div>',
+                '<div class="section-title">LOCK I — TRIGONOMETRIC FUNCTION WITH CHAIN RULE</div>',
                 unsafe_allow_html=True
             )
 
             st.write("Find the derivative of the function:")
-            st.latex(r"f(x) = sin(2x)")
 
-            answer = st.text_input("YOUR ANSWER", key="r4_answer1")
+            st.latex(r"f(x) = \sin(2x)")
+
+            answer = st.text_input(
+                "YOUR ANSWER",
+                key="r4_answer1"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    is_correct = clean_answer(answer) in [
+                if st.button(
+                    "SUBMIT ANSWER",
+                    key="r4_submit1",
+                    type="primary",
+                    use_container_width=True
+                ):
+
+                    normalized = (
+                        answer.lower()
+                        .replace(" ", "")
+                        .replace("**", "^")
+                        .replace("*", "")
+                    )
+
+                    is_correct = normalized in [
                         "2cos(2x)",
                         "2cos2x"
                     ]
@@ -3085,11 +3447,13 @@ def room4():
                     )
 
                     if is_correct:
+
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
 
                     else:
+
                         wrong_answer()
                         st.session_state.feedback = "wrong"
                         st.session_state.notification = "✕ INCORRECT ANSWER!"
@@ -3098,37 +3462,71 @@ def room4():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                if st.button(
+                    "USE HINT",
+                    key="r4_hint1",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
 
                     else:
-                        use_hint("Apply the Chain Rule: differentiate the outer sine function first, then multiply by the derivative of the inner function (2x).")
+
+                        use_hint(
+                            "Apply the Chain Rule: differentiate the outer sine function first, then multiply by the derivative of the inner function (2x)."
+                        )
 
                     st.rerun()
 
-    # CHALLENGE 2
-    elif st.session_state.question_number == 1:
+    # ==========================================
+    # CHALLENGE 2 — EXPONENTIAL
+    # ==========================================
+
+    elif st.session_state.room4_object == "lock2":
 
         with st.container(border=True):
 
             st.markdown(
-                '<div class="section-title">SHELF 2 OF 3 — EXPONENTIAL FUNCTIONS</div>',
+                '<div class="section-title">LOCK II — EXPONENTIAL FUNCTIONS</div>',
                 unsafe_allow_html=True
             )
 
             st.write("Find the derivative of the function:")
+
             st.latex(r"f(u) = 5^u")
 
-            answer = st.text_input("YOUR ANSWER ex.(3^xln(3))", key="r4_answer2")
+            answer = st.text_input(
+                "YOUR ANSWER (e.g. 3^x ln(3))",
+                key="r4_answer2"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    is_correct = clean_answer(answer) in ["5^uln(5)"]
+                if st.button(
+                    "SUBMIT ANSWER",
+                    key="r4_submit2",
+                    type="primary",
+                    use_container_width=True
+                ):
+
+                    normalized = (
+                        answer.lower()
+                        .replace(" ", "")
+                        .replace("**", "^")
+                        .replace("*", "")
+                    )
+
+                    is_correct = normalized in [
+                        "5^uln(5)"
+                    ]
 
                     save_attempt(
                         "ROOM 4 - EXIT DOOR",
@@ -3140,11 +3538,13 @@ def room4():
                     )
 
                     if is_correct:
+
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
 
                     else:
+
                         wrong_answer()
                         st.session_state.feedback = "wrong"
                         st.session_state.notification = "✕ INCORRECT ANSWER!"
@@ -3153,39 +3553,73 @@ def room4():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                if st.button(
+                    "USE HINT",
+                    key="r4_hint2",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
 
                     else:
-                        use_hint("Formula: d/du(a^u) = a^u ln(a)")
+
+                        use_hint(
+                            "Formula: d/du(a^u) = a^u ln(a)"
+                        )
 
                     st.rerun()
 
-    # CHALLENGE 3
-    elif st.session_state.question_number == 2:
+    # ==========================================
+    # CHALLENGE 3 — PRODUCT RULE
+    # ==========================================
+
+    elif st.session_state.room4_object == "lock3":
 
         with st.container(border=True):
 
             st.markdown(
-                '<div class="section-title">SHELF 3 OF 3 — PRODUCT RULE WITH EXPONENTIAL AND TRIGONOMETRIC FUNCTIONS</div>',
+                '<div class="section-title">LOCK III — PRODUCT RULE WITH EXPONENTIAL AND TRIGONOMETRIC FUNCTIONS</div>',
                 unsafe_allow_html=True
             )
 
             st.write("Find the derivative of the function:")
-            st.latex(r"f(x) = e^x tan x")
 
-            answer = st.text_input("YOUR ANSWER", key="r4_answer3")
+            st.latex(r"f(x) = e^x \tan x")
+
+            answer = st.text_input(
+                "YOUR ANSWER",
+                key="r4_answer3"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
 
-                    is_correct = clean_answer(answer) in [
+                if st.button(
+                    "SUBMIT ANSWER",
+                    key="r4_submit3",
+                    type="primary",
+                    use_container_width=True
+                ):
+
+                    normalized = (
+                        answer.lower()
+                        .replace(" ", "")
+                        .replace("**", "^")
+                        .replace("*", "")
+                    )
+
+                    is_correct = normalized in [
                         "e^xtan(x)+e^xsec^2(x)",
-                        "e^x(sec^2(x)+tan(x))"
+                        "e^x(sec^2(x)+tan(x))",
+                        "e^xtanx+e^xsec^2x",
+                        "e^x(sec^2x+tanx)"
                     ]
 
                     save_attempt(
@@ -3198,11 +3632,13 @@ def room4():
                     )
 
                     if is_correct:
+
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
 
                     else:
+
                         wrong_answer()
                         st.session_state.feedback = "wrong"
                         st.session_state.notification = "✕ INCORRECT ANSWER!"
@@ -3211,39 +3647,74 @@ def room4():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+
+                if st.button(
+                    "USE HINT",
+                    key="r4_hint3",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
 
                     else:
-                        use_hint("Apply the Product Rule: (uv)' = u'v + uv'.")
+
+                        use_hint(
+                            "Apply the Product Rule: (uv)' = u'v + uv'. Remember that the derivative of tan(x) is sec²(x)."
+                        )
 
                     st.rerun()
 
+    # ==========================================
     # FEEDBACK
+    # ==========================================
+
     if st.session_state.feedback == "correct":
 
-        st.success("Correct! You completed the challenge.")
+        st.success("Correct! You completed the lock.")
 
-        if st.button("CONTINUE", type="primary"):
+        if st.button(
+            "CONTINUE",
+            key="room4_continue",
+            type="primary"
+        ):
+
+            completed_lock = st.session_state.room4_object
+
+            if completed_lock not in st.session_state.room4_completed:
+                st.session_state.room4_completed.append(completed_lock)
 
             st.session_state.notification = ""
             st.session_state.notification_type = ""
 
-            st.session_state.question_number += 1
             st.session_state.feedback = ""
             st.session_state.hint_message = ""
             st.session_state.hint_used_this_question = False
 
-            # ROOM 4 COMPLETED
-            if st.session_state.question_number == 3:
+            st.session_state.room4_object = None
+
+            st.session_state.question_number = len(
+                st.session_state.room4_completed
+            )
+
+            # ==================================
+            # ALL THREE LOCKS COMPLETED
+            # ==================================
+
+            if len(st.session_state.room4_completed) == 3:
 
                 st.session_state.room4_cleared = True
                 st.session_state.end_time = time.time()
 
                 if "Crystal Key" not in st.session_state.keys_collected:
-                    st.session_state.keys_collected.append("Crystal Key")
+
+                    st.session_state.keys_collected.append(
+                        "Crystal Key"
+                    )
 
                 st.session_state.question_number = 0
                 st.session_state.page = "ending"
@@ -3252,18 +3723,27 @@ def room4():
 
     elif st.session_state.feedback == "wrong":
 
-        st.error("Incorrect! One life and five seconds deducted.")
+        st.error(
+            "Incorrect! One life and five seconds deducted."
+        )
 
         st.session_state.feedback = ""
 
         if st.session_state.game_over:
             st.rerun()
 
+    # ==========================================
     # HINT MESSAGE
+    # ==========================================
+
     if st.session_state.hint_message:
+
         st.info(st.session_state.hint_message)
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
 
 # ==========================================
 # ENDING PAGE
