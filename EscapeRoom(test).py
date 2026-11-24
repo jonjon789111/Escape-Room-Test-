@@ -2409,10 +2409,7 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
-
 def room3():
-
-    def room3():
 
     # ROOM 3 COMPLETION SCREEN
     if st.session_state.get("room3_cleared", False):
