@@ -973,14 +973,16 @@ def room1():
 
     design()
     
-     # ==========================================
-    # ROOM 1 COMPLETION SCREEN
-    # ==========================================
-
     if st.session_state.get("room1_cleared", False):
 
+        # LOAD BRONZE KEY IMAGE
+        with open("bronze.png", "rb") as image_file:
+            bronze = base64.b64encode(
+                image_file.read()
+            ).decode("utf-8")
+
         # COMPLETION SCREEN DESIGN
-        st.html("""
+        completion_html = """
         <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
@@ -1034,8 +1036,18 @@ def room1():
         }
 
         .bronze-key {
-            font-size: 75px;
             margin: 25px 0 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .key-image {
+            width: 220px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+
             filter: drop-shadow(
                 0 0 15px rgba(255,190,75,0.5)
             );
@@ -1082,7 +1094,7 @@ def room1():
 
             <div class="bronze-key">
                 <img
-                    src="data:image/png;base64,{bronze}"
+                    src="BRONZE_IMAGE_HERE"
                     class="key-image"
                 >
             </div>
@@ -1100,7 +1112,15 @@ def room1():
             </div>
 
         </div>
-        """)
+        """
+
+        # INSERT THE ACTUAL IMAGE DATA
+        completion_html = completion_html.replace(
+            "BRONZE_IMAGE_HERE",
+            "data:image/png;base64," + bronze
+        )
+
+        st.html(completion_html)
 
         # RETURN BUTTON DESIGN
         st.html("""
@@ -1159,6 +1179,7 @@ def room1():
                 st.rerun()
 
         st.stop()
+
 
 
     header(
