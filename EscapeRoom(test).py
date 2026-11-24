@@ -2409,8 +2409,11 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
+
 def room3():
 
+    design() 
+    
     # ROOM 3 COMPLETION SCREEN
     if st.session_state.get("room3_cleared", False):
 
@@ -2419,12 +2422,10 @@ def room3():
 
         completion_html = """
         <style>
-
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
 
         .completed-room {
-            background:
-                radial-gradient(circle at top, #49351F 0%, #241A12 55%, #130E0A 100%);
+            background: radial-gradient(circle at top, #49351F 0%, #241A12 55%, #130E0A 100%);
             border: 3px double #C69A45;
             border-radius: 18px;
             padding: 35px 20px;
@@ -2488,13 +2489,10 @@ def room3():
             letter-spacing: 2px;
             margin-top: 25px;
         }
-
         </style>
 
         <div class="completed-room">
-
             <div class="chapter">CHAPTER 03</div>
-
             <div class="main-title">CLASSROOM CLEARED</div>
 
             <div class="room-name">
@@ -2512,7 +2510,6 @@ def room3():
             <div class="progress-text">
                 3 / 3 CHALLENGES COMPLETED
             </div>
-
         </div>
         """
 
@@ -2525,7 +2522,6 @@ def room3():
 
         st.html("""
         <style>
-
         div[class*="st-key-room3_completed_return"] button {
             background: linear-gradient(135deg, #D5A744, #8C5D1C) !important;
             color: #211609 !important;
@@ -2543,7 +2539,6 @@ def room3():
             border-color: #FFF0C2 !important;
             transform: translateY(-2px);
         }
-
         </style>
         """)
 
@@ -2560,9 +2555,8 @@ def room3():
 
         st.stop()
 
-    # ORIGINAL ROOM 3 GAMEPLAY
-
-    design()
+    # ROOM DESIGN AND HEADER
+    
 
     header(
         "ROOM 03",
@@ -2585,9 +2579,12 @@ def room3():
     floating_notification()
     key_inventory()
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
 
-    # CHALLENGE 1 (Shelf 1 - Product Rule)
+    # CHALLENGE 1 - PRODUCT RULE
     if st.session_state.question_number == 0:
 
         with st.container(border=True):
@@ -2614,7 +2611,13 @@ def room3():
                     use_container_width=True
                 ):
 
-                    is_correct = clean_answer(answer) in [
+                    normalized_answer = (
+                        answer.replace(" ", "")
+                        .replace("**", "^")
+                        .lower()
+                    )
+
+                    is_correct = normalized_answer in [
                         "9x^2+2x",
                         "2x+9x^2"
                     ]
@@ -2661,7 +2664,7 @@ def room3():
 
                     st.rerun()
 
-    # CHALLENGE 2 (Shelf 2 - Quotient Rule)
+    # CHALLENGE 2 - QUOTIENT RULE
     elif st.session_state.question_number == 1:
 
         with st.container(border=True):
@@ -2688,7 +2691,13 @@ def room3():
                     use_container_width=True
                 ):
 
-                    is_correct = clean_answer(answer) in [
+                    normalized_answer = (
+                        answer.replace(" ", "")
+                        .replace("**", "^")
+                        .lower()
+                    )
+
+                    is_correct = normalized_answer in [
                         "1/(x+1)^2",
                         "1/(1+x)^2",
                         "1/(x+1)²"
@@ -2736,7 +2745,7 @@ def room3():
 
                     st.rerun()
 
-    # CHALLENGE 3 (Shelf 3 - Chain Rule)
+    # CHALLENGE 3 - CHAIN RULE
     elif st.session_state.question_number == 2:
 
         with st.container(border=True):
@@ -2763,7 +2772,13 @@ def room3():
                     use_container_width=True
                 ):
 
-                    is_correct = clean_answer(answer) in [
+                    normalized_answer = (
+                        answer.replace(" ", "")
+                        .replace("**", "^")
+                        .lower()
+                    )
+
+                    is_correct = normalized_answer in [
                         "8(2x+3)^3",
                         "8(3+2x)^3"
                     ]
@@ -2855,7 +2870,11 @@ def room3():
     if st.session_state.hint_message:
         st.info(st.session_state.hint_message)
 
-    st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="gold-line"></div>',
+        unsafe_allow_html=True
+    )
+
 
 def room4():
 
