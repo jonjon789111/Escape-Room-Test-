@@ -1081,7 +1081,7 @@ def room1():
             </div>
 
             <div class="bronze-key">
-                🗝️
+                <img src="images/bronze.png" class="key-image">
             </div>
 
             <div class="key-title">
