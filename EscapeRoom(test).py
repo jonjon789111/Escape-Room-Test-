@@ -1016,66 +1016,82 @@ def room1():
         st.markdown("### 🔎 EXPLORE THE CLASSROOM")
         st.write("Investigate the objects to uncover hidden challenges.")
 
+        
         st.markdown("""
         <style>
 
-        /* COMMON BUTTON STYLE */
+        /* =================================
+           ORNATE ADVENTURE GAME BUTTONS
+        ================================= */
 
         .st-key-explore_blackboard button,
         .st-key-explore_notebook button,
         .st-key-explore_notes button {
 
-            height: 165px !important;
-            min-height: 165px !important;
-            border-radius: 16px !important;
+            height: 175px !important;
+            min-height: 175px !important;
 
-            color: #F5EBDD !important;
-            font-size: 17px !important;
-            font-weight: 800 !important;
-            letter-spacing: 1px !important;
+            border: 3px solid #57402B !important;
+            border-radius: 3px !important;
 
-            border: 1px solid rgba(255,255,255,0.25) !important;
+            color: #FFF1C9 !important;
+
+            font-family: Georgia, serif !important;
+            font-size: 23px !important;
+            font-weight: bold !important;
+            letter-spacing: 2px !important;
+
+            background:
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(255, 180, 45, 0.22),
+                    transparent 70%
+                ),
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.025) 0px,
+                    transparent 3px,
+                    transparent 7px
+                ),
+                linear-gradient(
+                    180deg,
+                    #A92D08,
+                    #E85A0A 35%,
+                    #9B2706 75%,
+                    #541600
+                ) !important;
 
             box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.12),
-                0 8px 18px rgba(0,0,0,0.35) !important;
+                0 0 0 3px #241A12,
+                0 0 0 5px #80603B,
+                inset 0 2px 4px rgba(255,220,130,0.7),
+                inset 0 -5px 8px rgba(40,8,0,0.7),
+                0 6px 15px rgba(0,0,0,0.65),
+                0 0 12px rgba(255,85,0,0.3) !important;
+
+            text-shadow:
+                0 2px 3px rgba(50,0,0,0.8),
+                0 0 8px rgba(255,210,120,0.4);
 
             transition: all 0.25s ease !important;
         }
 
-        /* BLACKBOARD */
-
-        .st-key-explore_blackboard button {
-            background: linear-gradient(
-                135deg, #426B57, #172D25
-            ) !important;
-        }
-
-        /* OLD NOTEBOOK */
-
-        .st-key-explore_notebook button {
-            background: linear-gradient(
-                135deg, #80583B, #342218
-            ) !important;
-        }
-
-        /* WALL NOTES */
-
-        .st-key-explore_notes button {
-            background: linear-gradient(
-                135deg, #50668E, #202B43
-            ) !important;
-        }
-
-        /* HOVER EFFECT */
+        /* HOVER GLOW */
 
         .st-key-explore_blackboard button:not(:disabled):hover,
         .st-key-explore_notebook button:not(:disabled):hover,
         .st-key-explore_notes button:not(:disabled):hover {
 
-            transform: translateY(-5px) !important;
-            filter: brightness(1.2);
-            border-color: #E8D4AC !important;
+            filter: brightness(1.3);
+
+            transform: scale(1.025);
+
+            box-shadow:
+                0 0 0 3px #352317,
+                0 0 0 5px #C28B42,
+                inset 0 2px 5px #FFE1A0,
+                inset 0 -5px 8px rgba(40,8,0,0.6),
+                0 0 22px rgba(255,105,0,0.75) !important;
         }
 
         /* LOCKED BUTTONS */
@@ -1084,12 +1100,13 @@ def room1():
         .st-key-explore_notebook button:disabled,
         .st-key-explore_notes button:disabled {
 
-            opacity: 0.4 !important;
-            filter: grayscale(0.5);
+            filter: brightness(0.38) saturate(0.65);
+            opacity: 0.8 !important;
         }
 
         </style>
         """, unsafe_allow_html=True)
+
 
         col1, col2, col3 = st.columns(3, gap="large")
 
