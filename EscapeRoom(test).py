@@ -1017,96 +1017,128 @@ def room1():
         st.write("Investigate the objects to uncover hidden challenges.")
 
         
+        
         st.markdown("""
         <style>
 
-        /* =================================
-           ORNATE ADVENTURE GAME BUTTONS
-        ================================= */
+        /* BLACKBOARD - ORANGE METALLIC */
 
-        .st-key-explore_blackboard button,
-        .st-key-explore_notebook button,
-        .st-key-explore_notes button {
+        div.st-key-explore_blackboard button,
+        div.st-key-explore_blackboard button[kind="secondary"] {
+            background-color: #A83208 !important;
+            background-image:
+                linear-gradient(
+                    180deg,
+                    #FF9A27 0%,
+                    #D94B08 35%,
+                    #8D2105 75%,
+                    #4B1305 100%
+                ) !important;
 
-            height: 175px !important;
+            color: #FFF0C5 !important;
+            border: 3px double #E5A64B !important;
+            border-radius: 5px !important;
+
             min-height: 175px !important;
-
-            border: 3px solid #57402B !important;
-            border-radius: 3px !important;
-
-            color: #FFF1C9 !important;
+            height: 175px !important;
 
             font-family: Georgia, serif !important;
-            font-size: 23px !important;
+            font-size: 25px !important;
             font-weight: bold !important;
             letter-spacing: 2px !important;
 
-            background:
-                radial-gradient(
-                    circle at 50% 50%,
-                    rgba(255, 180, 45, 0.22),
-                    transparent 70%
-                ),
-                repeating-linear-gradient(
-                    135deg,
-                    rgba(255,255,255,0.025) 0px,
-                    transparent 3px,
-                    transparent 7px
-                ),
+            box-shadow:
+                0 0 0 3px #302016,
+                0 0 0 5px #886039,
+                inset 0 2px 5px #FFD58A,
+                inset 0 -5px 8px #4A1300,
+                0 0 15px rgba(255, 91, 0, 0.45) !important;
+        }
+
+        /* OLD NOTEBOOK - BRONZE */
+
+        div.st-key-explore_notebook button,
+        div.st-key-explore_notebook button[kind="secondary"] {
+            background-color: #713B16 !important;
+            background-image:
                 linear-gradient(
                     180deg,
-                    #A92D08,
-                    #E85A0A 35%,
-                    #9B2706 75%,
-                    #541600
+                    #D18A42,
+                    #925020 45%,
+                    #48240F
                 ) !important;
 
-            box-shadow:
-                0 0 0 3px #241A12,
-                0 0 0 5px #80603B,
-                inset 0 2px 4px rgba(255,220,130,0.7),
-                inset 0 -5px 8px rgba(40,8,0,0.7),
-                0 6px 15px rgba(0,0,0,0.65),
-                0 0 12px rgba(255,85,0,0.3) !important;
+            color: #FFF0C5 !important;
+            border: 3px double #D5A66C !important;
+            border-radius: 5px !important;
 
-            text-shadow:
-                0 2px 3px rgba(50,0,0,0.8),
-                0 0 8px rgba(255,210,120,0.4);
+            min-height: 175px !important;
+            height: 175px !important;
 
-            transition: all 0.25s ease !important;
-        }
-
-        /* HOVER GLOW */
-
-        .st-key-explore_blackboard button:not(:disabled):hover,
-        .st-key-explore_notebook button:not(:disabled):hover,
-        .st-key-explore_notes button:not(:disabled):hover {
-
-            filter: brightness(1.3);
-
-            transform: scale(1.025);
+            font-family: Georgia, serif !important;
+            font-size: 25px !important;
+            font-weight: bold !important;
 
             box-shadow:
-                0 0 0 3px #352317,
-                0 0 0 5px #C28B42,
-                inset 0 2px 5px #FFE1A0,
-                inset 0 -5px 8px rgba(40,8,0,0.6),
-                0 0 22px rgba(255,105,0,0.75) !important;
+                0 0 0 3px #302016,
+                0 0 0 5px #886039,
+                inset 0 2px 5px #FFE0A6,
+                inset 0 -5px 8px #321707,
+                0 0 12px rgba(190, 112, 40, 0.4) !important;
         }
 
-        /* LOCKED BUTTONS */
+        /* WALL NOTES - ANTIQUE GOLD */
 
-        .st-key-explore_blackboard button:disabled,
-        .st-key-explore_notebook button:disabled,
-        .st-key-explore_notes button:disabled {
+        div.st-key-explore_notes button,
+        div.st-key-explore_notes button[kind="secondary"] {
+            background-color: #555000 !important;
+            background-image:
+                linear-gradient(
+                    180deg,
+                    #A5A000,
+                    #656000 45%,
+                    #302F00
+                ) !important;
 
-            filter: brightness(0.38) saturate(0.65);
+            color: #FFF8C5 !important;
+            border: 3px double #C7B84A !important;
+            border-radius: 5px !important;
+
+            min-height: 175px !important;
+            height: 175px !important;
+
+            font-family: Georgia, serif !important;
+            font-size: 25px !important;
+            font-weight: bold !important;
+
+            box-shadow:
+                0 0 0 3px #302016,
+                0 0 0 5px #886039,
+                inset 0 2px 5px #FFF29A,
+                inset 0 -5px 8px #292600,
+                0 0 12px rgba(220, 210, 30, 0.3) !important;
+        }
+
+        /* HOVER */
+
+        div.st-key-explore_blackboard button:not(:disabled):hover,
+        div.st-key-explore_notebook button:not(:disabled):hover,
+        div.st-key-explore_notes button:not(:disabled):hover {
+            filter: brightness(1.3) !important;
+            transform: translateY(-4px) !important;
+        }
+
+        /* LOCKED */
+
+        div.st-key-explore_blackboard button:disabled,
+        div.st-key-explore_notebook button:disabled,
+        div.st-key-explore_notes button:disabled {
+            filter: brightness(0.4) saturate(0.6) !important;
             opacity: 0.8 !important;
         }
 
         </style>
         """, unsafe_allow_html=True)
-
 
         col1, col2, col3 = st.columns(3, gap="large")
 
