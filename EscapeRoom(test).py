@@ -971,6 +971,19 @@ def instructions_page():
 
 def room1():
 
+    # PREVENT RE-ENTERING A COMPLETED ROOM
+    if st.session_state.get("room1_cleared", False):
+
+        st.success("🏆 ROOM 1 ALREADY COMPLETED!")
+
+        st.write("You have already collected the Bronze Key.")
+
+        if st.button("RETURN TO STORY", use_container_width=True):
+            st.session_state.page = "story"
+            st.rerun()
+
+        st.stop()
+
     design()
 
     header(
