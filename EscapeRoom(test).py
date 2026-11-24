@@ -1006,11 +1006,11 @@ def room1():
         unsafe_allow_html=True
     )
 
+    
     # ==========================================
     # CLASSROOM EXPLORATION
     # ==========================================
 
-    
     if st.session_state.current_object is None:
 
         st.markdown("### 🔎 EXPLORE THE CLASSROOM")
@@ -1019,108 +1019,77 @@ def room1():
         st.markdown("""
         <style>
 
-        /* TARGET THE THREE EXPLORATION BUTTONS */
+        /* COMMON BUTTON STYLE */
 
-        div[class*="st-key-explore_blackboard"] button,
-        div[class*="st-key-explore_notebook"] button,
-        div[class*="st-key-explore_notes"] button {
+        .st-key-explore_blackboard button,
+        .st-key-explore_notebook button,
+        .st-key-explore_notes button {
 
-            height: 175px !important;
-            min-height: 175px !important;
-
-            border-radius: 18px !important;
-            border: 1px solid rgba(255,255,255,0.18) !important;
+            height: 165px !important;
+            min-height: 165px !important;
+            border-radius: 16px !important;
 
             color: #F5EBDD !important;
-
             font-size: 17px !important;
             font-weight: 800 !important;
-            letter-spacing: 1.5px !important;
+            letter-spacing: 1px !important;
 
-            white-space: normal !important;
+            border: 1px solid rgba(255,255,255,0.25) !important;
 
             box-shadow:
                 inset 0 1px 0 rgba(255,255,255,0.12),
-                0 8px 20px rgba(0,0,0,0.4) !important;
+                0 8px 18px rgba(0,0,0,0.35) !important;
 
             transition: all 0.25s ease !important;
         }
 
         /* BLACKBOARD */
 
-        div[class*="st-key-explore_blackboard"] button {
-
+        .st-key-explore_blackboard button {
             background: linear-gradient(
-                145deg,
-                #355B4C,
-                #172F29 65%,
-                #10231F
+                135deg, #426B57, #172D25
             ) !important;
-
-            border-bottom: 4px solid #82A995 !important;
         }
 
         /* OLD NOTEBOOK */
 
-        div[class*="st-key-explore_notebook"] button {
-
+        .st-key-explore_notebook button {
             background: linear-gradient(
-                145deg,
-                #765037,
-                #402B20 65%,
-                #291C16
+                135deg, #80583B, #342218
             ) !important;
-
-            border-bottom: 4px solid #C49A70 !important;
         }
 
         /* WALL NOTES */
 
-        div[class*="st-key-explore_notes"] button {
-
+        .st-key-explore_notes button {
             background: linear-gradient(
-                145deg,
-                #455779,
-                #26344D 65%,
-                #192338
+                135deg, #50668E, #202B43
             ) !important;
-
-            border-bottom: 4px solid #91A8D0 !important;
         }
 
-        /* HOVER */
+        /* HOVER EFFECT */
 
-        div[class*="st-key-explore_blackboard"] button:not(:disabled):hover,
-        div[class*="st-key-explore_notebook"] button:not(:disabled):hover,
-        div[class*="st-key-explore_notes"] button:not(:disabled):hover {
+        .st-key-explore_blackboard button:not(:disabled):hover,
+        .st-key-explore_notebook button:not(:disabled):hover,
+        .st-key-explore_notes button:not(:disabled):hover {
 
-            transform: translateY(-6px) !important;
-
-            border-color: #E8D3AA !important;
-
+            transform: translateY(-5px) !important;
             filter: brightness(1.2);
-
-            box-shadow:
-                0 14px 28px rgba(0,0,0,0.45),
-                0 0 18px rgba(218,190,135,0.18) !important;
+            border-color: #E8D4AC !important;
         }
 
         /* LOCKED BUTTONS */
 
-        div[class*="st-key-explore_blackboard"] button:disabled,
-        div[class*="st-key-explore_notebook"] button:disabled,
-        div[class*="st-key-explore_notes"] button:disabled {
+        .st-key-explore_blackboard button:disabled,
+        .st-key-explore_notebook button:disabled,
+        .st-key-explore_notes button:disabled {
 
-            opacity: 0.48 !important;
-            filter: saturate(0.55) brightness(0.8);
-
-            color: #D5D0C7 !important;
-            cursor: not-allowed !important;
+            opacity: 0.4 !important;
+            filter: grayscale(0.5);
         }
 
         </style>
         """, unsafe_allow_html=True)
-
 
         col1, col2, col3 = st.columns(3, gap="large")
 
@@ -1130,7 +1099,8 @@ def room1():
             disabled = st.session_state.question_number != 0
 
             if st.button(
-                "🖍️\nBLACKBOARD\n\nINSPECT OBJECT  →",
+                "🖍️  BLACKBOARD",
+                type="secondary",
                 disabled=disabled,
                 use_container_width=True,
                 key="explore_blackboard"
@@ -1149,7 +1119,8 @@ def room1():
             disabled = st.session_state.question_number != 1
 
             if st.button(
-                "📓\nOLD NOTEBOOK\n\nINSPECT OBJECT  →",
+                "📓  OLD NOTEBOOK",
+                type="secondary",
                 disabled=disabled,
                 use_container_width=True,
                 key="explore_notebook"
@@ -1170,7 +1141,8 @@ def room1():
             disabled = st.session_state.question_number != 2
 
             if st.button(
-                "📌\nWALL NOTES\n\nINSPECT OBJECT  →",
+                "📌  WALL NOTES",
+                type="secondary",
                 disabled=disabled,
                 use_container_width=True,
                 key="explore_notes"
