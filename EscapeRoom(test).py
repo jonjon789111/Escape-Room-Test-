@@ -380,8 +380,11 @@ def presenter_mode():
                 use_container_width=True,
                 type="secondary"
             ):
+                reset_game()
+            
                 st.session_state.presenter_unlocked = False
                 st.session_state.page = "home"
+            
                 st.rerun()
                             
 # ==========================================
@@ -390,14 +393,18 @@ def presenter_mode():
 
 def reset_game():
 
+    # GENERAL GAME RESET
     st.session_state.lives = 3
     st.session_state.hints = 2
     st.session_state.time_limit = 1200
     st.session_state.start_time = None
     st.session_state.question_number = 0
     st.session_state.current_object = None
-    st.session_state.keys_collected = []
-    st.session_state.answer_history = []
+
+    # ROOM-SPECIFIC STATES
+    st.session_state.room2_object = None
+    st.session_state.room3_object = None
+    st.session_state.room3_completed = []
 
     # ROOM PROGRESS
     st.session_state.room1_cleared = False
@@ -405,14 +412,33 @@ def reset_game():
     st.session_state.room3_cleared = False
     st.session_state.room4_cleared = False
 
+    # KEY COLLECTION
+    st.session_state.keys_collected = []
+
     # GAME STATUS
     st.session_state.game_over = False
     st.session_state.feedback = ""
     st.session_state.hint_message = ""
     st.session_state.hint_used_this_question = False
+    st.session_state.answer_history = []
     st.session_state.wrong_answers = 0
     st.session_state.hints_used = 0
     st.session_state.end_time = None
+
+    # NOTIFICATIONS
+    st.session_state.notification = ""
+    st.session_state.notification_type = ""
+
+    # RESET ANSWER INPUTS
+    answer_keys = [
+        "answer1", "answer2", "answer3",
+        "r2_answer1", "r2_answer2", "r2_answer3",
+        "r3_answer1", "r3_answer2", "r3_answer3",
+        "r4_answer1", "r4_answer2", "r4_answer3"
+    ]
+
+    for key in answer_keys:
+        st.session_state.pop(key, None)
 
 def start_presenter_room(room):
 
