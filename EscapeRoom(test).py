@@ -2623,7 +2623,8 @@ def room3():
         unsafe_allow_html=True
     )
 
-    # CHALLENGE SELECTION
+    
+    # CHALLENGE SELECTION SCREEN
     if st.session_state.room3_object is None:
 
         st.markdown(
@@ -2631,39 +2632,49 @@ def room3():
             unsafe_allow_html=True
         )
 
-        st.write("Choose an available shelf to continue.")
+        st.write("Choose a shelf to begin your challenge.")
 
         completed = st.session_state.room3_completed
 
-        # SHELF 1
+        # SHELF 1 - PRODUCT RULE
         if st.button(
             "📖  SHELF I — THE PRODUCT RULE",
             key="room3_shelf1",
-            use_container_width=True,
-            disabled="shelf1" in completed
+            use_container_width=True
         ):
-            st.session_state.room3_object = "shelf1"
-            st.rerun()
+            if "shelf1" in completed:
+                st.warning("✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!")
+            else:
+                st.session_state.room3_object = "shelf1"
+                st.rerun()
 
-        # SHELF 2
+        # SHELF 2 - QUOTIENT RULE
         if st.button(
             "📖  SHELF II — THE QUOTIENT RULE",
             key="room3_shelf2",
-            use_container_width=True,
-            disabled=("shelf1" not in completed or "shelf2" in completed)
+            use_container_width=True
         ):
-            st.session_state.room3_object = "shelf2"
-            st.rerun()
+            if "shelf2" in completed:
+                st.warning("✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!")
+            elif "shelf1" not in completed:
+                st.warning("🔒 COMPLETE SHELF I FIRST!")
+            else:
+                st.session_state.room3_object = "shelf2"
+                st.rerun()
 
-        # SHELF 3
+        # SHELF 3 - CHAIN RULE
         if st.button(
             "📖  SHELF III — THE CHAIN RULE",
             key="room3_shelf3",
-            use_container_width=True,
-            disabled=("shelf2" not in completed or "shelf3" in completed)
+            use_container_width=True
         ):
-            st.session_state.room3_object = "shelf3"
-            st.rerun()
+            if "shelf3" in completed:
+                st.warning("✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!")
+            elif "shelf2" not in completed:
+                st.warning("🔒 COMPLETE SHELF II FIRST!")
+            else:
+                st.session_state.room3_object = "shelf3"
+                st.rerun()
 
         st.markdown(
             '<div class="gold-line"></div>',
