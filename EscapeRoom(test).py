@@ -1007,6 +1007,7 @@ def room1():
     )
 
     
+   
     # ==========================================
     # CLASSROOM EXPLORATION
     # ==========================================
@@ -1015,16 +1016,14 @@ def room1():
 
         st.markdown("### 🔎 EXPLORE THE CLASSROOM")
         st.write("Investigate the objects to uncover hidden challenges.")
-        
-        # BUTTON COLORS BASED ON PROGRESS
 
-        
         q = st.session_state.question_number
 
+        # BUTTON DESIGN
         st.markdown("""
         <style>
 
-        /* BASE STYLE */
+        /* BASE BUTTON DESIGN */
         div[class*="st-key-explore_blackboard"] button,
         div[class*="st-key-explore_notebook"] button,
         div[class*="st-key-explore_notes"] button {
@@ -1060,7 +1059,16 @@ def room1():
             transition: all 0.25s ease !important;
         }
 
-        /* LOCKED */
+        /* COMPLETED - GREEN */
+        div[class*="st-key-explore_blackboard"] button.completed,
+        div[class*="st-key-explore_notebook"] button.completed,
+        div[class*="st-key-explore_notes"] button.completed {
+            background: linear-gradient(
+                180deg, #72D887, #238C43, #105328
+            ) !important;
+        }
+
+        /* LOCKED - DARK */
         div[class*="st-key-explore_blackboard"] button:disabled,
         div[class*="st-key-explore_notebook"] button:disabled,
         div[class*="st-key-explore_notes"] button:disabled {
@@ -1069,6 +1077,7 @@ def room1():
                 180deg, #51433A, #29201B, #17110E
             ) !important;
 
+            background-color: #29201B !important;
             color: #A99B87 !important;
             opacity: 0.7 !important;
             filter: grayscale(0.5) !important;
@@ -1086,55 +1095,26 @@ def room1():
         </style>
         """, unsafe_allow_html=True)
 
-        # COMPLETED BUTTONS - GREEN
-        if q >= 1:
-            st.markdown("""
-            <style>
-            div[class*="st-key-explore_blackboard"] button {
-                background: linear-gradient(
-                    180deg, #72D887, #238C43, #105328
-                ) !important;
-                border-color: #B4F0B8 !important;
-                color: white !important;
-                opacity: 1 !important;
-                filter: none !important;
-            }
-            </style>
-            """, unsafe_allow_html=True)
-
-        if q >= 2:
-            st.markdown("""
-            <style>
-            div[class*="st-key-explore_notebook"] button {
-                background: linear-gradient(
-                    180deg, #72D887, #238C43, #105328
-                ) !important;
-                border-color: #B4F0B8 !important;
-                color: white !important;
-                opacity: 1 !important;
-                filter: none !important;
-            }
-            </style>
-            """, unsafe_allow_html=True)
-
         col1, col2, col3 = st.columns(3, gap="large")
 
         # BLACKBOARD
         with col1:
 
-            disabled = st.session_state.question_number != 0
+            completed = q >= 1
 
             if st.button(
                 "🖍️  BLACKBOARD",
                 type="secondary",
-                disabled=disabled,
                 use_container_width=True,
                 key="explore_blackboard"
             ):
-                st.session_state.current_object = "blackboard"
-                st.rerun()
+                if completed:
+                    st.info("You have already completed this challenge.")
+                else:
+                    st.session_state.current_object = "blackboard"
+                    st.rerun()
 
-            if disabled:
+            if completed:
                 st.caption("✓ COMPLETED")
             else:
                 st.caption("● AVAILABLE")
@@ -1142,21 +1122,25 @@ def room1():
         # OLD NOTEBOOK
         with col2:
 
-            disabled = st.session_state.question_number != 1
+            completed = q >= 2
+            locked = q < 1
 
             if st.button(
                 "📓  OLD NOTEBOOK",
                 type="secondary",
-                disabled=disabled,
+                disabled=locked,
                 use_container_width=True,
                 key="explore_notebook"
             ):
-                st.session_state.current_object = "notebook"
-                st.rerun()
+                if completed:
+                    st.info("You have already completed this challenge.")
+                else:
+                    st.session_state.current_object = "notebook"
+                    st.rerun()
 
-            if st.session_state.question_number > 1:
+            if completed:
                 st.caption("✓ COMPLETED")
-            elif disabled:
+            elif locked:
                 st.caption("🔒 LOCKED")
             else:
                 st.caption("● AVAILABLE")
@@ -1164,25 +1148,28 @@ def room1():
         # WALL NOTES
         with col3:
 
-            disabled = st.session_state.question_number != 2
+            completed = q >= 3
+            locked = q < 2
 
             if st.button(
                 "📌  WALL NOTES",
                 type="secondary",
-                disabled=disabled,
+                disabled=locked,
                 use_container_width=True,
                 key="explore_notes"
             ):
-                st.session_state.current_object = "notes"
-                st.rerun()
+                if completed:
+                    st.info("You have already completed this challenge.")
+                else:
+                    st.session_state.current_object = "notes"
+                    st.rerun()
 
-            if st.session_state.question_number > 2:
+            if completed:
                 st.caption("✓ COMPLETED")
-            elif disabled:
+            elif locked:
                 st.caption("🔒 LOCKED")
             else:
                 st.caption("● AVAILABLE")
-
 
     # ==========================================
     # CHALLENGE 1 — BLACKBOARD
