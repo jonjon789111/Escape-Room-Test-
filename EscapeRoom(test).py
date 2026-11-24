@@ -1010,6 +1010,7 @@ def room1():
     # CLASSROOM EXPLORATION
     # ==========================================
 
+    
     if st.session_state.current_object is None:
 
         st.markdown("### 🔎 EXPLORE THE CLASSROOM")
@@ -1017,41 +1018,135 @@ def room1():
 
         st.markdown("""
         <style>
+
+        /* GENERAL GAME BUTTON DESIGN */
+
         div.st-key-explore_blackboard button,
         div.st-key-explore_notebook button,
         div.st-key-explore_notes button {
-            min-height: 150px;
-            border: 1px solid #b58b45;
-            border-radius: 14px;
-            background: linear-gradient(145deg, #252525, #111111);
-            color: #f0d7a0;
+
+            height: 175px;
+            min-height: 175px;
+            width: 100%;
+
+            border-radius: 18px;
+            border: 1px solid rgba(220, 195, 145, 0.35);
+
+            color: #F4EBDD;
+
             font-size: 17px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+
+            white-space: pre-line;
+
+            box-shadow:
+                0 8px 18px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255,255,255,0.12);
+
+            transition: all 0.25s ease;
         }
+
+        /* BLACKBOARD */
+
+        div.st-key-explore_blackboard button {
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(92, 139, 119, 0.35),
+                    transparent 55%
+                ),
+                linear-gradient(
+                    145deg,
+                    #293D38,
+                    #172622
+                );
+
+            border-bottom: 4px solid #789B83;
+        }
+
+        /* OLD NOTEBOOK */
+
+        div.st-key-explore_notebook button {
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(178, 126, 78, 0.35),
+                    transparent 55%
+                ),
+                linear-gradient(
+                    145deg,
+                    #493629,
+                    #251C17
+                );
+
+            border-bottom: 4px solid #B98B60;
+        }
+
+        /* WALL NOTES */
+
+        div.st-key-explore_notes button {
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(102, 125, 169, 0.35),
+                    transparent 55%
+                ),
+                linear-gradient(
+                    145deg,
+                    #303A50,
+                    #1B2231
+                );
+
+            border-bottom: 4px solid #8297C1;
+        }
+
+        /* HOVER EFFECTS */
 
         div.st-key-explore_blackboard button:hover,
         div.st-key-explore_notebook button:hover,
         div.st-key-explore_notes button:hover {
-            border: 1px solid #f5cf79;
-            background: linear-gradient(145deg, #49371f, #21180f);
-            color: #ffffff;
-            transform: translateY(-4px);
-            box-shadow: 0 5px 18px rgba(181, 139, 69, 0.25);
+
+            transform: translateY(-6px);
+
+            color: #FFFFFF;
+
+            box-shadow:
+                0 14px 25px rgba(0,0,0,0.4),
+                0 0 16px rgba(220,195,145,0.16);
+
+            border-color: #D9C39A;
         }
+
+        /* CLICK EFFECT */
+
+        div.st-key-explore_blackboard button:active,
+        div.st-key-explore_notebook button:active,
+        div.st-key-explore_notes button:active {
+
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* LOCKED BUTTONS */
 
         div.st-key-explore_blackboard button:disabled,
         div.st-key-explore_notebook button:disabled,
         div.st-key-explore_notes button:disabled {
-            opacity: 0.4;
-            border: 1px solid #555555;
-            color: #999999;
+
+            opacity: 0.38;
+            filter: grayscale(0.65);
+            cursor: not-allowed;
+
+            box-shadow: none;
         }
+
         </style>
         """, unsafe_allow_html=True)
 
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3 = st.columns(3, gap="large")
 
         # BLACKBOARD
         with col1:
@@ -1059,7 +1154,7 @@ def room1():
             disabled = st.session_state.question_number != 0
 
             if st.button(
-                "🖍️\nBLACKBOARD\n\nINSPECT OBJECT",
+                "🖍️\nBLACKBOARD\n\nINSPECT OBJECT  →",
                 disabled=disabled,
                 use_container_width=True,
                 key="explore_blackboard"
@@ -1078,7 +1173,7 @@ def room1():
             disabled = st.session_state.question_number != 1
 
             if st.button(
-                "📓\nOLD NOTEBOOK\n\nINSPECT OBJECT",
+                "📓\nOLD NOTEBOOK\n\nINSPECT OBJECT  →",
                 disabled=disabled,
                 use_container_width=True,
                 key="explore_notebook"
@@ -1099,7 +1194,7 @@ def room1():
             disabled = st.session_state.question_number != 2
 
             if st.button(
-                "📌\nWALL NOTES\n\nINSPECT OBJECT",
+                "📌\nWALL NOTES\n\nINSPECT OBJECT  →",
                 disabled=disabled,
                 use_container_width=True,
                 key="explore_notes"
@@ -1113,6 +1208,7 @@ def room1():
                 st.caption("🔒 LOCKED")
             else:
                 st.caption("● AVAILABLE")
+
 
     # ==========================================
     # CHALLENGE 1 — BLACKBOARD
