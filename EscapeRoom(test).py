@@ -701,14 +701,109 @@ def floating_notification():
         </div>
     """, unsafe_allow_html=True)
 
+
 def header(label, title, subtitle):
 
-    st.markdown(f"""
-        <div class="section-title" style="text-align:center">{label}</div>
-        <div class="main-title">{title}</div>
-        <div class="subtitle">{subtitle}</div>
-        <div class="gold-line"></div>
+    st.markdown("""
+        <style>
+
+        @keyframes roomLabelReveal {
+            0% {
+                opacity: 0;
+                letter-spacing: 12px;
+                transform: translateY(-15px);
+            }
+            100% {
+                opacity: 1;
+                letter-spacing: 4px;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes roomTitleReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(35px) scale(0.96);
+                filter: blur(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes roomSubtitleReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes goldLineReveal {
+            0% {
+                opacity: 0;
+                width: 0;
+                box-shadow: 0 0 0 transparent;
+            }
+            100% {
+                opacity: 1;
+                width: 180px;
+                box-shadow: 0 0 18px rgba(201, 169, 104, 0.45);
+            }
+        }
+
+        .room-entrance {
+            text-align: center;
+            padding: 22px 10px 28px;
+        }
+
+        .room-entrance .section-title {
+            animation: roomLabelReveal 0.9s ease-out both;
+        }
+
+        .room-entrance .main-title {
+            animation: roomTitleReveal 1.1s ease-out 0.2s both;
+        }
+
+        .room-entrance .subtitle {
+            animation: roomSubtitleReveal 0.9s ease-out 0.65s both;
+        }
+
+        .room-entrance .gold-line {
+            width: 180px;
+            margin: 22px auto 0;
+            animation: goldLineReveal 1s ease-out 0.9s both;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .room-entrance *,
+            .room-entrance .gold-line {
+                animation: none !important;
+            }
+        }
+
+        </style>
     """, unsafe_allow_html=True)
+
+    st.markdown(f"""
+        <div class="room-entrance">
+
+            <div class="section-title">{label}</div>
+
+            <div class="main-title">{title}</div>
+
+            <div class="subtitle">{subtitle}</div>
+
+            <div class="gold-line"></div>
+
+        </div>
+    """, unsafe_allow_html=True)
+
 
 
 def presenter_mode():
