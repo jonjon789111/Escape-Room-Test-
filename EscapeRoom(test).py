@@ -1707,8 +1707,6 @@ def room1():
 # ROOM 2 — THE TEACHER'S DESK
 # ==========================================
 
-
-
 def room2():
 
     design()
@@ -1719,7 +1717,21 @@ def room2():
 
     if st.session_state.get("room2_cleared", False):
 
-        st.html("""
+        
+    # ==========================================
+    # ROOM 2 COMPLETION SCREEN
+    # ==========================================
+
+    if st.session_state.get("room2_cleared", False):
+
+        # LOAD SILVER KEY IMAGE
+        with open("silver.png", "rb") as image_file:
+            silver = base64.b64encode(
+                image_file.read()
+            ).decode("utf-8")
+
+        # COMPLETION SCREEN DESIGN
+        completion_html = """
         <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
@@ -1773,16 +1785,26 @@ def room2():
         }
 
         .silver-key {
-            font-size: 75px;
             margin: 25px 0 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .key-image {
+            width: 220px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+
             filter: drop-shadow(
-                0 0 15px rgba(210,210,220,0.6)
+                0 0 15px rgba(190,215,255,0.5)
             );
         }
 
         .key-title {
             font-family: 'Cinzel', Georgia, serif;
-            color: #D9DDE5;
+            color: #DCE8F5;
             font-size: 23px;
             font-weight: 900;
             letter-spacing: 2px;
@@ -1820,7 +1842,10 @@ def room2():
             </div>
 
             <div class="silver-key">
-                🗝️
+                <img
+                    src="SILVER_IMAGE_HERE"
+                    class="key-image"
+                >
             </div>
 
             <div class="key-title">
@@ -1836,8 +1861,17 @@ def room2():
             </div>
 
         </div>
-        """)
+        """
 
+        # INSERT THE ACTUAL IMAGE DATA
+        completion_html = completion_html.replace(
+            "SILVER_IMAGE_HERE",
+            "data:image/png;base64," + silver
+        )
+
+        st.html(completion_html)
+
+        # RETURN BUTTON DESIGN
         st.html("""
         <style>
 
@@ -1879,6 +1913,7 @@ def room2():
         </style>
         """)
 
+        # RETURN TO STORY BUTTON
         _, center, _ = st.columns([1, 2, 1])
 
         with center:
