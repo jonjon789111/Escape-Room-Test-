@@ -813,7 +813,7 @@ def story_page():
     with col2:
         with st.container(border=True):
             st.markdown("### 🚪 The Exit Door")
-            st.caption("Room 4 — Trigonometric Derivative, Exponential Function, Inverse Trigonometric Derivative")
+            st.caption("Room 4 — Trigonometric Derivative, Exponential Function")
 
             if st.session_state.room4_cleared:
                 st.success("COMPLETED")
@@ -949,7 +949,7 @@ def instructions_page():
         ("ROOM 01", "BLACKBOARD", "Limits"),
         ("ROOM 02", "TEACHER'S DESK", "Power Rule"),
         ("ROOM 03", "STORAGE CABINET", "Product, Quotient, Chain Rules"),
-        ("ROOM 04", "EXIT DOOR", "Trigonometric Derivatives, Exponential Function, Inverse Trigonometric Derivative")
+        ("ROOM 04", "EXIT DOOR", "Trigonometric Derivatives, Exponential Function")
     ]
 
     for col, room in zip(cols, rooms):
