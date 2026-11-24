@@ -1015,91 +1015,107 @@ def room1():
 
         st.markdown("### 🔎 EXPLORE THE CLASSROOM")
         st.write("Investigate the objects to uncover hidden challenges.")
-
-        
-        
         
         # BUTTON COLORS BASED ON PROGRESS
 
+        
         q = st.session_state.question_number
-
-        completed_styles = ""
-
-        if q >= 1:
-            completed_styles += """
-            div.st-key-explore_blackboard button {
-                background: linear-gradient(
-                    180deg, #65C879, #21853B, #104D25
-                ) !important;
-                border-color: #A5E8A7 !important;
-                opacity: 1 !important;
-                filter: none !important;
-            }
-            """
-
-        if q >= 2:
-            completed_styles += """
-            div.st-key-explore_notebook button {
-                background: linear-gradient(
-                    180deg, #65C879, #21853B, #104D25
-                ) !important;
-                border-color: #A5E8A7 !important;
-                opacity: 1 !important;
-                filter: none !important;
-            }
-            """
 
         st.markdown("""
         <style>
 
-        /* AVAILABLE - RED */
+        /* BASE STYLE */
+        div[class*="st-key-explore_blackboard"] button,
+        div[class*="st-key-explore_notebook"] button,
+        div[class*="st-key-explore_notes"] button {
 
-        div.st-key-explore_blackboard button,
-        div.st-key-explore_notebook button,
-        div.st-key-explore_notes button {
             background: linear-gradient(
-                180deg, #FF713C, #D52D0B, #4A0B03
+                180deg,
+                #FF7545 0%,
+                #D52D12 45%,
+                #761204 100%
             ) !important;
-            color: #FFF0CF !important;
-            border: 3px double #E7A65B !important;
+
+            background-color: #B51F08 !important;
+            color: #FFF0D0 !important;
+
+            border: 3px double #E6AD65 !important;
             border-radius: 5px !important;
+
             height: 175px !important;
+            min-height: 175px !important;
+
             font-family: Georgia, serif !important;
             font-size: 23px !important;
             font-weight: bold !important;
-            box-shadow: 0 0 12px rgba(255,75,0,0.45) !important;
+            letter-spacing: 2px !important;
+
+            box-shadow:
+                0 0 0 3px #302016,
+                0 0 0 5px #89633B,
+                inset 0 2px 5px #FFD58A,
+                inset 0 -5px 8px #4A1300,
+                0 0 15px rgba(255,75,0,0.45) !important;
+
+            transition: all 0.25s ease !important;
         }
 
-        /* LOCKED - DARK */
+        /* LOCKED */
+        div[class*="st-key-explore_blackboard"] button:disabled,
+        div[class*="st-key-explore_notebook"] button:disabled,
+        div[class*="st-key-explore_notes"] button:disabled {
 
-        div.st-key-explore_blackboard button:disabled,
-        div.st-key-explore_notebook button:disabled,
-        div.st-key-explore_notes button:disabled {
             background: linear-gradient(
                 180deg, #51433A, #29201B, #17110E
             ) !important;
+
             color: #A99B87 !important;
-            opacity: 0.65 !important;
+            opacity: 0.7 !important;
+            filter: grayscale(0.5) !important;
         }
 
         /* HOVER */
+        div[class*="st-key-explore_blackboard"] button:not(:disabled):hover,
+        div[class*="st-key-explore_notebook"] button:not(:disabled):hover,
+        div[class*="st-key-explore_notes"] button:not(:disabled):hover {
 
-        div.st-key-explore_blackboard button:not(:disabled):hover,
-        div.st-key-explore_notebook button:not(:disabled):hover,
-        div.st-key-explore_notes button:not(:disabled):hover {
-            filter: brightness(1.3) !important;
+            filter: brightness(1.25) !important;
             transform: translateY(-4px) !important;
         }
 
         </style>
         """, unsafe_allow_html=True)
 
-        # APPLY COMPLETED BUTTON STYLES
-        st.markdown(
-            "<style>" + completed_styles + "</style>",
-            unsafe_allow_html=True
-        )
+        # COMPLETED BUTTONS - GREEN
+        if q >= 1:
+            st.markdown("""
+            <style>
+            div[class*="st-key-explore_blackboard"] button {
+                background: linear-gradient(
+                    180deg, #72D887, #238C43, #105328
+                ) !important;
+                border-color: #B4F0B8 !important;
+                color: white !important;
+                opacity: 1 !important;
+                filter: none !important;
+            }
+            </style>
+            """, unsafe_allow_html=True)
 
+        if q >= 2:
+            st.markdown("""
+            <style>
+            div[class*="st-key-explore_notebook"] button {
+                background: linear-gradient(
+                    180deg, #72D887, #238C43, #105328
+                ) !important;
+                border-color: #B4F0B8 !important;
+                color: white !important;
+                opacity: 1 !important;
+                filter: none !important;
+            }
+            </style>
+            """, unsafe_allow_html=True)
 
         col1, col2, col3 = st.columns(3, gap="large")
 
