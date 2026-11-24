@@ -2408,11 +2408,7 @@ def room2():
         st.info(st.session_state.hint_message)
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-
-
-def room3():
-
-    
+   
 def room3():
 
     # INITIALIZE ROOM 3 SELECTION STATE
