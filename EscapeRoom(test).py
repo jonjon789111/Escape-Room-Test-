@@ -2413,6 +2413,8 @@ def room2():
 
 def room3():
 
+    design()
+
     # INITIALIZE ROOM 3 STATES
     if "room3_object" not in st.session_state:
         st.session_state.room3_object = None
