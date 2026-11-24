@@ -971,21 +971,28 @@ def instructions_page():
 
 def room1():
 
+    design()
     
-    # ==========================================
+     # ==========================================
     # ROOM 1 COMPLETION SCREEN
     # ==========================================
 
     if st.session_state.get("room1_cleared", False):
 
-        st.markdown("""
+        # COMPLETION SCREEN DESIGN
+        st.html("""
         <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
 
         .completed-room {
             background:
-                radial-gradient(circle at top, #49351F 0%, #241A12 55%, #130E0A 100%);
+                radial-gradient(
+                    circle at top,
+                    #49351F 0%,
+                    #241A12 55%,
+                    #130E0A 100%
+                );
 
             border: 3px double #C69A55;
             outline: 2px solid #634322;
@@ -1029,7 +1036,9 @@ def room1():
         .bronze-key {
             font-size: 75px;
             margin: 25px 0 10px 0;
-            filter: drop-shadow(0 0 15px rgba(255,190,75,0.5));
+            filter: drop-shadow(
+                0 0 15px rgba(255,190,75,0.5)
+            );
         }
 
         .key-title {
@@ -1044,18 +1053,65 @@ def room1():
             display: inline-block;
             margin-top: 25px;
             padding: 12px 25px;
+
             border: 1px solid #89663D;
             background: rgba(0,0,0,0.3);
             border-radius: 6px;
+
             color: #E8D1A8;
             font-family: 'Cinzel', Georgia, serif;
             font-size: 14px;
             letter-spacing: 2px;
         }
 
+        </style>
+
+        <div class="completed-room">
+
+            <div class="completed-label">
+                CHAPTER 01
+            </div>
+
+            <div class="completed-title">
+                CLASSROOM CLEARED
+            </div>
+
+            <div class="completed-subtitle">
+                THE BLACKBOARD — LIMITS
+            </div>
+
+            <div class="bronze-key">
+                🗝️
+            </div>
+
+            <div class="key-title">
+                BRONZE KEY ACQUIRED
+            </div>
+
+            <div class="completed-subtitle">
+                The secrets of the classroom have been uncovered.
+            </div>
+
+            <div class="completed-progress">
+                3 / 3 CHALLENGES COMPLETED
+            </div>
+
+        </div>
+        """)
+
+        # RETURN BUTTON DESIGN
+        st.html("""
+        <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
+
         div[class*="st-key-room1_completed_return"] button {
+
             background: linear-gradient(
-                180deg, #D9B36C, #94652D, #583716
+                180deg,
+                #D9B36C,
+                #94652D,
+                #583716
             ) !important;
 
             color: #FFF1D0 !important;
@@ -1073,6 +1129,8 @@ def room1():
                 0 0 0 3px #352316,
                 inset 0 2px 5px #FFE2A4,
                 0 0 15px rgba(220,170,90,0.3) !important;
+
+            transition: all 0.25s ease !important;
         }
 
         div[class*="st-key-room1_completed_return"] button:hover {
@@ -1081,45 +1139,9 @@ def room1():
         }
 
         </style>
-        """, unsafe_allow_html=True)
+        """)
 
-        st.markdown(
-            """
-            <div class="completed-room">
-
-                <div class="completed-label">
-                    CHAPTER 01
-                </div>
-
-                <div class="completed-title">
-                    CLASSROOM CLEARED
-                </div>
-
-                <div class="completed-subtitle">
-                    THE BLACKBOARD — LIMITS
-                </div>
-
-                <div class="bronze-key">
-                    🗝️
-                </div>
-
-                <div class="key-title">
-                    BRONZE KEY ACQUIRED
-                </div>
-
-                <div class="completed-subtitle">
-                    The secrets of the classroom have been uncovered.
-                </div>
-
-                <div class="completed-progress">
-                    3 / 3 CHALLENGES COMPLETED
-                </div>
-
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
+        # RETURN TO STORY BUTTON
         _, center, _ = st.columns([1, 2, 1])
 
         with center:
@@ -1129,12 +1151,12 @@ def room1():
                 key="room1_completed_return",
                 use_container_width=True
             ):
+
                 st.session_state.page = "story"
                 st.rerun()
 
         st.stop()
 
-    design()
 
     header(
         "ROOM 01",
