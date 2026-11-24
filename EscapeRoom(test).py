@@ -1018,105 +1018,68 @@ def room1():
 
         
         
+        
+        # BUTTON COLORS BASED ON PROGRESS
+
+        q = st.session_state.question_number
+
+        completed_styles = ""
+
+        if q >= 1:
+            completed_styles += """
+            div.st-key-explore_blackboard button {
+                background: linear-gradient(
+                    180deg, #65C879, #21853B, #104D25
+                ) !important;
+                border-color: #A5E8A7 !important;
+                opacity: 1 !important;
+                filter: none !important;
+            }
+            """
+
+        if q >= 2:
+            completed_styles += """
+            div.st-key-explore_notebook button {
+                background: linear-gradient(
+                    180deg, #65C879, #21853B, #104D25
+                ) !important;
+                border-color: #A5E8A7 !important;
+                opacity: 1 !important;
+                filter: none !important;
+            }
+            """
+
         st.markdown("""
         <style>
 
-        /* BLACKBOARD - ORANGE METALLIC */
+        /* AVAILABLE - RED */
 
         div.st-key-explore_blackboard button,
-        div.st-key-explore_blackboard button[kind="secondary"] {
-            background-color: #A83208 !important;
-            background-image:
-                linear-gradient(
-                    180deg,
-                    #FF9A27 0%,
-                    #D94B08 35%,
-                    #8D2105 75%,
-                    #4B1305 100%
-                ) !important;
-
-            color: #FFF0C5 !important;
-            border: 3px double #E5A64B !important;
-            border-radius: 5px !important;
-
-            min-height: 175px !important;
-            height: 175px !important;
-
-            font-family: Georgia, serif !important;
-            font-size: 25px !important;
-            font-weight: bold !important;
-            letter-spacing: 2px !important;
-
-            box-shadow:
-                0 0 0 3px #302016,
-                0 0 0 5px #886039,
-                inset 0 2px 5px #FFD58A,
-                inset 0 -5px 8px #4A1300,
-                0 0 15px rgba(255, 91, 0, 0.45) !important;
-        }
-
-        /* OLD NOTEBOOK - BRONZE */
-
         div.st-key-explore_notebook button,
-        div.st-key-explore_notebook button[kind="secondary"] {
-            background-color: #713B16 !important;
-            background-image:
-                linear-gradient(
-                    180deg,
-                    #D18A42,
-                    #925020 45%,
-                    #48240F
-                ) !important;
-
-            color: #FFF0C5 !important;
-            border: 3px double #D5A66C !important;
+        div.st-key-explore_notes button {
+            background: linear-gradient(
+                180deg, #FF713C, #D52D0B, #4A0B03
+            ) !important;
+            color: #FFF0CF !important;
+            border: 3px double #E7A65B !important;
             border-radius: 5px !important;
-
-            min-height: 175px !important;
             height: 175px !important;
-
             font-family: Georgia, serif !important;
-            font-size: 25px !important;
+            font-size: 23px !important;
             font-weight: bold !important;
-
-            box-shadow:
-                0 0 0 3px #302016,
-                0 0 0 5px #886039,
-                inset 0 2px 5px #FFE0A6,
-                inset 0 -5px 8px #321707,
-                0 0 12px rgba(190, 112, 40, 0.4) !important;
+            box-shadow: 0 0 12px rgba(255,75,0,0.45) !important;
         }
 
-        /* WALL NOTES - ANTIQUE GOLD */
+        /* LOCKED - DARK */
 
-        div.st-key-explore_notes button,
-        div.st-key-explore_notes button[kind="secondary"] {
-            background-color: #555000 !important;
-            background-image:
-                linear-gradient(
-                    180deg,
-                    #A5A000,
-                    #656000 45%,
-                    #302F00
-                ) !important;
-
-            color: #FFF8C5 !important;
-            border: 3px double #C7B84A !important;
-            border-radius: 5px !important;
-
-            min-height: 175px !important;
-            height: 175px !important;
-
-            font-family: Georgia, serif !important;
-            font-size: 25px !important;
-            font-weight: bold !important;
-
-            box-shadow:
-                0 0 0 3px #302016,
-                0 0 0 5px #886039,
-                inset 0 2px 5px #FFF29A,
-                inset 0 -5px 8px #292600,
-                0 0 12px rgba(220, 210, 30, 0.3) !important;
+        div.st-key-explore_blackboard button:disabled,
+        div.st-key-explore_notebook button:disabled,
+        div.st-key-explore_notes button:disabled {
+            background: linear-gradient(
+                180deg, #51433A, #29201B, #17110E
+            ) !important;
+            color: #A99B87 !important;
+            opacity: 0.65 !important;
         }
 
         /* HOVER */
@@ -1128,17 +1091,15 @@ def room1():
             transform: translateY(-4px) !important;
         }
 
-        /* LOCKED */
-
-        div.st-key-explore_blackboard button:disabled,
-        div.st-key-explore_notebook button:disabled,
-        div.st-key-explore_notes button:disabled {
-            filter: brightness(0.4) saturate(0.6) !important;
-            opacity: 0.8 !important;
-        }
-
         </style>
         """, unsafe_allow_html=True)
+
+        # APPLY COMPLETED BUTTON STYLES
+        st.markdown(
+            "<style>" + completed_styles + "</style>",
+            unsafe_allow_html=True
+        )
+
 
         col1, col2, col3 = st.columns(3, gap="large")
 
