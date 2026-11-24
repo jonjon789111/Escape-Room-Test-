@@ -50,8 +50,6 @@ for key, value in defaults.items():
 # SHARED DESIGN
 # ==========================================
 
-
-
 def design():
 
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
@@ -62,11 +60,11 @@ def design():
     st.markdown(f"""
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
 
     /* =====================================
-       GLOBAL BACKGROUND
+       BACKGROUND
     ===================================== */
 
     .stApp {{
@@ -116,9 +114,6 @@ def design():
         letter-spacing: 5px;
         color: #F4F1EA;
         text-align: center;
-
-        text-shadow:
-            0 0 15px rgba(216, 185, 111, 0.25);
     }}
 
 
@@ -131,41 +126,6 @@ def design():
         font-size: 24px;
         color: #C6B78E;
         text-align: center;
-        letter-spacing: 1px;
-    }}
-
-
-    /* =====================================
-       SECTION TITLE
-    ===================================== */
-
-    .section-title {{
-        font-family: Cinzel, serif;
-        color: #E6C77F;
-        font-size: 17px;
-        font-weight: 800;
-        letter-spacing: 2px;
-        line-height: 1.6;
-
-        padding-bottom: 15px;
-        margin-bottom: 15px;
-
-        border-bottom: 1px solid rgba(181, 154, 96, 0.45);
-
-        text-shadow:
-            0 0 10px rgba(216, 185, 111, 0.18);
-    }}
-
-
-    /* =====================================
-       STORY TEXT
-    ===================================== */
-
-    .story-text {{
-        font-family: 'Cormorant Garamond', serif;
-        color: #E0E3E8;
-        font-size: 21px;
-        line-height: 1.7;
     }}
 
 
@@ -184,6 +144,30 @@ def design():
             #B59A60,
             transparent
         );
+    }}
+
+
+    /* =====================================
+       SECTION TITLE
+    ===================================== */
+
+    .section-title {{
+        font-family: Cinzel, serif;
+        color: #D8B96F;
+        font-size: 18px;
+        letter-spacing: 3px;
+    }}
+
+
+    /* =====================================
+       STORY TEXT
+    ===================================== */
+
+    .story-text {{
+        font-family: 'Cormorant Garamond', serif;
+        color: #E0E3E8;
+        font-size: 21px;
+        line-height: 1.7;
     }}
 
 
@@ -211,7 +195,9 @@ def design():
     }}
 
 
-    /* QUESTION TEXT */
+    /* =====================================
+       QUESTION TEXT
+    ===================================== */
 
     div[data-testid="stVerticalBlockBorderWrapper"] .stMarkdown p {{
         color: #E4D8C2;
@@ -271,28 +257,19 @@ def design():
 
 
     /* =====================================
-       ALL BUTTONS
+       BUTTONS — ORIGINAL DESIGN
     ===================================== */
 
     div[data-testid="stButton"] button {{
-        min-height: 52px;
-        border-radius: 9px;
-
+        height: 52px;
+        border-radius: 8px;
         font-family: Cinzel, serif;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-
-        transition: all 0.2s ease;
-    }}
-
-    div[data-testid="stButton"] button:hover {{
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        font-weight: bold;
+        letter-spacing: 2px;
     }}
 
 
-    /* PRIMARY BUTTON */
+    /* PLAY BUTTON */
 
     div[data-testid="stButton"] button[kind="primary"] {{
         background: #476B56 !important;
@@ -300,23 +277,13 @@ def design():
         border: 1px solid #78947E !important;
     }}
 
-    div[data-testid="stButton"] button[kind="primary"]:hover {{
-        background: #557D65 !important;
-        border-color: #A1B69F !important;
-    }}
 
-
-    /* SECONDARY BUTTON */
+    /* SECONDARY BUTTONS */
 
     div[data-testid="stButton"] button[kind="secondary"] {{
         background: #B59A60 !important;
         color: #17202B !important;
         border: 1px solid #D9C28C !important;
-    }}
-
-    div[data-testid="stButton"] button[kind="secondary"]:hover {{
-        background: #D0B577 !important;
-        border-color: #F0DCA9 !important;
     }}
 
 
@@ -334,17 +301,11 @@ def design():
 
     .hud-item {{
         flex: 1;
-
-        background: rgba(23, 34, 51, 0.92);
+        background: rgba(23, 34, 51, 0.90);
         border: 1px solid #8C774D;
         border-radius: 10px;
-
         padding: 15px;
         text-align: center;
-
-        box-shadow:
-            0 5px 15px rgba(0, 0, 0, 0.25),
-            inset 0 0 15px rgba(181, 154, 96, 0.05);
     }}
 
     .hud-icon {{
@@ -368,7 +329,7 @@ def design():
 
 
     /* =====================================
-       RESPONSIVE LAYOUT
+       MOBILE RESPONSIVENESS
     ===================================== */
 
     @media (max-width: 700px) {{
@@ -383,7 +344,7 @@ def design():
         }}
 
         .hud-item {{
-            padding: 10px 5px;
+            padding: 10px;
         }}
 
         .hud-value {{
