@@ -2409,7 +2409,161 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
+
 def room3():
+
+    def room3():
+
+    # ROOM 3 COMPLETION SCREEN
+    if st.session_state.get("room3_cleared", False):
+
+        with open("gold.png", "rb") as image_file:
+            gold = base64.b64encode(image_file.read()).decode("utf-8")
+
+        completion_html = """
+        <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
+
+        .completed-room {
+            background:
+                radial-gradient(circle at top, #49351F 0%, #241A12 55%, #130E0A 100%);
+            border: 3px double #C69A45;
+            border-radius: 18px;
+            padding: 35px 20px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(198,154,69,0.25);
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .completed-room .chapter {
+            color: #D6B56D;
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 5px;
+        }
+
+        .completed-room .main-title {
+            color: #F4D58D;
+            font-family: 'Cinzel', serif;
+            font-size: 35px;
+            font-weight: 900;
+            margin: 12px 0;
+            text-shadow: 0 0 15px rgba(218,165,72,0.4);
+        }
+
+        .completed-room .room-name {
+            color: #D9C39A;
+            font-family: 'Cinzel', serif;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .completed-room .key-image {
+            width: 220px;
+            max-width: 75%;
+            margin: 10px auto;
+            filter: drop-shadow(0 0 18px rgba(255,190,65,0.45));
+        }
+
+        .completed-room .key-title {
+            color: #E7BD60;
+            font-family: 'Cinzel', serif;
+            font-size: 25px;
+            font-weight: 900;
+            margin-top: 12px;
+        }
+
+        .completed-room .description {
+            color: #E2D3B8;
+            font-size: 15px;
+            margin-top: 12px;
+        }
+
+        .completed-room .progress-text {
+            color: #D6B56D;
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-top: 25px;
+        }
+
+        </style>
+
+        <div class="completed-room">
+
+            <div class="chapter">CHAPTER 03</div>
+
+            <div class="main-title">CLASSROOM CLEARED</div>
+
+            <div class="room-name">
+                THE LIBRARY — PRODUCT, QUOTIENT & CHAIN RULES
+            </div>
+
+            <img class="key-image" src="GOLD_IMAGE_HERE">
+
+            <div class="key-title">GOLD KEY ACQUIRED</div>
+
+            <div class="description">
+                The secrets hidden within the library have been uncovered.
+            </div>
+
+            <div class="progress-text">
+                3 / 3 CHALLENGES COMPLETED
+            </div>
+
+        </div>
+        """
+
+        completion_html = completion_html.replace(
+            "GOLD_IMAGE_HERE",
+            "data:image/png;base64," + gold
+        )
+
+        st.html(completion_html)
+
+        st.html("""
+        <style>
+
+        div[class*="st-key-room3_completed_return"] button {
+            background: linear-gradient(135deg, #D5A744, #8C5D1C) !important;
+            color: #211609 !important;
+            border: 2px solid #F0D18A !important;
+            border-radius: 12px !important;
+            font-family: 'Cinzel', serif !important;
+            font-weight: 900 !important;
+            letter-spacing: 2px !important;
+            min-height: 52px !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4) !important;
+        }
+
+        div[class*="st-key-room3_completed_return"] button:hover {
+            background: linear-gradient(135deg, #F0D18A, #C18A2D) !important;
+            border-color: #FFF0C2 !important;
+            transform: translateY(-2px);
+        }
+
+        </style>
+        """)
+
+        _, center, _ = st.columns([1, 2, 1])
+
+        with center:
+            if st.button(
+                "RETURN TO STORY",
+                key="room3_completed_return",
+                use_container_width=True
+            ):
+                st.session_state.page = "story"
+                st.rerun()
+
+        st.stop()
+
+    # ORIGINAL ROOM 3 GAMEPLAY
 
     design()
 
@@ -2449,14 +2603,24 @@ def room3():
             st.write("Find the derivative of the function:")
             st.latex(r"f(x) = x^2(3x + 1)")
 
-            answer = st.text_input("YOUR ANSWER (e.g. 2x^2+3x)", key="r3_answer1")
+            answer = st.text_input(
+                "YOUR ANSWER (e.g. 2x^2+3x)",
+                key="r3_answer1"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+                if st.button(
+                    "SUBMIT ANSWER",
+                    type="primary",
+                    use_container_width=True
+                ):
 
-                    is_correct = clean_answer(answer) in ["9x^2+2x", "2x+9x^2"]
+                    is_correct = clean_answer(answer) in [
+                        "9x^2+2x",
+                        "2x+9x^2"
+                    ]
 
                     save_attempt(
                         "ROOM 3 - LIBRARY",
@@ -2481,13 +2645,22 @@ def room3():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+                if st.button(
+                    "USE HINT",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
 
                     else:
-                        use_hint("Product Rule: (uv)' = u'v + uv'. Let u = x^2 and v = 3x + 1.")
+                        use_hint(
+                            "Product Rule: (uv)' = u'v + uv'. "
+                            "Let u = x^2 and v = 3x + 1."
+                        )
 
                     st.rerun()
 
@@ -2504,12 +2677,19 @@ def room3():
             st.write("Find the derivative of the function:")
             st.latex(r"f(x) = \frac{x}{x + 1}")
 
-            answer = st.text_input("YOUR ANSWER (e.g. 1/(x+2)^2)", key="r3_answer2")
+            answer = st.text_input(
+                "YOUR ANSWER (e.g. 1/(x+2)^2)",
+                key="r3_answer2"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+                if st.button(
+                    "SUBMIT ANSWER",
+                    type="primary",
+                    use_container_width=True
+                ):
 
                     is_correct = clean_answer(answer) in [
                         "1/(x+1)^2",
@@ -2540,13 +2720,22 @@ def room3():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+                if st.button(
+                    "USE HINT",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
 
                     else:
-                        use_hint("Quotient Rule: (u/v)' = (u'v - uv') / v^2. Let u = x and v = x + 1.")
+                        use_hint(
+                            "Quotient Rule: (u/v)' = (u'v - uv') / v^2. "
+                            "Let u = x and v = x + 1."
+                        )
 
                     st.rerun()
 
@@ -2563,12 +2752,19 @@ def room3():
             st.write("Find the derivative of the function:")
             st.latex(r"f(x) = (2x + 3)^4")
 
-            answer = st.text_input("YOUR ANSWER (e.g. 6(3x+1)^1)", key="r3_answer3")
+            answer = st.text_input(
+                "YOUR ANSWER (e.g. 6(3x+1)^1)",
+                key="r3_answer3"
+            )
 
             left, right = st.columns(2)
 
             with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+                if st.button(
+                    "SUBMIT ANSWER",
+                    type="primary",
+                    use_container_width=True
+                ):
 
                     is_correct = clean_answer(answer) in [
                         "8(2x+3)^3",
@@ -2598,13 +2794,23 @@ def room3():
                     st.rerun()
 
             with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+                if st.button(
+                    "USE HINT",
+                    type="secondary",
+                    use_container_width=True
+                ):
 
                     if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+                        st.session_state.hint_message = (
+                            "You can only use a hint once per challenge!"
+                        )
 
                     else:
-                        use_hint("Chain Rule: differentiate the outer power first, then multiply by the derivative of the inside (2x + 3).")
+                        use_hint(
+                            "Chain Rule: differentiate the outer power first, "
+                            "then multiply by the derivative of the inside "
+                            "(2x + 3)."
+                        )
 
                     st.rerun()
 
@@ -2614,6 +2820,7 @@ def room3():
         st.success("Correct! You completed the challenge.")
 
         if st.button("CONTINUE", type="primary"):
+
             st.session_state.notification = ""
             st.session_state.notification_type = ""
 
@@ -2652,7 +2859,6 @@ def room3():
         st.info(st.session_state.hint_message)
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-
 
 def room4():
 
