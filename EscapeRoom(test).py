@@ -1020,10 +1020,16 @@ def room1():
         q = st.session_state.question_number
 
         # BUTTON DESIGN
+        
         st.markdown("""
         <style>
 
-        /* BASE BUTTON DESIGN */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
+
+        /* =====================================
+           BASE BUTTON DESIGN - AVAILABLE (RED)
+        ===================================== */
+
         div[class*="st-key-explore_blackboard"] button,
         div[class*="st-key-explore_notebook"] button,
         div[class*="st-key-explore_notes"] button {
@@ -1039,14 +1045,14 @@ def room1():
             color: #FFF0D0 !important;
 
             border: 3px double #E6AD65 !important;
-            border-radius: 5px !important;
+            border-radius: 8px !important;
 
             height: 175px !important;
             min-height: 175px !important;
 
-            font-family: Georgia, serif !important;
-            font-size: 23px !important;
-            font-weight: bold !important;
+            font-family: 'Cinzel', Georgia, serif !important;
+            font-size: 29px !important;
+            font-weight: 900 !important;
             letter-spacing: 2px !important;
 
             box-shadow:
@@ -1059,37 +1065,46 @@ def room1():
             transition: all 0.25s ease !important;
         }
 
-        /* COMPLETED - GREEN */
-        div[class*="st-key-explore_blackboard"] button.completed,
-        div[class*="st-key-explore_notebook"] button.completed,
-        div[class*="st-key-explore_notes"] button.completed {
-            background: linear-gradient(
-                180deg, #72D887, #238C43, #105328
-            ) !important;
-        }
+        /* =====================================
+           LOCKED BUTTON - DARK
+        ===================================== */
 
-        /* LOCKED - DARK */
         div[class*="st-key-explore_blackboard"] button:disabled,
         div[class*="st-key-explore_notebook"] button:disabled,
         div[class*="st-key-explore_notes"] button:disabled {
 
             background: linear-gradient(
-                180deg, #51433A, #29201B, #17110E
+                180deg,
+                #51433A,
+                #29201B,
+                #17110E
             ) !important;
 
             background-color: #29201B !important;
             color: #A99B87 !important;
+
+            border-color: #62513D !important;
+
             opacity: 0.7 !important;
             filter: grayscale(0.5) !important;
         }
 
-        /* HOVER */
+        /* =====================================
+           HOVER EFFECT
+        ===================================== */
+
         div[class*="st-key-explore_blackboard"] button:not(:disabled):hover,
         div[class*="st-key-explore_notebook"] button:not(:disabled):hover,
         div[class*="st-key-explore_notes"] button:not(:disabled):hover {
 
             filter: brightness(1.25) !important;
             transform: translateY(-4px) !important;
+
+            box-shadow:
+                0 0 0 3px #302016,
+                0 0 0 5px #E6AD65,
+                inset 0 2px 5px #FFD58A,
+                0 0 22px rgba(255,150,50,0.7) !important;
         }
 
         </style>
