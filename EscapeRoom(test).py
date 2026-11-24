@@ -3026,6 +3026,8 @@ def room3():
 
 def room4():
 
+    design()
+
     # ==========================================
     # ROOM 4 INITIALIZATION
     # ==========================================
@@ -3189,8 +3191,6 @@ def room4():
     # ROOM DESIGN
     # ==========================================
 
-    design()
-
     header(
         "ROOM 04",
         "THE EXIT DOOR",
@@ -3244,13 +3244,6 @@ def room4():
                 ">
                     THE THREE LOCKS
                 </h2>
-
-                <p style="
-                    color:#C9B994;
-                    font-size:14px;
-                ">
-                    Solve each lock to unlock the exit door.
-                </p>
             </div>
             """,
             unsafe_allow_html=True
