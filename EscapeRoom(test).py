@@ -1081,7 +1081,10 @@ def room1():
             </div>
 
             <div class="bronze-key">
-                <img src="images/bronze.png" class="key-image">
+                <img
+                    src="data:image/png;base64,{bronze}"
+                    class="key-image"
+                >
             </div>
 
             <div class="key-title">
