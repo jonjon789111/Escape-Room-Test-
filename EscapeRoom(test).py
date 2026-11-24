@@ -971,16 +971,163 @@ def instructions_page():
 
 def room1():
 
-    # PREVENT RE-ENTERING A COMPLETED ROOM
+    
+    # ==========================================
+    # ROOM 1 COMPLETION SCREEN
+    # ==========================================
+
     if st.session_state.get("room1_cleared", False):
 
-        st.success("🏆 ROOM 1 ALREADY COMPLETED!")
+        st.markdown("""
+        <style>
 
-        st.write("You have already collected the Bronze Key.")
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
 
-        if st.button("RETURN TO STORY", use_container_width=True):
-            st.session_state.page = "story"
-            st.rerun()
+        .completed-room {
+            background:
+                radial-gradient(circle at top, #49351F 0%, #241A12 55%, #130E0A 100%);
+
+            border: 3px double #C69A55;
+            outline: 2px solid #634322;
+            outline-offset: 5px;
+
+            border-radius: 12px;
+            padding: 45px 25px;
+            margin: 25px 0;
+
+            text-align: center;
+
+            box-shadow:
+                inset 0 0 30px rgba(0,0,0,0.8),
+                0 0 25px rgba(198,154,85,0.2);
+        }
+
+        .completed-label {
+            font-family: 'Cinzel', Georgia, serif;
+            color: #D6AD6C;
+            font-size: 17px;
+            letter-spacing: 5px;
+            font-weight: bold;
+        }
+
+        .completed-title {
+            font-family: 'Cinzel', Georgia, serif;
+            color: #FFE3A6;
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin: 12px 0;
+            text-shadow: 0 3px 10px #000;
+        }
+
+        .completed-subtitle {
+            color: #C7B18E;
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+
+        .bronze-key {
+            font-size: 75px;
+            margin: 25px 0 10px 0;
+            filter: drop-shadow(0 0 15px rgba(255,190,75,0.5));
+        }
+
+        .key-title {
+            font-family: 'Cinzel', Georgia, serif;
+            color: #E9BE73;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .completed-progress {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: 1px solid #89663D;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            color: #E8D1A8;
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        div[class*="st-key-room1_completed_return"] button {
+            background: linear-gradient(
+                180deg, #D9B36C, #94652D, #583716
+            ) !important;
+
+            color: #FFF1D0 !important;
+            border: 2px solid #F1D49B !important;
+            border-radius: 7px !important;
+
+            min-height: 60px !important;
+
+            font-family: 'Cinzel', Georgia, serif !important;
+            font-size: 18px !important;
+            font-weight: 900 !important;
+            letter-spacing: 2px !important;
+
+            box-shadow:
+                0 0 0 3px #352316,
+                inset 0 2px 5px #FFE2A4,
+                0 0 15px rgba(220,170,90,0.3) !important;
+        }
+
+        div[class*="st-key-room1_completed_return"] button:hover {
+            filter: brightness(1.2) !important;
+            transform: translateY(-3px) !important;
+        }
+
+        </style>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="completed-room">
+
+            <div class="completed-label">
+                CHAPTER 01
+            </div>
+
+            <div class="completed-title">
+                CLASSROOM CLEARED
+            </div>
+
+            <div class="completed-subtitle">
+                THE BLACKBOARD — LIMITS
+            </div>
+
+            <div class="bronze-key">
+                🗝️
+            </div>
+
+            <div class="key-title">
+                BRONZE KEY ACQUIRED
+            </div>
+
+            <div class="completed-subtitle">
+                The secrets of the classroom have been uncovered.
+            </div>
+
+            <div class="completed-progress">
+                3 / 3 CHALLENGES COMPLETED
+            </div>
+
+        </div>
+        """, unsafe_allow_html=True)
+
+        _, center, _ = st.columns([1, 2, 1])
+
+        with center:
+
+            if st.button(
+                "RETURN TO STORY",
+                key="room1_completed_return",
+                use_container_width=True
+            ):
+                st.session_state.page = "story"
+                st.rerun()
 
         st.stop()
 
