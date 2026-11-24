@@ -2412,8 +2412,13 @@ def room2():
 
 def room3():
 
-    design() 
     
+def room3():
+
+    # INITIALIZE ROOM 3 SELECTION STATE
+    if "room3_object" not in st.session_state:
+        st.session_state.room3_object = None
+
     # ROOM 3 COMPLETION SCREEN
     if st.session_state.get("room3_cleared", False):
 
@@ -2556,7 +2561,7 @@ def room3():
         st.stop()
 
     # ROOM DESIGN AND HEADER
-    
+    design()
 
     header(
         "ROOM 03",
@@ -2584,8 +2589,57 @@ def room3():
         unsafe_allow_html=True
     )
 
+    # CHALLENGE SELECTION SCREEN
+    if st.session_state.room3_object is None:
+
+        st.markdown(
+            """
+            <div class="section-title">
+                THE LIBRARY — SELECT A SHELF
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.write("Choose a shelf to begin your challenge.")
+
+        # SHELF 1
+        if st.button(
+            "📚  SHELF 1 — PRODUCT RULE",
+            key="room3_shelf1",
+            use_container_width=True,
+            disabled=st.session_state.question_number > 0
+        ):
+            st.session_state.room3_object = "shelf1"
+            st.rerun()
+
+        # SHELF 2
+        if st.button(
+            "📚  SHELF 2 — QUOTIENT RULE",
+            key="room3_shelf2",
+            use_container_width=True,
+            disabled=st.session_state.question_number < 1
+        ):
+            st.session_state.room3_object = "shelf2"
+            st.rerun()
+
+        # SHELF 3
+        if st.button(
+            "📚  SHELF 3 — CHAIN RULE",
+            key="room3_shelf3",
+            use_container_width=True,
+            disabled=st.session_state.question_number < 2
+        ):
+            st.session_state.room3_object = "shelf3"
+            st.rerun()
+
+        st.markdown(
+            '<div class="gold-line"></div>',
+            unsafe_allow_html=True
+        )
+
     # CHALLENGE 1 - PRODUCT RULE
-    if st.session_state.question_number == 0:
+    elif st.session_state.room3_object == "shelf1":
 
         with st.container(border=True):
 
@@ -2665,7 +2719,7 @@ def room3():
                     st.rerun()
 
     # CHALLENGE 2 - QUOTIENT RULE
-    elif st.session_state.question_number == 1:
+    elif st.session_state.room3_object == "shelf2":
 
         with st.container(border=True):
 
@@ -2746,7 +2800,7 @@ def room3():
                     st.rerun()
 
     # CHALLENGE 3 - CHAIN RULE
-    elif st.session_state.question_number == 2:
+    elif st.session_state.room3_object == "shelf3":
 
         with st.container(border=True):
 
@@ -2841,6 +2895,9 @@ def room3():
             st.session_state.hint_message = ""
             st.session_state.hint_used_this_question = False
 
+            # RETURN TO SHELF SELECTION
+            st.session_state.room3_object = None
+
             if st.session_state.question_number == 3:
 
                 st.session_state.room3_cleared = True
@@ -2874,7 +2931,6 @@ def room3():
         '<div class="gold-line"></div>',
         unsafe_allow_html=True
     )
-
 
 def room4():
 
