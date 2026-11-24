@@ -51,6 +51,7 @@ for key, value in defaults.items():
 # ==========================================
 
 
+
 def design():
 
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
@@ -61,21 +62,17 @@ def design():
     st.markdown(f"""
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
 
     /* =====================================
-       GLOBAL APP
+       GLOBAL BACKGROUND
     ===================================== */
 
     .stApp {{
         background: transparent;
         color: #F4F1EA;
-        font-family: 'Cormorant Garamond', serif;
     }}
-
-    /* =====================================
-       BACKGROUND
-    ===================================== */
 
     .stApp::before {{
         content: "";
@@ -93,9 +90,9 @@ def design():
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-
         filter: {blur};
     }}
+
 
     /* =====================================
        PAGE SPACING
@@ -107,6 +104,7 @@ def design():
         padding-bottom: 3rem !important;
     }}
 
+
     /* =====================================
        MAIN TITLE
     ===================================== */
@@ -114,17 +112,15 @@ def design():
     .main-title {{
         font-family: Cinzel, serif;
         font-size: clamp(40px, 5vw, 68px);
-        font-weight: 900;
+        font-weight: 800;
         letter-spacing: 5px;
-        line-height: 1.2;
-
-        color: #F4E5BF;
+        color: #F4F1EA;
         text-align: center;
 
         text-shadow:
-            0 3px 5px rgba(0, 0, 0, 0.8),
-            0 0 20px rgba(181, 154, 96, 0.25);
+            0 0 15px rgba(216, 185, 111, 0.25);
     }}
+
 
     /* =====================================
        SUBTITLE
@@ -132,52 +128,34 @@ def design():
 
     .subtitle {{
         font-family: 'Cormorant Garamond', serif;
-        font-size: 25px;
-        font-weight: 600;
-        letter-spacing: 2px;
-
-        color: #D4C39C;
+        font-size: 24px;
+        color: #C6B78E;
         text-align: center;
-
-        text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+        letter-spacing: 1px;
     }}
 
-    /* =====================================
-       GOLD DIVIDER
-    ===================================== */
-
-    .gold-line {{
-        width: 75%;
-        height: 2px;
-        margin: 28px auto;
-
-        background: linear-gradient(
-            to right,
-            transparent,
-            #806333,
-            #E2C47D,
-            #806333,
-            transparent
-        );
-
-        box-shadow: 0 0 8px rgba(181, 154, 96, 0.25);
-    }}
 
     /* =====================================
-       SECTION TITLES
+       SECTION TITLE
     ===================================== */
 
     .section-title {{
         font-family: Cinzel, serif;
-        color: #E2C47D;
-
+        color: #E6C77F;
         font-size: 17px;
         font-weight: 800;
-        letter-spacing: 2.5px;
-        line-height: 1.5;
+        letter-spacing: 2px;
+        line-height: 1.6;
 
-        text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+
+        border-bottom: 1px solid rgba(181, 154, 96, 0.45);
+
+        text-shadow:
+            0 0 10px rgba(216, 185, 111, 0.18);
     }}
+
 
     /* =====================================
        STORY TEXT
@@ -186,48 +164,114 @@ def design():
     .story-text {{
         font-family: 'Cormorant Garamond', serif;
         color: #E0E3E8;
-
-        font-size: 22px;
-        font-weight: 500;
-        line-height: 1.8;
-        letter-spacing: 0.3px;
+        font-size: 21px;
+        line-height: 1.7;
     }}
 
+
     /* =====================================
-       GENERAL TEXT
+       GOLD DIVIDER
     ===================================== */
 
-    .stMarkdown p,
-    .stMarkdown li {{
-        font-family: 'Cormorant Garamond', serif;
-        color: #E8E0D1;
-        font-size: 19px;
-        line-height: 1.6;
+    .gold-line {{
+        width: 75%;
+        height: 1px;
+        margin: 25px auto;
+
+        background: linear-gradient(
+            to right,
+            transparent,
+            #B59A60,
+            transparent
+        );
     }}
 
+
     /* =====================================
-       CHALLENGE CONTAINERS
+       QUESTION BOX
     ===================================== */
 
     div[data-testid="stVerticalBlockBorderWrapper"] {{
-        background: linear-gradient(
-            145deg,
-            rgba(39, 34, 27, 0.94),
-            rgba(20, 25, 34, 0.96)
-        );
+        background:
+            linear-gradient(
+                145deg,
+                rgba(43, 35, 26, 0.97),
+                rgba(19, 24, 33, 0.98)
+            );
 
-        border: 1px solid rgba(181, 154, 96, 0.75) !important;
-        border-radius: 15px !important;
+        border: 2px solid #A88A51 !important;
+        border-radius: 16px !important;
+
+        padding: 24px 25px !important;
 
         box-shadow:
-            0 8px 22px rgba(0, 0, 0, 0.35),
-            inset 0 0 18px rgba(181, 154, 96, 0.04);
-
-        padding: 10px;
+            0 0 0 4px rgba(181, 154, 96, 0.10),
+            0 10px 30px rgba(0, 0, 0, 0.45),
+            inset 0 0 25px rgba(181, 154, 96, 0.06);
     }}
 
+
+    /* QUESTION TEXT */
+
+    div[data-testid="stVerticalBlockBorderWrapper"] .stMarkdown p {{
+        color: #E4D8C2;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 21px;
+        line-height: 1.6;
+    }}
+
+
     /* =====================================
-       BUTTON BASE STYLE
+       EQUATION PANEL
+    ===================================== */
+
+    div[data-testid="stVerticalBlockBorderWrapper"] .stLatex {{
+        background: rgba(10, 15, 23, 0.65);
+
+        border: 1px solid rgba(181, 154, 96, 0.4);
+        border-radius: 12px;
+
+        padding: 22px 12px;
+        margin: 15px 0 22px 0;
+
+        box-shadow:
+            inset 0 0 18px rgba(0, 0, 0, 0.3);
+    }}
+
+
+    /* =====================================
+       ANSWER INPUT
+    ===================================== */
+
+    div[data-testid="stTextInput"] label {{
+        color: #D8B96F !important;
+        font-family: Cinzel, serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+    }}
+
+    div[data-testid="stTextInput"] input {{
+        background: rgba(10, 15, 23, 0.9);
+        color: #F4E5BF;
+
+        border: 1px solid #8C774D;
+        border-radius: 9px;
+
+        min-height: 48px;
+
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 20px;
+    }}
+
+    div[data-testid="stTextInput"] input:focus {{
+        border: 1px solid #E2C47D;
+        box-shadow: 0 0 12px rgba(216, 185, 111, 0.2);
+    }}
+
+
+    /* =====================================
+       ALL BUTTONS
     ===================================== */
 
     div[data-testid="stButton"] button {{
@@ -235,87 +279,46 @@ def design():
         border-radius: 9px;
 
         font-family: Cinzel, serif;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 800;
         letter-spacing: 1.5px;
 
-        transition: all 0.22s ease;
-
-        box-shadow:
-            0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease;
     }}
 
-    /* =====================================
-       PRIMARY BUTTONS
-    ===================================== */
+    div[data-testid="stButton"] button:hover {{
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }}
+
+
+    /* PRIMARY BUTTON */
 
     div[data-testid="stButton"] button[kind="primary"] {{
-        background: linear-gradient(
-            145deg,
-            #806B43,
-            #A98B52,
-            #715B36
-        ) !important;
-
-        color: #FFF5DC !important;
-
-        border: 1px solid #D8B96F !important;
+        background: #476B56 !important;
+        color: white !important;
+        border: 1px solid #78947E !important;
     }}
 
     div[data-testid="stButton"] button[kind="primary"]:hover {{
-        background: linear-gradient(
-            145deg,
-            #A78B53,
-            #D0B36F,
-            #987A43
-        ) !important;
-
-        border-color: #F5DFA6 !important;
-
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 6px 16px rgba(181, 154, 96, 0.3);
+        background: #557D65 !important;
+        border-color: #A1B69F !important;
     }}
 
-    /* =====================================
-       SECONDARY BUTTONS
-    ===================================== */
+
+    /* SECONDARY BUTTON */
 
     div[data-testid="stButton"] button[kind="secondary"] {{
-        background: linear-gradient(
-            145deg,
-            #293342,
-            #1B2532
-        ) !important;
-
-        color: #E5D4AA !important;
-
-        border: 1px solid #8C774D !important;
+        background: #B59A60 !important;
+        color: #17202B !important;
+        border: 1px solid #D9C28C !important;
     }}
 
     div[data-testid="stButton"] button[kind="secondary"]:hover {{
-        background: linear-gradient(
-            145deg,
-            #3B4858,
-            #293342
-        ) !important;
-
-        border-color: #D8B96F !important;
-
-        color: #FFF0C9 !important;
-
-        transform: translateY(-2px);
+        background: #D0B577 !important;
+        border-color: #F0DCA9 !important;
     }}
 
-    /* =====================================
-       BUTTON FOCUS
-    ===================================== */
-
-    div[data-testid="stButton"] button:focus:not(:active) {{
-        border-color: #E2C47D !important;
-        box-shadow: 0 0 0 2px rgba(216, 185, 111, 0.25);
-    }}
 
     /* =====================================
        GAME HUD
@@ -324,43 +327,34 @@ def design():
     .hud-container {{
         display: flex;
         justify-content: center;
-        gap: 16px;
-        margin: 24px auto;
-
-        max-width: 800px;
+        gap: 20px;
+        margin: 20px auto;
+        max-width: 750px;
     }}
 
     .hud-item {{
         flex: 1;
 
-        background: linear-gradient(
-            145deg,
-            rgba(42, 39, 32, 0.96),
-            rgba(20, 27, 38, 0.96)
-        );
+        background: rgba(23, 34, 51, 0.92);
+        border: 1px solid #8C774D;
+        border-radius: 10px;
 
-        border: 1px solid #A88A51;
-        border-radius: 12px;
-
-        padding: 17px 12px;
+        padding: 15px;
         text-align: center;
 
         box-shadow:
-            0 5px 15px rgba(0, 0, 0, 0.35),
-            inset 0 0 12px rgba(181, 154, 96, 0.05);
+            0 5px 15px rgba(0, 0, 0, 0.25),
+            inset 0 0 15px rgba(181, 154, 96, 0.05);
     }}
 
     .hud-icon {{
-        font-size: 26px;
-        color: #E2C47D;
-        margin-bottom: 5px;
+        font-size: 25px;
+        color: #D8B96F;
     }}
 
     .hud-label {{
         font-family: Cinzel, serif;
-        font-size: 11px;
-        font-weight: 700;
-
+        font-size: 12px;
         color: #C6B78E;
         letter-spacing: 2px;
     }}
@@ -368,65 +362,42 @@ def design():
     .hud-value {{
         font-family: Cinzel, serif;
         font-size: 27px;
-        font-weight: 800;
-
-        color: #F4E5BF;
-
-        text-shadow: 0 0 8px rgba(226, 196, 125, 0.15);
+        font-weight: bold;
+        color: #F4F1EA;
     }}
+
 
     /* =====================================
-       INPUT FIELDS
+       RESPONSIVE LAYOUT
     ===================================== */
 
-    div[data-testid="stTextInput"] input {{
-        background: rgba(18, 25, 35, 0.95);
-        color: #F4E5BF;
+    @media (max-width: 700px) {{
 
-        border: 1px solid #8C774D;
-        border-radius: 8px;
-
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 19px;
-    }}
-
-    div[data-testid="stTextInput"] input:focus {{
-        border-color: #D8B96F;
-        box-shadow: 0 0 8px rgba(216, 185, 111, 0.2);
-    }}
-
-    /* =====================================
-       RESPONSIVE HUD
-    ===================================== */
-
-    @media (max-width: 600px) {{
+        .block-container {{
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }}
 
         .hud-container {{
             gap: 8px;
         }}
 
         .hud-item {{
-            padding: 12px 5px;
-        }}
-
-        .hud-label {{
-            font-size: 9px;
-            letter-spacing: 1px;
+            padding: 10px 5px;
         }}
 
         .hud-value {{
             font-size: 21px;
         }}
 
-        .section-title {{
-            font-size: 14px;
+        div[data-testid="stVerticalBlockBorderWrapper"] {{
+            padding: 16px !important;
         }}
 
     }}
 
     </style>
     """, unsafe_allow_html=True)
-
 
 def floating_notification():
 
