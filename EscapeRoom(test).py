@@ -1083,39 +1083,42 @@ def room1():
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("""
-        <div class="completed-room">
+                st.markdown(
+            """
+            <div class="completed-room">
 
-            <div class="completed-label">
-                CHAPTER 01
+                <div class="completed-label">
+                    CHAPTER 01
+                </div>
+
+                <div class="completed-title">
+                    CLASSROOM CLEARED
+                </div>
+
+                <div class="completed-subtitle">
+                    THE BLACKBOARD — LIMITS
+                </div>
+
+                <div class="bronze-key">
+                    🗝️
+                </div>
+
+                <div class="key-title">
+                    BRONZE KEY ACQUIRED
+                </div>
+
+                <div class="completed-subtitle">
+                    The secrets of the classroom have been uncovered.
+                </div>
+
+                <div class="completed-progress">
+                    3 / 3 CHALLENGES COMPLETED
+                </div>
+
             </div>
-
-            <div class="completed-title">
-                CLASSROOM CLEARED
-            </div>
-
-            <div class="completed-subtitle">
-                THE BLACKBOARD — LIMITS
-            </div>
-
-            <div class="bronze-key">
-                🗝️
-            </div>
-
-            <div class="key-title">
-                BRONZE KEY ACQUIRED
-            </div>
-
-            <div class="completed-subtitle">
-                The secrets of the classroom have been uncovered.
-            </div>
-
-            <div class="completed-progress">
-                3 / 3 CHALLENGES COMPLETED
-            </div>
-
-        </div>
-        """, unsafe_allow_html=True)
+            """,
+            unsafe_allow_html=True
+        )
 
         _, center, _ = st.columns([1, 2, 1])
 
