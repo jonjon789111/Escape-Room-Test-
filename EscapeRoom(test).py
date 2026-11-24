@@ -1019,132 +1019,108 @@ def room1():
         st.markdown("""
         <style>
 
-        /* GENERAL GAME BUTTON DESIGN */
+        /* TARGET THE THREE EXPLORATION BUTTONS */
 
-        div.st-key-explore_blackboard button,
-        div.st-key-explore_notebook button,
-        div.st-key-explore_notes button {
+        div[class*="st-key-explore_blackboard"] button,
+        div[class*="st-key-explore_notebook"] button,
+        div[class*="st-key-explore_notes"] button {
 
-            height: 175px;
-            min-height: 175px;
-            width: 100%;
+            height: 175px !important;
+            min-height: 175px !important;
 
-            border-radius: 18px;
-            border: 1px solid rgba(220, 195, 145, 0.35);
+            border-radius: 18px !important;
+            border: 1px solid rgba(255,255,255,0.18) !important;
 
-            color: #F4EBDD;
+            color: #F5EBDD !important;
 
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
+            font-size: 17px !important;
+            font-weight: 800 !important;
+            letter-spacing: 1.5px !important;
 
-            white-space: pre-line;
+            white-space: normal !important;
 
             box-shadow:
-                0 8px 18px rgba(0, 0, 0, 0.35),
-                inset 0 1px 0 rgba(255,255,255,0.12);
+                inset 0 1px 0 rgba(255,255,255,0.12),
+                0 8px 20px rgba(0,0,0,0.4) !important;
 
-            transition: all 0.25s ease;
+            transition: all 0.25s ease !important;
         }
 
         /* BLACKBOARD */
 
-        div.st-key-explore_blackboard button {
+        div[class*="st-key-explore_blackboard"] button {
 
-            background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(92, 139, 119, 0.35),
-                    transparent 55%
-                ),
-                linear-gradient(
-                    145deg,
-                    #293D38,
-                    #172622
-                );
+            background: linear-gradient(
+                145deg,
+                #355B4C,
+                #172F29 65%,
+                #10231F
+            ) !important;
 
-            border-bottom: 4px solid #789B83;
+            border-bottom: 4px solid #82A995 !important;
         }
 
         /* OLD NOTEBOOK */
 
-        div.st-key-explore_notebook button {
+        div[class*="st-key-explore_notebook"] button {
 
-            background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(178, 126, 78, 0.35),
-                    transparent 55%
-                ),
-                linear-gradient(
-                    145deg,
-                    #493629,
-                    #251C17
-                );
+            background: linear-gradient(
+                145deg,
+                #765037,
+                #402B20 65%,
+                #291C16
+            ) !important;
 
-            border-bottom: 4px solid #B98B60;
+            border-bottom: 4px solid #C49A70 !important;
         }
 
         /* WALL NOTES */
 
-        div.st-key-explore_notes button {
+        div[class*="st-key-explore_notes"] button {
 
-            background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(102, 125, 169, 0.35),
-                    transparent 55%
-                ),
-                linear-gradient(
-                    145deg,
-                    #303A50,
-                    #1B2231
-                );
+            background: linear-gradient(
+                145deg,
+                #455779,
+                #26344D 65%,
+                #192338
+            ) !important;
 
-            border-bottom: 4px solid #8297C1;
+            border-bottom: 4px solid #91A8D0 !important;
         }
 
-        /* HOVER EFFECTS */
+        /* HOVER */
 
-        div.st-key-explore_blackboard button:hover,
-        div.st-key-explore_notebook button:hover,
-        div.st-key-explore_notes button:hover {
+        div[class*="st-key-explore_blackboard"] button:not(:disabled):hover,
+        div[class*="st-key-explore_notebook"] button:not(:disabled):hover,
+        div[class*="st-key-explore_notes"] button:not(:disabled):hover {
 
-            transform: translateY(-6px);
+            transform: translateY(-6px) !important;
 
-            color: #FFFFFF;
+            border-color: #E8D3AA !important;
+
+            filter: brightness(1.2);
 
             box-shadow:
-                0 14px 25px rgba(0,0,0,0.4),
-                0 0 16px rgba(220,195,145,0.16);
-
-            border-color: #D9C39A;
-        }
-
-        /* CLICK EFFECT */
-
-        div.st-key-explore_blackboard button:active,
-        div.st-key-explore_notebook button:active,
-        div.st-key-explore_notes button:active {
-
-            transform: translateY(-1px) scale(0.98);
+                0 14px 28px rgba(0,0,0,0.45),
+                0 0 18px rgba(218,190,135,0.18) !important;
         }
 
         /* LOCKED BUTTONS */
 
-        div.st-key-explore_blackboard button:disabled,
-        div.st-key-explore_notebook button:disabled,
-        div.st-key-explore_notes button:disabled {
+        div[class*="st-key-explore_blackboard"] button:disabled,
+        div[class*="st-key-explore_notebook"] button:disabled,
+        div[class*="st-key-explore_notes"] button:disabled {
 
-            opacity: 0.38;
-            filter: grayscale(0.65);
-            cursor: not-allowed;
+            opacity: 0.48 !important;
+            filter: saturate(0.55) brightness(0.8);
 
-            box-shadow: none;
+            color: #D5D0C7 !important;
+            cursor: not-allowed !important;
         }
 
         </style>
         """, unsafe_allow_html=True)
+
 
         col1, col2, col3 = st.columns(3, gap="large")
 
