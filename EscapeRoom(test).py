@@ -2409,12 +2409,10 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
    
-
-
 def room3():
 
     design()
-
+    
     # INITIALIZE ROOM 3 STATES
     if "room3_object" not in st.session_state:
         st.session_state.room3_object = None
@@ -2423,6 +2421,7 @@ def room3():
         st.session_state.room3_completed = []
 
     # ROOM 3 COMPLETION SCREEN
+    # Only appears when the player enters Room 3 again.
     if st.session_state.get("room3_cleared", False):
 
         with open("gold.png", "rb") as image_file:
@@ -2556,7 +2555,6 @@ def room3():
         st.stop()
 
     # ROOM DESIGN
-    design()
 
     header(
         "ROOM 03",
@@ -2564,7 +2562,9 @@ def room3():
         "The third challenge — Product, Quotient & Chain Rules"
     )
 
+    # GAME OVER CHECK
     if st.session_state.game_over:
+
         st.error("GAME OVER! You ran out of lives or time.")
 
         if st.button("RETURN TO MENU"):
@@ -2573,6 +2573,7 @@ def room3():
 
         return
 
+    # GAME INFORMATION
     game_status()
     progress_bar()
     floating_notification()
@@ -2601,21 +2602,12 @@ def room3():
         transition: all 0.25s ease !important;
     }
 
-    div[class*="st-key-room3_shelf"] button:hover:not(:disabled) {
+    div[class*="st-key-room3_shelf"] button:hover {
         background: linear-gradient(135deg, #73502A, #3F2918, #604323) !important;
         border-color: #F0D18A !important;
         color: #FFF0C2 !important;
         box-shadow: 0 0 20px rgba(218,165,72,0.35) !important;
         transform: translateY(-3px);
-    }
-
-    div[class*="st-key-room3_shelf"] button:disabled {
-        background: linear-gradient(135deg, #241B14, #17100B) !important;
-        border: 2px solid #51402B !important;
-        color: #78664C !important;
-        opacity: 0.65 !important;
-        box-shadow: none !important;
-        cursor: not-allowed !important;
     }
     </style>
     """)
@@ -2625,7 +2617,6 @@ def room3():
         unsafe_allow_html=True
     )
 
-    
     # CHALLENGE SELECTION SCREEN
     if st.session_state.room3_object is None:
 
@@ -2644,8 +2635,12 @@ def room3():
             key="room3_shelf1",
             use_container_width=True
         ):
+
             if "shelf1" in completed:
-                st.warning("✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!")
+                st.warning(
+                    "✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!"
+                )
+
             else:
                 st.session_state.room3_object = "shelf1"
                 st.rerun()
@@ -2656,10 +2651,15 @@ def room3():
             key="room3_shelf2",
             use_container_width=True
         ):
+
             if "shelf2" in completed:
-                st.warning("✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!")
+                st.warning(
+                    "✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!"
+                )
+
             elif "shelf1" not in completed:
                 st.warning("🔒 COMPLETE SHELF I FIRST!")
+
             else:
                 st.session_state.room3_object = "shelf2"
                 st.rerun()
@@ -2670,10 +2670,15 @@ def room3():
             key="room3_shelf3",
             use_container_width=True
         ):
+
             if "shelf3" in completed:
-                st.warning("✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!")
+                st.warning(
+                    "✓ YOU HAVE ALREADY COMPLETED THIS CHALLENGE!"
+                )
+
             elif "shelf2" not in completed:
                 st.warning("🔒 COMPLETE SHELF II FIRST!")
+
             else:
                 st.session_state.room3_object = "shelf3"
                 st.rerun()
@@ -2735,6 +2740,7 @@ def room3():
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -2755,6 +2761,7 @@ def room3():
                         st.session_state.hint_message = (
                             "You can only use a hint once per challenge!"
                         )
+
                     else:
                         use_hint(
                             "Product Rule: (uv)' = u'v + uv'. "
@@ -2816,6 +2823,7 @@ def room3():
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -2836,6 +2844,7 @@ def room3():
                         st.session_state.hint_message = (
                             "You can only use a hint once per challenge!"
                         )
+
                     else:
                         use_hint(
                             "Quotient Rule: (u/v)' = (u'v - uv') / v^2. "
@@ -2896,6 +2905,7 @@ def room3():
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
+
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -2916,6 +2926,7 @@ def room3():
                         st.session_state.hint_message = (
                             "You can only use a hint once per challenge!"
                         )
+
                     else:
                         use_hint(
                             "Chain Rule: differentiate the outer power first, "
@@ -2930,7 +2941,11 @@ def room3():
 
         st.success("Correct! You completed the challenge.")
 
-        if st.button("CONTINUE", key="r3_continue", type="primary"):
+        if st.button(
+            "CONTINUE",
+            key="r3_continue",
+            type="primary"
+        ):
 
             current_shelf = st.session_state.room3_object
 
@@ -2938,6 +2953,7 @@ def room3():
             if current_shelf not in st.session_state.room3_completed:
                 st.session_state.room3_completed.append(current_shelf)
 
+            # CLEAR CHALLENGE FEEDBACK
             st.session_state.notification = ""
             st.session_state.notification_type = ""
             st.session_state.feedback = ""
@@ -2957,6 +2973,9 @@ def room3():
 
                 st.session_state.notification = "🔑 GOLD KEY COLLECTED!"
                 st.session_state.notification_type = "warning"
+
+                # RETURN TO STORY PAGE
+                st.session_state.page = "story"
 
             st.rerun()
 
