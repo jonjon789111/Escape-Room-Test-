@@ -50,6 +50,7 @@ for key, value in defaults.items():
 # SHARED DESIGN
 # ==========================================
 
+
 def design():
 
     blur = "blur(6px)" if st.session_state.page != "home" else "none"
@@ -60,33 +61,45 @@ def design():
     st.markdown(f"""
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
-    /* BACKGROUND */
+    /* =====================================
+       GLOBAL APP
+    ===================================== */
 
     .stApp {{
         background: transparent;
         color: #F4F1EA;
+        font-family: 'Cormorant Garamond', serif;
     }}
+
+    /* =====================================
+       BACKGROUND
+    ===================================== */
 
     .stApp::before {{
         content: "";
         position: fixed;
         inset: -10px;
         z-index: -1;
+
         background-image:
             linear-gradient(
                 rgba(16, 24, 39, 0.65),
                 rgba(16, 24, 39, 0.65)
             ),
             url("data:image/jpeg;base64,{encoded_image}");
+
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+
         filter: {blur};
     }}
 
-    /* PAGE SPACING */
+    /* =====================================
+       PAGE SPACING
+    ===================================== */
 
     .block-container {{
         max-width: 1150px;
@@ -94,111 +107,260 @@ def design():
         padding-bottom: 3rem !important;
     }}
 
-    /* MAIN TITLE */
+    /* =====================================
+       MAIN TITLE
+    ===================================== */
 
     .main-title {{
         font-family: Cinzel, serif;
         font-size: clamp(40px, 5vw, 68px);
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 5px;
-        color: #F4F1EA;
+        line-height: 1.2;
+
+        color: #F4E5BF;
         text-align: center;
+
+        text-shadow:
+            0 3px 5px rgba(0, 0, 0, 0.8),
+            0 0 20px rgba(181, 154, 96, 0.25);
     }}
 
-    /* SUBTITLE */
+    /* =====================================
+       SUBTITLE
+    ===================================== */
 
     .subtitle {{
         font-family: 'Cormorant Garamond', serif;
-        font-size: 24px;
-        color: #C6B78E;
+        font-size: 25px;
+        font-weight: 600;
+        letter-spacing: 2px;
+
+        color: #D4C39C;
         text-align: center;
+
+        text-shadow: 0 2px 5px rgba(0,0,0,0.7);
     }}
 
-    /* GOLD DIVIDER */
+    /* =====================================
+       GOLD DIVIDER
+    ===================================== */
 
     .gold-line {{
         width: 75%;
-        height: 1px;
-        margin: 25px auto;
+        height: 2px;
+        margin: 28px auto;
+
         background: linear-gradient(
             to right,
             transparent,
-            #B59A60,
+            #806333,
+            #E2C47D,
+            #806333,
             transparent
         );
+
+        box-shadow: 0 0 8px rgba(181, 154, 96, 0.25);
     }}
 
-    /* SECTION TITLE */
+    /* =====================================
+       SECTION TITLES
+    ===================================== */
 
     .section-title {{
         font-family: Cinzel, serif;
-        color: #D8B96F;
-        font-size: 18px;
-        letter-spacing: 3px;
+        color: #E2C47D;
+
+        font-size: 17px;
+        font-weight: 800;
+        letter-spacing: 2.5px;
+        line-height: 1.5;
+
+        text-shadow: 0 2px 5px rgba(0,0,0,0.6);
     }}
 
-    /* STORY TEXT */
+    /* =====================================
+       STORY TEXT
+    ===================================== */
 
     .story-text {{
         font-family: 'Cormorant Garamond', serif;
         color: #E0E3E8;
-        font-size: 21px;
-        line-height: 1.7;
+
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 1.8;
+        letter-spacing: 0.3px;
     }}
 
-    /* BUTTONS */
+    /* =====================================
+       GENERAL TEXT
+    ===================================== */
+
+    .stMarkdown p,
+    .stMarkdown li {{
+        font-family: 'Cormorant Garamond', serif;
+        color: #E8E0D1;
+        font-size: 19px;
+        line-height: 1.6;
+    }}
+
+    /* =====================================
+       CHALLENGE CONTAINERS
+    ===================================== */
+
+    div[data-testid="stVerticalBlockBorderWrapper"] {{
+        background: linear-gradient(
+            145deg,
+            rgba(39, 34, 27, 0.94),
+            rgba(20, 25, 34, 0.96)
+        );
+
+        border: 1px solid rgba(181, 154, 96, 0.75) !important;
+        border-radius: 15px !important;
+
+        box-shadow:
+            0 8px 22px rgba(0, 0, 0, 0.35),
+            inset 0 0 18px rgba(181, 154, 96, 0.04);
+
+        padding: 10px;
+    }}
+
+    /* =====================================
+       BUTTON BASE STYLE
+    ===================================== */
 
     div[data-testid="stButton"] button {{
-        height: 52px;
-        border-radius: 8px;
+        min-height: 52px;
+        border-radius: 9px;
+
         font-family: Cinzel, serif;
-        font-weight: bold;
-        letter-spacing: 2px;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+
+        transition: all 0.22s ease;
+
+        box-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.3);
     }}
 
-    /* PLAY BUTTON */
+    /* =====================================
+       PRIMARY BUTTONS
+    ===================================== */
 
     div[data-testid="stButton"] button[kind="primary"] {{
-        background: #476B56 !important;
-        color: white !important;
-        border: 1px solid #78947E !important;
+        background: linear-gradient(
+            145deg,
+            #806B43,
+            #A98B52,
+            #715B36
+        ) !important;
+
+        color: #FFF5DC !important;
+
+        border: 1px solid #D8B96F !important;
     }}
 
-    /* SECONDARY BUTTONS */
+    div[data-testid="stButton"] button[kind="primary"]:hover {{
+        background: linear-gradient(
+            145deg,
+            #A78B53,
+            #D0B36F,
+            #987A43
+        ) !important;
+
+        border-color: #F5DFA6 !important;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 6px 16px rgba(181, 154, 96, 0.3);
+    }}
+
+    /* =====================================
+       SECONDARY BUTTONS
+    ===================================== */
 
     div[data-testid="stButton"] button[kind="secondary"] {{
-        background: #B59A60 !important;
-        color: #17202B !important;
-        border: 1px solid #D9C28C !important;
+        background: linear-gradient(
+            145deg,
+            #293342,
+            #1B2532
+        ) !important;
+
+        color: #E5D4AA !important;
+
+        border: 1px solid #8C774D !important;
     }}
 
-    /* GAME HUD */
+    div[data-testid="stButton"] button[kind="secondary"]:hover {{
+        background: linear-gradient(
+            145deg,
+            #3B4858,
+            #293342
+        ) !important;
+
+        border-color: #D8B96F !important;
+
+        color: #FFF0C9 !important;
+
+        transform: translateY(-2px);
+    }}
+
+    /* =====================================
+       BUTTON FOCUS
+    ===================================== */
+
+    div[data-testid="stButton"] button:focus:not(:active) {{
+        border-color: #E2C47D !important;
+        box-shadow: 0 0 0 2px rgba(216, 185, 111, 0.25);
+    }}
+
+    /* =====================================
+       GAME HUD
+    ===================================== */
 
     .hud-container {{
         display: flex;
         justify-content: center;
-        gap: 20px;
-        margin: 20px auto;
-        max-width: 750px;
+        gap: 16px;
+        margin: 24px auto;
+
+        max-width: 800px;
     }}
 
     .hud-item {{
         flex: 1;
-        background: rgba(23, 34, 51, 0.90);
-        border: 1px solid #8C774D;
-        border-radius: 10px;
-        padding: 15px;
+
+        background: linear-gradient(
+            145deg,
+            rgba(42, 39, 32, 0.96),
+            rgba(20, 27, 38, 0.96)
+        );
+
+        border: 1px solid #A88A51;
+        border-radius: 12px;
+
+        padding: 17px 12px;
         text-align: center;
+
+        box-shadow:
+            0 5px 15px rgba(0, 0, 0, 0.35),
+            inset 0 0 12px rgba(181, 154, 96, 0.05);
     }}
 
     .hud-icon {{
-        font-size: 25px;
-        color: #D8B96F;
+        font-size: 26px;
+        color: #E2C47D;
+        margin-bottom: 5px;
     }}
 
     .hud-label {{
         font-family: Cinzel, serif;
-        font-size: 12px;
+        font-size: 11px;
+        font-weight: 700;
+
         color: #C6B78E;
         letter-spacing: 2px;
     }}
@@ -206,12 +368,65 @@ def design():
     .hud-value {{
         font-family: Cinzel, serif;
         font-size: 27px;
-        font-weight: bold;
-        color: #F4F1EA;
+        font-weight: 800;
+
+        color: #F4E5BF;
+
+        text-shadow: 0 0 8px rgba(226, 196, 125, 0.15);
+    }}
+
+    /* =====================================
+       INPUT FIELDS
+    ===================================== */
+
+    div[data-testid="stTextInput"] input {{
+        background: rgba(18, 25, 35, 0.95);
+        color: #F4E5BF;
+
+        border: 1px solid #8C774D;
+        border-radius: 8px;
+
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 19px;
+    }}
+
+    div[data-testid="stTextInput"] input:focus {{
+        border-color: #D8B96F;
+        box-shadow: 0 0 8px rgba(216, 185, 111, 0.2);
+    }}
+
+    /* =====================================
+       RESPONSIVE HUD
+    ===================================== */
+
+    @media (max-width: 600px) {{
+
+        .hud-container {{
+            gap: 8px;
+        }}
+
+        .hud-item {{
+            padding: 12px 5px;
+        }}
+
+        .hud-label {{
+            font-size: 9px;
+            letter-spacing: 1px;
+        }}
+
+        .hud-value {{
+            font-size: 21px;
+        }}
+
+        .section-title {{
+            font-size: 14px;
+        }}
+
     }}
 
     </style>
     """, unsafe_allow_html=True)
+
 
 def floating_notification():
 
