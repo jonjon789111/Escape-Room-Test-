@@ -2410,13 +2410,15 @@ def room2():
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
    
 
+
 def room3():
 
-    design()
-
-    # INITIALIZE ROOM 3 SELECTION STATE
+    # INITIALIZE ROOM 3 STATES
     if "room3_object" not in st.session_state:
         st.session_state.room3_object = None
+
+    if "room3_completed" not in st.session_state:
+        st.session_state.room3_completed = []
 
     # ROOM 3 COMPLETION SCREEN
     if st.session_state.get("room3_cleared", False):
@@ -2453,7 +2455,6 @@ def room3():
             font-size: 35px;
             font-weight: 900;
             margin: 12px 0;
-            text-shadow: 0 0 15px rgba(218,165,72,0.4);
         }
 
         .completed-room .room-name {
@@ -2498,19 +2499,14 @@ def room3():
         <div class="completed-room">
             <div class="chapter">CHAPTER 03</div>
             <div class="main-title">CLASSROOM CLEARED</div>
-
             <div class="room-name">
                 THE LIBRARY — PRODUCT, QUOTIENT & CHAIN RULES
             </div>
-
             <img class="key-image" src="GOLD_IMAGE_HERE">
-
             <div class="key-title">GOLD KEY ACQUIRED</div>
-
             <div class="description">
                 The secrets hidden within the library have been uncovered.
             </div>
-
             <div class="progress-text">
                 3 / 3 CHALLENGES COMPLETED
             </div>
@@ -2535,13 +2531,11 @@ def room3():
             font-weight: 900 !important;
             letter-spacing: 2px !important;
             min-height: 52px !important;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4) !important;
         }
 
         div[class*="st-key-room3_completed_return"] button:hover {
             background: linear-gradient(135deg, #F0D18A, #C18A2D) !important;
             border-color: #FFF0C2 !important;
-            transform: translateY(-2px);
         }
         </style>
         """)
@@ -2559,7 +2553,8 @@ def room3():
 
         st.stop()
 
-    # ROOM DESIGN AND HEADER
+    # ROOM DESIGN
+    design()
 
     header(
         "ROOM 03",
@@ -2568,7 +2563,6 @@ def room3():
     )
 
     if st.session_state.game_over:
-
         st.error("GAME OVER! You ran out of lives or time.")
 
         if st.button("RETURN TO MENU"):
@@ -2582,101 +2576,45 @@ def room3():
     floating_notification()
     key_inventory()
 
-    # ROOM 3 SHELF BUTTON DESIGN
+    # SHELF BUTTON DESIGN
     st.html("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
 
-    div[class*="st-key-room3_shelf1"] button,
-    div[class*="st-key-room3_shelf2"] button,
-    div[class*="st-key-room3_shelf3"] button {
-
+    div[class*="st-key-room3_shelf"] button {
         background:
-            linear-gradient(
-                145deg,
-                rgba(115,77,39,0.25),
-                transparent 35%,
-                rgba(0,0,0,0.3)
-            ),
-            linear-gradient(
-                135deg,
-                #49301E 0%,
-                #2B1B12 48%,
-                #1A100B 100%
-            ) !important;
-
+            linear-gradient(145deg, #49301E, #2B1B12 55%, #190F09) !important;
         border: 2px solid #A77B3D !important;
         border-radius: 10px !important;
-
-        min-height: 82px !important;
-
-        color: #EBD09A !important;
+        min-height: 78px !important;
+        color: #F0D6A0 !important;
         font-family: 'Cinzel', serif !important;
         font-size: 16px !important;
         font-weight: 900 !important;
-        letter-spacing: 1.2px !important;
-
+        letter-spacing: 1px !important;
         box-shadow:
             inset 0 1px 0 rgba(255,225,170,0.18),
             inset 0 0 0 4px rgba(198,154,69,0.08),
             0 6px 15px rgba(0,0,0,0.45) !important;
-
         transition: all 0.25s ease !important;
     }
 
-    div[class*="st-key-room3_shelf1"] button:hover:not(:disabled),
-    div[class*="st-key-room3_shelf2"] button:hover:not(:disabled),
-    div[class*="st-key-room3_shelf3"] button:hover:not(:disabled) {
-
-        background:
-            linear-gradient(
-                135deg,
-                #73502A,
-                #3F2918 50%,
-                #604323
-            ) !important;
-
+    div[class*="st-key-room3_shelf"] button:hover:not(:disabled) {
+        background: linear-gradient(135deg, #73502A, #3F2918, #604323) !important;
         border-color: #F0D18A !important;
         color: #FFF0C2 !important;
-
-        box-shadow:
-            0 0 20px rgba(218,165,72,0.35),
-            inset 0 0 15px rgba(255,210,120,0.08) !important;
-
+        box-shadow: 0 0 20px rgba(218,165,72,0.35) !important;
         transform: translateY(-3px);
     }
 
-    div[class*="st-key-room3_shelf1"] button:active,
-    div[class*="st-key-room3_shelf2"] button:active,
-    div[class*="st-key-room3_shelf3"] button:active {
-        transform: translateY(0px);
-    }
-
-    div[class*="st-key-room3_shelf1"] button:disabled,
-    div[class*="st-key-room3_shelf2"] button:disabled,
-    div[class*="st-key-room3_shelf3"] button:disabled {
-
-        background:
-            linear-gradient(
-                135deg,
-                #241B14,
-                #17100B
-            ) !important;
-
+    div[class*="st-key-room3_shelf"] button:disabled {
+        background: linear-gradient(135deg, #241B14, #17100B) !important;
         border: 2px solid #51402B !important;
         color: #78664C !important;
         opacity: 0.65 !important;
         box-shadow: none !important;
         cursor: not-allowed !important;
     }
-
-    div[class*="st-key-room3_shelf1"] button p,
-    div[class*="st-key-room3_shelf2"] button p,
-    div[class*="st-key-room3_shelf3"] button p {
-        font-family: 'Cinzel', serif !important;
-        font-weight: 900 !important;
-    }
-
     </style>
     """)
 
@@ -2685,46 +2623,44 @@ def room3():
         unsafe_allow_html=True
     )
 
-    # CHALLENGE SELECTION SCREEN
+    # CHALLENGE SELECTION
     if st.session_state.room3_object is None:
 
         st.markdown(
-            """
-            <div class="section-title">
-                THE LIBRARY — SELECT A SHELF
-            </div>
-            """,
+            '<div class="section-title">THE LIBRARY — SELECT A SHELF</div>',
             unsafe_allow_html=True
         )
 
-        st.write("Choose a shelf to begin your challenge.")
+        st.write("Choose an available shelf to continue.")
+
+        completed = st.session_state.room3_completed
 
         # SHELF 1
         if st.button(
-            "📖   SHELF I — THE PRODUCT RULE   ➜",
+            "📖  SHELF I — THE PRODUCT RULE",
             key="room3_shelf1",
             use_container_width=True,
-            disabled=st.session_state.question_number > 0
+            disabled="shelf1" in completed
         ):
             st.session_state.room3_object = "shelf1"
             st.rerun()
 
         # SHELF 2
         if st.button(
-            "📖   SHELF II — THE QUOTIENT RULE   ➜",
+            "📖  SHELF II — THE QUOTIENT RULE",
             key="room3_shelf2",
             use_container_width=True,
-            disabled=st.session_state.question_number < 1
+            disabled=("shelf1" not in completed or "shelf2" in completed)
         ):
             st.session_state.room3_object = "shelf2"
             st.rerun()
 
         # SHELF 3
         if st.button(
-            "📖   SHELF III — THE CHAIN RULE   ➜",
+            "📖  SHELF III — THE CHAIN RULE",
             key="room3_shelf3",
             use_container_width=True,
-            disabled=st.session_state.question_number < 2
+            disabled=("shelf2" not in completed or "shelf3" in completed)
         ):
             st.session_state.room3_object = "shelf3"
             st.rerun()
@@ -2748,7 +2684,7 @@ def room3():
             st.latex(r"f(x) = x^2(3x + 1)")
 
             answer = st.text_input(
-                "YOUR ANSWER (e.g. 2x^2+3x)",
+                "YOUR ANSWER",
                 key="r3_answer1"
             )
 
@@ -2757,8 +2693,8 @@ def room3():
             with left:
                 if st.button(
                     "SUBMIT ANSWER",
-                    type="primary",
                     key="r3_submit1",
+                    type="primary",
                     use_container_width=True
                 ):
 
@@ -2786,7 +2722,6 @@ def room3():
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
-
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -2807,7 +2742,6 @@ def room3():
                         st.session_state.hint_message = (
                             "You can only use a hint once per challenge!"
                         )
-
                     else:
                         use_hint(
                             "Product Rule: (uv)' = u'v + uv'. "
@@ -2830,7 +2764,7 @@ def room3():
             st.latex(r"f(x) = \frac{x}{x + 1}")
 
             answer = st.text_input(
-                "YOUR ANSWER (e.g. 1/(x+2)^2)",
+                "YOUR ANSWER",
                 key="r3_answer2"
             )
 
@@ -2839,8 +2773,8 @@ def room3():
             with left:
                 if st.button(
                     "SUBMIT ANSWER",
-                    type="primary",
                     key="r3_submit2",
+                    type="primary",
                     use_container_width=True
                 ):
 
@@ -2869,7 +2803,6 @@ def room3():
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
-
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -2890,7 +2823,6 @@ def room3():
                         st.session_state.hint_message = (
                             "You can only use a hint once per challenge!"
                         )
-
                     else:
                         use_hint(
                             "Quotient Rule: (u/v)' = (u'v - uv') / v^2. "
@@ -2913,7 +2845,7 @@ def room3():
             st.latex(r"f(x) = (2x + 3)^4")
 
             answer = st.text_input(
-                "YOUR ANSWER (e.g. 6(3x+1)^1)",
+                "YOUR ANSWER",
                 key="r3_answer3"
             )
 
@@ -2922,8 +2854,8 @@ def room3():
             with left:
                 if st.button(
                     "SUBMIT ANSWER",
-                    type="primary",
                     key="r3_submit3",
+                    type="primary",
                     use_container_width=True
                 ):
 
@@ -2951,7 +2883,6 @@ def room3():
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
                         st.session_state.notification_type = "success"
-
                     else:
                         wrong_answer()
                         st.session_state.feedback = "wrong"
@@ -2972,7 +2903,6 @@ def room3():
                         st.session_state.hint_message = (
                             "You can only use a hint once per challenge!"
                         )
-
                     else:
                         use_hint(
                             "Chain Rule: differentiate the outer power first, "
@@ -2987,16 +2917,16 @@ def room3():
 
         st.success("Correct! You completed the challenge.")
 
-        if st.button(
-            "CONTINUE",
-            key="r3_continue",
-            type="primary"
-        ):
+        if st.button("CONTINUE", key="r3_continue", type="primary"):
+
+            current_shelf = st.session_state.room3_object
+
+            # MARK CURRENT SHELF AS COMPLETED
+            if current_shelf not in st.session_state.room3_completed:
+                st.session_state.room3_completed.append(current_shelf)
 
             st.session_state.notification = ""
             st.session_state.notification_type = ""
-
-            st.session_state.question_number += 1
             st.session_state.feedback = ""
             st.session_state.hint_message = ""
             st.session_state.hint_used_this_question = False
@@ -3004,19 +2934,16 @@ def room3():
             # RETURN TO SHELF SELECTION
             st.session_state.room3_object = None
 
-            if st.session_state.question_number == 3:
+            # ALL THREE CHALLENGES COMPLETED
+            if len(st.session_state.room3_completed) == 3:
 
                 st.session_state.room3_cleared = True
 
-                # COLLECT GOLD KEY
                 if "Gold Key" not in st.session_state.keys_collected:
                     st.session_state.keys_collected.append("Gold Key")
 
                 st.session_state.notification = "🔑 GOLD KEY COLLECTED!"
                 st.session_state.notification_type = "warning"
-
-                st.session_state.question_number = 0
-                st.session_state.page = "story"
 
             st.rerun()
 
