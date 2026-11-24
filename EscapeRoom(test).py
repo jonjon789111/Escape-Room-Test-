@@ -1684,7 +1684,20 @@ def room1():
 # ==========================================
 
 
+
 def room2():
+
+    # PREVENT RE-ENTERING A COMPLETED ROOM
+    if st.session_state.get("room2_cleared", False):
+
+        st.success("ROOM 2 ALREADY COMPLETED!")
+        st.write("You have already collected the Silver Key.")
+
+        if st.button("RETURN TO STORY", key="room2_completed_return"):
+            st.session_state.page = "story"
+            st.rerun()
+
+        st.stop()
 
     design()
 
@@ -1712,219 +1725,178 @@ def room2():
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
-    # CHALLENGE 1 (Drawer 1 - Power Rule)
-    if st.session_state.question_number == 0:
+    # DRAWER SELECTION
+    q = st.session_state.question_number
 
-        with st.container(border=True):
+    st.markdown(
+        """
+        <div style="text-align:center; margin:25px 0;">
+            <h2 style="
+                font-family: Georgia, serif;
+                color:#E5C58B;
+                letter-spacing:3px;
+                font-size:27px;
+            ">
+                THE TEACHER'S DESK
+            </h2>
 
-            st.markdown(
-                '<div class="section-title">DRAWER 1 OF 3 — POWER RULE</div>',
-                unsafe_allow_html=True
-            )
+            <p style="
+                color:#BCA17A;
+                font-size:15px;
+                letter-spacing:1px;
+            ">
+                Unlock the drawers and uncover the lessons inside.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-            st.write("Find the derivative of the function:")
-            st.latex(r"f(x) = 4x^3")
+    # DRAWER BUTTON DESIGN
+    st.markdown(
+        """
+        <style>
 
-            answer = st.text_input("YOUR ANSWER (e.g. 2x^2)", key="r2_answer1")
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&display=swap');
 
-            left, right = st.columns(2)
+        /* GENERAL DRAWER BUTTON */
+        div[class*="st-key-r2_drawer"] button {
 
-            with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+            min-height:115px !important;
 
-                    is_correct = answer.replace(" ", "").lower() == "12x^2"
+            border-radius:10px !important;
+            border:3px double #C69A55 !important;
 
-                    save_attempt(
-                        "ROOM 2 - TEACHER'S DESK",
-                        1,
-                        "f(x) = 4x^3",
-                        answer,
-                        "12x^2",
-                        is_correct
-                    )
+            font-family:'Cinzel', Georgia, serif !important;
+            font-size:20px !important;
+            font-weight:900 !important;
+            letter-spacing:2px !important;
 
-                    if is_correct:
-                        st.session_state.feedback = "correct"
-                        st.session_state.notification = "✓ CORRECT ANSWER!"
-                        st.session_state.notification_type = "success"
+            transition:all 0.25s ease !important;
 
-                    else:
-                        wrong_answer()
-                        st.session_state.feedback = "wrong"
-                        st.session_state.notification = "✕ INCORRECT ANSWER!"
-                        st.session_state.notification_type = "error"
+            box-shadow:
+                inset 0 2px 5px rgba(255,255,255,0.12),
+                inset 0 -5px 10px rgba(0,0,0,0.35),
+                0 5px 12px rgba(0,0,0,0.4) !important;
+        }
 
-                    st.rerun()
+        /* AVAILABLE — RED */
+        div[class*="st-key-r2_drawer"] button[kind="primary"] {
+            background:linear-gradient(
+                145deg,
+                #A52D24,
+                #762019,
+                #48130F
+            ) !important;
 
-            with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+            color:#FFE5C2 !important;
+            border-color:#D9A45B !important;
+        }
 
-                    if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+        /* LOCKED — DARK */
+        div[class*="st-key-r2_drawer"] button:disabled {
+            background:linear-gradient(
+                145deg,
+                #39302A,
+                #211B17
+            ) !important;
 
-                    else:
-                        use_hint("Apply the Power Rule: bring down the exponent 3, multiply by 4, and subtract 1 from the exponent.")
+            color:#887B6A !important;
+            border-color:#67513A !important;
+            opacity:0.75 !important;
+        }
 
-                    st.rerun()
+        /* HOVER */
+        div[class*="st-key-r2_drawer"] button:not(:disabled):hover {
+            transform:translateY(-4px) !important;
 
-    # CHALLENGE 2 (Drawer 2 - Constant, Sum, and Difference Rules)
-    elif st.session_state.question_number == 1:
+            box-shadow:
+                0 0 15px rgba(205,155,78,0.4),
+                inset 0 2px 5px rgba(255,255,255,0.2) !important;
+        }
 
-        with st.container(border=True):
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
-            st.markdown(
-                '<div class="section-title">DRAWER 2 OF 3 — SUM & DIFFERENCE RULES</div>',
-                unsafe_allow_html=True
-            )
+    # DRAWER 1
+    completed1 = q >= 1
 
-            st.write("Find the derivative of the function:")
-            st.latex(r"f(x) = 5x^2 - 3x + 7")
+    if completed1:
+        drawer1_label = "✓ DRAWER 01"
+    else:
+        drawer1_label = "🔓 DRAWER 01"
 
-            answer = st.text_input("YOUR ANSWER", key="r2_answer2")
+    # DRAWER 2
+    completed2 = q >= 2
+    locked2 = q < 1
 
-            left, right = st.columns(2)
+    if completed2:
+        drawer2_label = "✓ DRAWER 02"
+    elif locked2:
+        drawer2_label = "🔒 DRAWER 02"
+    else:
+        drawer2_label = "🔓 DRAWER 02"
 
-            with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
+    # DRAWER 3
+    completed3 = q >= 3
+    locked3 = q < 2
 
-                    is_correct = answer.replace(" ", "").lower() == "10x-3"
+    if completed3:
+        drawer3_label = "✓ DRAWER 03"
+    elif locked3:
+        drawer3_label = "🔒 DRAWER 03"
+    else:
+        drawer3_label = "🔓 DRAWER 03"
 
-                    save_attempt(
-                        "ROOM 2 - TEACHER'S DESK",
-                        2,
-                        "f(x) = 5x^2 - 3x + 7",
-                        answer,
-                        "10x-3",
-                        is_correct
-                    )
+    col1, col2, col3 = st.columns(3)
 
-                    if is_correct:
-                        st.session_state.feedback = "correct"
-                        st.session_state.notification = "✓ CORRECT ANSWER!"
-                        st.session_state.notification_type = "success"
+    with col1:
 
-                    else:
-                        wrong_answer()
-                        st.session_state.feedback = "wrong"
-                        st.session_state.notification = "✕ INCORRECT ANSWER!"
-                        st.session_state.notification_type = "error"
+        if st.button(
+            drawer1_label,
+            key="r2_drawer1",
+            type="primary",
+            use_container_width=True
+        ):
 
-                    st.rerun()
+            if not completed1:
+                st.session_state.current_object = "drawer1"
+                st.rerun()
 
-            with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
+    with col2:
 
-                    if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
+        if st.button(
+            drawer2_label,
+            key="r2_drawer2",
+            type="primary" if not locked2 else "secondary",
+            disabled=locked2,
+            use_container_width=True
+        ):
 
-                    else:
-                        use_hint("Differentiate each term separately. Remember that the derivative of a constant (7) is 0.")
+            if not completed2:
+                st.session_state.current_object = "drawer2"
+                st.rerun()
 
-                    st.rerun()
+    with col3:
 
-    # CHALLENGE 3 (Drawer 3 - Combination of Basic Rules)
-    elif st.session_state.question_number == 2:
+        if st.button(
+            drawer3_label,
+            key="r2_drawer3",
+            type="primary" if not locked3 else "secondary",
+            disabled=locked3,
+            use_container_width=True
+        ):
 
-        with st.container(border=True):
-
-            st.markdown(
-                '<div class="section-title">DRAWER 3 OF 3 — COMBINATION OF BASIC RULES</div>',
-                unsafe_allow_html=True
-            )
-
-            st.write("Find the derivative of the function:")
-            st.latex(r"f(x) = 10x^4 + 9x^3 + 4x^2 + x + 67")
-
-            answer = st.text_input("YOUR ANSWER", key="r2_answer3")
-
-            left, right = st.columns(2)
-
-            with left:
-                if st.button("SUBMIT ANSWER", type="primary", use_container_width=True):
-
-                    is_correct = answer.replace(" ", "").lower() == "40x^3+27x^2+8x+1"
-
-                    save_attempt(
-                        "ROOM 2 - TEACHER'S DESK",
-                        3,
-                        "f(x) = 10x^4 + 9x^3 + 4x^2 + x + 67",
-                        answer,
-                        "40x^3+27x^2+8x+1",
-                        is_correct
-                    )
-
-                    if is_correct:
-                        st.session_state.feedback = "correct"
-                        st.session_state.notification = "✓ CORRECT ANSWER!"
-                        st.session_state.notification_type = "success"
-
-                    else:
-                        wrong_answer()
-                        st.session_state.feedback = "wrong"
-                        st.session_state.notification = "✕ INCORRECT ANSWER!"
-                        st.session_state.notification_type = "error"
-
-                    st.rerun()
-
-            with right:
-                if st.button("USE HINT", type="secondary", use_container_width=True):
-
-                    if st.session_state.hint_used_this_question:
-                        st.session_state.hint_message = "You can only use a hint once per challenge!"
-
-                    else:
-                        use_hint("Apply the Power Rule to each term: the derivative of x is 1, and the derivative of 67 is 0.")
-
-                    st.rerun()
-
-    # FEEDBACK
-    if st.session_state.feedback == "correct":
-
-        st.success("Correct! You solved the challenge.")
-
-        if st.button("CONTINUE", type="primary"):
-            st.session_state.notification = ""
-            st.session_state.notification_type = ""
-
-            st.session_state.question_number += 1
-            st.session_state.feedback = ""
-            st.session_state.hint_message = ""
-            st.session_state.hint_used_this_question = False
-
-            if st.session_state.question_number == 3:
-
-                st.session_state.room2_cleared = True
-
-                # COLLECT SILVER KEY
-                if "Silver Key" not in st.session_state.keys_collected:
-                    st.session_state.keys_collected.append("Silver Key")
-
-                st.session_state.notification = "🔑 SILVER KEY COLLECTED!"
-                st.session_state.notification_type = "warning"
-
-                st.session_state.question_number = 0
-                st.session_state.page = "story"
-
-            st.rerun()
-
-    elif st.session_state.feedback == "wrong":
-
-        st.error("Incorrect! One life and five seconds deducted.")
-
-        st.session_state.feedback = ""
-
-        if st.session_state.game_over:
-            st.rerun()
-
-    # HINT MESSAGE
-    if st.session_state.hint_message:
-        st.info(st.session_state.hint_message)
+            if not completed3:
+                st.session_state.current_object = "drawer3"
+                st.rerun()
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
 
-def clean_answer(text):
-    # Normalizes input so "8 * (2x + 3)^3" and "8(2x+3)^3" are treated the same
-    return text.replace(" ", "").replace("*", "").replace("**", "^").lower()
+    # CHALLENGE CONTENT
+    # Keep your existing question and feedback code here.
 
 
 def room3():
