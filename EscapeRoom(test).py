@@ -1684,10 +1684,11 @@ def room1():
 # ==========================================
 
 
+
 def room2():
 
     # ==========================================
-    # PREVENT RE-ENTERING A COMPLETED ROOM
+    # ROOM 2 COMPLETION GUARD
     # ==========================================
 
     if st.session_state.get("room2_cleared", False):
@@ -1705,8 +1706,8 @@ def room2():
     # INITIALIZE ROOM STATE
     # ==========================================
 
-    if "current_object" not in st.session_state:
-        st.session_state.current_object = None
+    if "room2_object" not in st.session_state:
+        st.session_state.room2_object = None
 
     design()
 
@@ -1747,7 +1748,6 @@ def room2():
         div[class*="st-key-r2_drawer"] button {
 
             min-height:115px !important;
-
             border-radius:10px !important;
             border:3px double #C69A55 !important;
 
@@ -1764,8 +1764,6 @@ def room2():
             transition:all 0.25s ease !important;
         }
 
-        /* AVAILABLE — RED */
-
         div[class*="st-key-r2_drawer"] button[kind="primary"] {
 
             background:linear-gradient(
@@ -1779,8 +1777,6 @@ def room2():
             border-color:#D9A45B !important;
         }
 
-        /* LOCKED — DARK */
-
         div[class*="st-key-r2_drawer"] button:disabled {
 
             background:linear-gradient(
@@ -1793,8 +1789,6 @@ def room2():
             border-color:#67513A !important;
             opacity:0.75 !important;
         }
-
-        /* HOVER */
 
         div[class*="st-key-r2_drawer"] button:not(:disabled):hover {
 
@@ -1814,7 +1808,7 @@ def room2():
     # DRAWER SELECTION
     # ==========================================
 
-    if st.session_state.current_object is None:
+    if st.session_state.room2_object is None:
 
         q = st.session_state.question_number
 
@@ -1836,14 +1830,9 @@ def room2():
 
         col1, col2, col3 = st.columns(3)
 
-        # DRAWER 1
-
         with col1:
 
-            if q >= 1:
-                label1 = "✓ DRAWER 01"
-            else:
-                label1 = "DRAWER 01"
+            label1 = "✓ DRAWER 01" if q >= 1 else "DRAWER 01"
 
             if st.button(
                 label1,
@@ -1853,13 +1842,11 @@ def room2():
             ):
 
                 if q == 0:
-                    st.session_state.current_object = "drawer1"
+                    st.session_state.room2_object = "drawer1"
                     st.rerun()
 
                 else:
                     st.info("You have already completed this drawer.")
-
-        # DRAWER 2
 
         with col2:
 
@@ -1879,13 +1866,11 @@ def room2():
             ):
 
                 if q == 1:
-                    st.session_state.current_object = "drawer2"
+                    st.session_state.room2_object = "drawer2"
                     st.rerun()
 
                 else:
                     st.info("You have already completed this drawer.")
-
-        # DRAWER 3
 
         with col3:
 
@@ -1905,7 +1890,7 @@ def room2():
             ):
 
                 if q == 2:
-                    st.session_state.current_object = "drawer3"
+                    st.session_state.room2_object = "drawer3"
                     st.rerun()
 
                 else:
@@ -1915,7 +1900,7 @@ def room2():
     # CHALLENGE 1 — POWER RULE
     # ==========================================
 
-    elif st.session_state.current_object == "drawer1" and st.session_state.question_number == 0:
+    elif st.session_state.room2_object == "drawer1" and st.session_state.question_number == 0:
 
         with st.container(border=True):
 
@@ -1943,7 +1928,8 @@ def room2():
                     use_container_width=True
                 ):
 
-                    is_correct = clean_answer(answer) == "12x^2"
+                    normalized = answer.replace(" ", "").replace("**", "^").replace("*", "").lower()
+                    is_correct = normalized == "12x^2"
 
                     save_attempt(
                         "ROOM 2 - TEACHER'S DESK",
@@ -1990,7 +1976,7 @@ def room2():
     # CHALLENGE 2 — SUM AND DIFFERENCE RULES
     # ==========================================
 
-    elif st.session_state.current_object == "drawer2" and st.session_state.question_number == 1:
+    elif st.session_state.room2_object == "drawer2" and st.session_state.question_number == 1:
 
         with st.container(border=True):
 
@@ -2018,7 +2004,8 @@ def room2():
                     use_container_width=True
                 ):
 
-                    is_correct = clean_answer(answer) == "10x-3"
+                    normalized = answer.replace(" ", "").replace("**", "^").replace("*", "").lower()
+                    is_correct = normalized == "10x-3"
 
                     save_attempt(
                         "ROOM 2 - TEACHER'S DESK",
@@ -2065,7 +2052,7 @@ def room2():
     # CHALLENGE 3 — COMBINATION OF BASIC RULES
     # ==========================================
 
-    elif st.session_state.current_object == "drawer3" and st.session_state.question_number == 2:
+    elif st.session_state.room2_object == "drawer3" and st.session_state.question_number == 2:
 
         with st.container(border=True):
 
@@ -2093,7 +2080,8 @@ def room2():
                     use_container_width=True
                 ):
 
-                    is_correct = clean_answer(answer) == "40x^3+27x^2+8x+1"
+                    normalized = answer.replace(" ", "").replace("**", "^").replace("*", "").lower()
+                    is_correct = normalized == "40x^3+27x^2+8x+1"
 
                     save_attempt(
                         "ROOM 2 - TEACHER'S DESK",
@@ -2137,10 +2125,10 @@ def room2():
                     st.rerun()
 
     # ==========================================
-    # RETURN TO DESK
+    # RETURN TO DRAWERS
     # ==========================================
 
-    if st.session_state.current_object is not None:
+    if st.session_state.room2_object is not None:
 
         if st.button("← BACK TO DRAWERS", key="r2_back_to_drawers"):
 
@@ -2148,7 +2136,7 @@ def room2():
                 st.warning("Press CONTINUE first to save your progress.")
 
             else:
-                st.session_state.current_object = None
+                st.session_state.room2_object = None
                 st.rerun()
 
     # ==========================================
@@ -2168,7 +2156,7 @@ def room2():
             st.session_state.feedback = ""
             st.session_state.hint_message = ""
             st.session_state.hint_used_this_question = False
-            st.session_state.current_object = None
+            st.session_state.room2_object = None
 
             if st.session_state.question_number == 3:
 
