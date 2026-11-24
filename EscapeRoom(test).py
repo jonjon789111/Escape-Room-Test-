@@ -1013,97 +1013,106 @@ def room1():
     if st.session_state.current_object is None:
 
         st.markdown("### 🔎 EXPLORE THE CLASSROOM")
+        st.write("Investigate the objects to uncover hidden challenges.")
 
-        st.write(
-            "Investigate the available objects to uncover "
-            "the challenges hidden inside the classroom."
-        )
+        st.markdown("""
+        <style>
+        div.st-key-explore_blackboard button,
+        div.st-key-explore_notebook button,
+        div.st-key-explore_notes button {
+            min-height: 150px;
+            border: 1px solid #b58b45;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #252525, #111111);
+            color: #f0d7a0;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        div.st-key-explore_blackboard button:hover,
+        div.st-key-explore_notebook button:hover,
+        div.st-key-explore_notes button:hover {
+            border: 1px solid #f5cf79;
+            background: linear-gradient(145deg, #49371f, #21180f);
+            color: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 5px 18px rgba(181, 139, 69, 0.25);
+        }
+
+        div.st-key-explore_blackboard button:disabled,
+        div.st-key-explore_notebook button:disabled,
+        div.st-key-explore_notes button:disabled {
+            opacity: 0.4;
+            border: 1px solid #555555;
+            color: #999999;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
         col1, col2, col3 = st.columns(3)
 
         # BLACKBOARD
         with col1:
 
-            if st.session_state.question_number == 0:
-                status = "🟢 AVAILABLE"
-                disabled = False
+            disabled = st.session_state.question_number != 0
+
+            if st.button(
+                "🖍️\nBLACKBOARD\n\nINSPECT OBJECT",
+                disabled=disabled,
+                use_container_width=True,
+                key="explore_blackboard"
+            ):
+                st.session_state.current_object = "blackboard"
+                st.rerun()
+
+            if disabled:
+                st.caption("✓ COMPLETED")
             else:
-                status = "🔒 COMPLETED"
-                disabled = True
+                st.caption("● AVAILABLE")
 
-            with st.container(border=True):
-
-                st.markdown("### 🖍️ BLACKBOARD")
-                st.caption(status)
-
-                st.write("A mathematical problem is written on the board.")
-
-                if st.button(
-                    "INSPECT",
-                    disabled=disabled,
-                    use_container_width=True,
-                    key="explore_blackboard"
-                ):
-                    st.session_state.current_object = "blackboard"
-                    st.rerun()
-
-        # TEACHER'S DESK
+        # OLD NOTEBOOK
         with col2:
 
-            if st.session_state.question_number == 1:
-                status = "🟢 AVAILABLE"
-                disabled = False
-            elif st.session_state.question_number > 1:
-                status = "🔒 COMPLETED"
-                disabled = True
+            disabled = st.session_state.question_number != 1
+
+            if st.button(
+                "📓\nOLD NOTEBOOK\n\nINSPECT OBJECT",
+                disabled=disabled,
+                use_container_width=True,
+                key="explore_notebook"
+            ):
+                st.session_state.current_object = "notebook"
+                st.rerun()
+
+            if st.session_state.question_number > 1:
+                st.caption("✓ COMPLETED")
+            elif disabled:
+                st.caption("🔒 LOCKED")
             else:
-                status = "🔒 LOCKED"
-                disabled = True
-
-            with st.container(border=True):
-
-                st.markdown("### 🗄️ TEACHER'S DESK")
-                st.caption(status)
-
-                st.write("Something important is waiting on the desk.")
-
-                if st.button(
-                    "INSPECT",
-                    disabled=disabled,
-                    use_container_width=True,
-                    key="explore_desk"
-                ):
-                    st.session_state.current_object = "desk"
-                    st.rerun()
+                st.caption("● AVAILABLE")
 
         # WALL NOTES
         with col3:
 
-            if st.session_state.question_number == 2:
-                status = "🟢 AVAILABLE"
-                disabled = False
-            elif st.session_state.question_number > 2:
-                status = "🔒 COMPLETED"
-                disabled = True
+            disabled = st.session_state.question_number != 2
+
+            if st.button(
+                "📌\nWALL NOTES\n\nINSPECT OBJECT",
+                disabled=disabled,
+                use_container_width=True,
+                key="explore_notes"
+            ):
+                st.session_state.current_object = "notes"
+                st.rerun()
+
+            if st.session_state.question_number > 2:
+                st.caption("✓ COMPLETED")
+            elif disabled:
+                st.caption("🔒 LOCKED")
             else:
-                status = "🔒 LOCKED"
-                disabled = True
-
-            with st.container(border=True):
-
-                st.markdown("### 📌 WALL NOTES")
-                st.caption(status)
-
-                st.write("A set of notes contains the final challenge.")
-
-                if st.button(
-                    "INSPECT",
-                    disabled=disabled,
-                    use_container_width=True,
-                    key="explore_notes"
-                ):
-                    st.session_state.current_object = "notes"
-                    st.rerun()
+                st.caption("● AVAILABLE")
 
     # ==========================================
     # CHALLENGE 1 — BLACKBOARD
@@ -1191,7 +1200,7 @@ def room1():
     # CHALLENGE 2 — TEACHER'S DESK
     # ==========================================
 
-    elif st.session_state.current_object == "desk":
+    elif st.session_state.current_object == "notebook":
 
         with st.container(border=True):
 
@@ -1200,7 +1209,7 @@ def room1():
                 unsafe_allow_html=True
             )
 
-            st.markdown("### 🗄️ Teacher's Desk")
+            st.markdown("### 📓 Old Notebook")
 
             st.write("Evaluate the following limit:")
 
