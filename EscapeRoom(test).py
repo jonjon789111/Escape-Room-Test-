@@ -897,6 +897,7 @@ def trigger_jumpscare(answer_correct):
     )
 
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
@@ -913,46 +914,55 @@ def display_jumpscare():
                 audio_file.read()
             ).decode("utf-8")
 
-        # DISPLAY FOR 2 SECONDS
-        components.html(f"""
-            <script>
-                const parentDoc = window.parent.document;
+        html_code = """
+        <script>
+            const parentDoc = window.parent.document;
 
-                const overlay = parentDoc.createElement("div");
+            const overlay = parentDoc.createElement("div");
 
-                overlay.style.position = "fixed";
-                overlay.style.inset = "0";
-                overlay.style.width = "100vw";
-                overlay.style.height = "100vh";
-                overlay.style.zIndex = "999999999";
-                overlay.style.background = "black";
+            overlay.style.position = "fixed";
+            overlay.style.inset = "0";
+            overlay.style.width = "100vw";
+            overlay.style.height = "100vh";
+            overlay.style.zIndex = "999999999";
+            overlay.style.background = "black";
 
-                const img = parentDoc.createElement("img");
-                img.src = "data:image/jpeg;base64,{image_data}";
-                img.style.width = "100%";
-                img.style.height = "100%";
-                img.style.objectFit = "cover";
+            const img = parentDoc.createElement("img");
+            img.src = "IMAGE_DATA";
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.objectFit = "cover";
 
-                overlay.appendChild(img);
-                parentDoc.body.appendChild(overlay);
+            overlay.appendChild(img);
+            parentDoc.body.appendChild(overlay);
 
-                const audio = new Audio(
-                    "data:audio/mpeg;base64,{audio_data}"
-                );
+            const audio = new Audio("AUDIO_DATA");
 
-                audio.play().catch(error => {
-                    console.log("Audio playback blocked:", error);
-                });
+            audio.play().catch(error => {
+                console.log("Audio playback blocked:", error);
+            });
 
-                setTimeout(() => {
-                    overlay.remove();
-                    audio.pause();
-                }, 2000);
-            </script>
-        """, height=0)
+            setTimeout(() => {
+                overlay.remove();
+                audio.pause();
+            }, 2000);
+        </script>
+        """
+
+        html_code = html_code.replace(
+            "IMAGE_DATA",
+            "data:image/jpeg;base64," + image_data
+        )
+
+        html_code = html_code.replace(
+            "AUDIO_DATA",
+            "data:audio/mpeg;base64," + audio_data
+        )
+
+        components.html(html_code, height=0)
 
         st.session_state.show_jumpscare = False
-
+        
 def start_presenter_room(room):
 
     reset_game()
