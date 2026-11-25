@@ -3558,6 +3558,30 @@ def room3():
             unsafe_allow_html=True
         )
 
+            # ==========================================
+        # SECRET FILE — ROOM 3
+        # ==========================================
+
+        st.markdown(
+            '<div class="gold-line"></div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown("### 📁 CLASSIFIED DOCUMENT")
+
+        st.caption(
+            "Investigation notes have been discovered among the library's old records."
+        )
+
+        if st.button(
+            "🔍 DISCOVER FILE 003",
+            key="discover_file_003",
+            use_container_width=True
+        ):
+            st.session_state.current_secret_file = "file_003"
+            st.session_state.page = "secret_file"
+            st.rerun()
+
     # CHALLENGE 1 - PRODUCT RULE
     elif st.session_state.room3_object == "shelf1":
 
