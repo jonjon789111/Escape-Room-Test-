@@ -54,8 +54,6 @@ for key, value in defaults.items():
 # SHARED DESIGN
 # ==========================================
 
-
-
 def design():
 
     backgrounds = {
@@ -1319,16 +1317,28 @@ def story_page():
         "An escape room adventure"
     )
 
-    st.markdown("### THE FINAL BELL HAS RUNG...")
+    st.markdown("### THE CLASSROOM WAS NEVER SUPPOSED TO BE FOUND...")
 
     st.write(
-        "As you prepare to leave, you reach for the door. "
-        "But something is wrong. **It's locked.**"
+        "While exploring an abandoned school building, "
+        "you stumble upon a classroom filled with forgotten "
+        "belongings and documents marked **CONFIDENTIAL**."
     )
-
+    
+    st.write(
+        "Curiosity leads you inside, but the door suddenly "
+        "shuts behind you. **It's locked.**"
+    )
+    
     st.info(
-        "Suddenly, strange mathematical challenges begin appearing "
-        "around the classroom."
+        "With no way out, you must solve the challenges, "
+        "collect the keys, and uncover the secrets hidden "
+        "within the classroom."
+    )
+    
+    st.caption(
+        "Something happened here. And the truth is buried "
+        "in its forgotten records."
     )
 
     st.markdown("### FOUR AREAS. FOUR CHALLENGES.")
