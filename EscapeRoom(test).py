@@ -1538,6 +1538,8 @@ def room1():
 
     design()
     
+    st.image("jumpscare.jpg", caption="Jumpscare Image Test")
+    
     if st.session_state.get("room1_cleared", False):
 
         # LOAD BRONZE KEY IMAGE
