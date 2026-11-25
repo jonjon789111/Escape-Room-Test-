@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import base64
+import random
 
 # ==========================================
 # PAGE CONFIGURATION
@@ -16,6 +17,8 @@ defaults = {
     "page": "home",
     "lives": 3,
     "hints": 2,
+    "show_jumpscare": False,
+    "jumpscare_video": "jumpscare.mp4",
     "time_limit": 1200,
     "start_time": None,
     "question_number": 0,
@@ -859,6 +862,7 @@ def reset_game():
     st.session_state.wrong_answers = 0
     st.session_state.hints_used = 0
     st.session_state.end_time = None
+    st.session_state.show_jumpscare = False
 
     # NOTIFICATIONS
     st.session_state.notification = ""
@@ -875,6 +879,31 @@ def reset_game():
     for key in answer_keys:
         st.session_state.pop(key, None)
 
+# ==========================================
+# JUMPSCARE SYSTEM
+# ==========================================
+
+def trigger_jumpscare(answer_correct):
+
+    if answer_correct:
+        chance = 0.15
+    else:
+        chance = 0.65
+
+    st.session_state.show_jumpscare = random.random() < chance
+
+
+def display_jumpscare():
+
+    if st.session_state.show_jumpscare:
+
+        st.video(
+            st.session_state.jumpscare_video,
+            autoplay=True,
+            muted=False
+        )
+
+        st.session_state.show_jumpscare = False
 def start_presenter_room(room):
 
     reset_game()
@@ -1473,6 +1502,31 @@ def instructions_page():
             st.session_state.page="story"
             st.rerun()
 
+# ==========================================
+# JUMPSCARE SYSTEM
+# ==========================================
+
+def trigger_jumpscare(answer_correct):
+
+    if answer_correct:
+        chance = 0.15
+    else:
+        chance = 0.65
+
+    st.session_state.show_jumpscare = random.random() < chance
+
+
+def display_jumpscare():
+
+    if st.session_state.show_jumpscare:
+
+        st.video(
+            st.session_state.jumpscare_video,
+            autoplay=True,
+            muted=False
+        )
+
+        st.session_state.show_jumpscare = False
 
 # ==========================================
 # ROOM 1 — THE BLACKBOARD
@@ -1948,6 +2002,8 @@ def room1():
                         "10",
                         is_correct
                     )
+                    
+                    trigger_jumpscare(is_correct)
 
                     if is_correct:
 
@@ -2031,6 +2087,8 @@ def room1():
                         is_correct
                     )
 
+                    trigger_jumpscare(is_correct)
+
                     if is_correct:
 
                         st.session_state.feedback = "correct"
@@ -2112,6 +2170,8 @@ def room1():
                         "5",
                         is_correct
                     )
+
+                    trigger_jumpscare(is_correct)
 
                     if is_correct:
 
@@ -2210,6 +2270,8 @@ def room1():
         '<div class="gold-line"></div>',
         unsafe_allow_html=True
     )
+
+    display_jumpscare()
 
 
 # ==========================================
