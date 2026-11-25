@@ -4780,8 +4780,6 @@ def ending_page():
 # ACHIEVEMENTS PAGE
 # ==========================================
 
-
-
 def achievements_page():
 
     design()
@@ -4846,6 +4844,13 @@ def achievements_page():
             )
         }
     ]
+
+            {
+            "name": "SECRET KEEPER",
+            "icon": "📁",
+            "description": "Discover and collect all four secret files.",
+            "unlocked": len(st.session_state.secret_files) == 4
+        }
 
     # UNLOCKED COUNT
     unlocked_count = sum(
