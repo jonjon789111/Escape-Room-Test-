@@ -888,7 +888,7 @@ def trigger_jumpscare(answer_correct):
     if answer_correct:
         chance = 0.15
     else:
-        chance = 0.65
+        chance = 1.0
 
     st.session_state.show_jumpscare = random.random() < chance
 
