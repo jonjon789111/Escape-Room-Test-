@@ -2,6 +2,7 @@ import streamlit as st
 import time
 import base64
 import random
+import streamlit.components.v1 as components
 
 # ==========================================
 # PAGE CONFIGURATION
@@ -895,6 +896,7 @@ def trigger_jumpscare(answer_correct):
     )
 
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
@@ -911,44 +913,59 @@ def display_jumpscare():
                 audio_file.read()
             ).decode("utf-8")
 
-        # FULLSCREEN IMAGE + HIDDEN AUDIO
-        st.markdown(
+        components.html(
             f"""
-            <div style="
-                position: fixed;
-                inset: 0;
-                width: 100vw;
-                height: 100vh;
-                background: black;
-                z-index: 999999999;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow: hidden;
-            ">
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    html, body {{
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                        height: 100%;
+                        overflow: hidden;
+                        background: black;
+                    }}
 
-                <img
-                    src="data:image/jpeg;base64,{image_data}"
-                    style="
-                        position: absolute;
+                    #jumpscare {{
+                        position: fixed;
                         inset: 0;
+                        width: 100vw;
+                        height: 100vh;
+                        z-index: 999999;
+                        background: black;
+                    }}
+
+                    #jumpscare img {{
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
-                    "
-                >
+                    }}
 
-                <audio autoplay
-                    style="display:none;"
-                    controls="false">
+                    audio {{
+                        display: none !important;
+                    }}
+                </style>
+            </head>
+
+            <body>
+
+                <div id="jumpscare">
+                    <img src="data:image/jpeg;base64,{image_data}">
+                </div>
+
+                <audio autoplay>
                     <source
                         src="data:audio/mpeg;base64,{audio_data}"
                         type="audio/mpeg">
                 </audio>
 
-            </div>
+            </body>
+            </html>
             """,
-            unsafe_allow_html=True
+            height=700,
+            scrolling=False
         )
 
         st.session_state.show_jumpscare = False
