@@ -2953,6 +2953,30 @@ def room2():
                 else:
                     st.info("You have already completed this drawer.")
 
+            # ==========================================
+        # SECRET FILE — ROOM 2
+        # ==========================================
+
+        st.markdown(
+            '<div class="gold-line"></div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown("### 📁 UNIDENTIFIED DOCUMENT")
+
+        st.caption(
+            "A personal journal appears to be hidden among the teacher's belongings."
+        )
+
+        if st.button(
+            "🔍 DISCOVER FILE 002",
+            key="discover_file_002",
+            use_container_width=True
+        ):
+            st.session_state.current_secret_file = "file_002"
+            st.session_state.page = "secret_file"
+            st.rerun()
+
     # ==========================================
     # CHALLENGE 1 — POWER RULE
     # ==========================================
