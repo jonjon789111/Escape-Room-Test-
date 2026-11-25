@@ -894,31 +894,33 @@ def trigger_jumpscare(answer_correct):
         random.random() < chance
     )
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
 
-        # LOAD JUMPSCARE JPG IMAGE
+        # LOAD JPG IMAGE
         with open("jumpscare.jpg", "rb") as image_file:
             image_data = base64.b64encode(
                 image_file.read()
             ).decode("utf-8")
 
-        # LOAD JUMPSCARE MP3 SOUND
+        # LOAD MP3 AUDIO
         with open("jumpscare.mp3", "rb") as audio_file:
             audio_data = base64.b64encode(
                 audio_file.read()
             ).decode("utf-8")
 
-        # FULL-SCREEN JUMPSCARE
-        st.html(f"""
+        # FULLSCREEN IMAGE + HIDDEN AUDIO
+        st.markdown(
+            f"""
             <div style="
                 position: fixed;
                 inset: 0;
                 width: 100vw;
                 height: 100vh;
                 background: black;
-                z-index: 2147483647;
+                z-index: 999999999;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -936,15 +938,18 @@ def display_jumpscare():
                     "
                 >
 
-                <audio autoplay>
+                <audio autoplay
+                    style="display:none;"
+                    controls="false">
                     <source
                         src="data:audio/mpeg;base64,{audio_data}"
-                        type="audio/mpeg"
-                    >
+                        type="audio/mpeg">
                 </audio>
 
             </div>
-        """)
+            """,
+            unsafe_allow_html=True
+        )
 
         st.session_state.show_jumpscare = False
         
