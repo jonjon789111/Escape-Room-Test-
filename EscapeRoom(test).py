@@ -943,7 +943,7 @@ def display_jumpscare():
             setTimeout(() => {
                 overlay.remove();
                 audio.pause();
-            }, 2000);
+            }, 4000);
         </script>
         """
 
