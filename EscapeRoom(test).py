@@ -203,6 +203,7 @@ defaults = {
     "lives": 3,
     "hints": 2,
     "show_jumpscare": False,
+    "music_enabled": True,
     "jumpscare_video": "jumpscare.mp3",
     "time_limit": 1200,
     "start_time": None,
@@ -270,7 +271,9 @@ def background_music():
             parentDoc.body.appendChild(bgMusic);
         }
 
-        if (bgMusic.paused) {
+        bgMusic.muted = MUSIC_MUTED;
+
+        if (!bgMusic.muted && bgMusic.paused) {
             bgMusic.play().catch(error => {
                 console.log("Background music error:", error);
             });
@@ -284,7 +287,24 @@ def background_music():
         audio_data
     )
 
+    audio_html = audio_html.replace(
+    "MUSIC_MUTED",
+    str(not st.session_state.music_enabled).lower()
+)
+
     components.html(audio_html, height=0)
+
+def music_control():
+
+    if st.session_state.music_enabled:
+        label = "🔊 SOUND ON"
+    else:
+        label = "🔇 SOUND OFF"
+
+    if st.button(label, key="music_toggle"):
+        st.session_state.music_enabled = not st.session_state.music_enabled
+        st.rerun()
+        
 # ==========================================
 # SHARED DESIGN
 # ==========================================
@@ -794,6 +814,7 @@ def design():
     </style>
     """, unsafe_allow_html=True)
 
+    music_control()
     background_music()
 
 def floating_notification():
