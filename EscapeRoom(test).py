@@ -250,12 +250,31 @@ def background_music():
         ).decode("utf-8")
 
     audio_html = f"""
-        <audio autoplay loop>
-            <source
-                src="data:audio/mpeg;base64,{audio_data}"
-                type="audio/mpeg"
-            >
-        </audio>
+    <script>
+
+        const parentDoc = window.parent.document;
+
+        let bgMusic = parentDoc.getElementById("background-music");
+
+        if (!bgMusic) {
+
+            bgMusic = parentDoc.createElement("audio");
+
+            bgMusic.id = "background-music";
+            bgMusic.src = "data:audio/mpeg;base64,{audio_data}";
+
+            bgMusic.loop = true;
+            bgMusic.volume = 0.25;
+            bgMusic.autoplay = true;
+
+            parentDoc.body.appendChild(bgMusic);
+
+            bgMusic.play().catch(error => {
+                console.log("Background music playback blocked:", error);
+            });
+        }
+
+    </script>
     """
 
     components.html(
@@ -1166,9 +1185,19 @@ def display_jumpscare():
             });
 
             setTimeout(() => {
+
+                // REMOVE JUMPSCARE IMAGE
                 overlay.remove();
+            
+                // STOP JUMPSCARE SOUND
                 audio.pause();
                 audio.currentTime = 0;
+            
+                // RESTORE BACKGROUND MUSIC
+                if (backgroundMusic) {
+                    backgroundMusic.muted = false;
+                }
+            
             }, 4000);
         </script>
         """
