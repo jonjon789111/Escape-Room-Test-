@@ -4845,7 +4845,7 @@ def achievements_page():
         }
     ]
 
-        {
+    {
             "name": "SECRET KEEPER",
             "icon": "📁",
             "description": "Discover and collect all four secret files.",
