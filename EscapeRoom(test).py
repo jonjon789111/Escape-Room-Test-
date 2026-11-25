@@ -2770,6 +2770,8 @@ def room2():
                         is_correct
                     )
 
+                    trigger_jumpscare(is_correct)
+
                     if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
@@ -2846,6 +2848,8 @@ def room2():
                         is_correct
                     )
 
+                    trigger_jumpscare(is_correct)
+
                     if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
@@ -2921,6 +2925,8 @@ def room2():
                         "40x^3+27x^2+8x+1",
                         is_correct
                     )
+
+                    trigger_jumpscare(is_correct)
 
                     if is_correct:
                         st.session_state.feedback = "correct"
@@ -3020,6 +3026,7 @@ def room2():
         st.info(st.session_state.hint_message)
 
     st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+    display_jumpscare()
    
 def room3():
 
@@ -3348,6 +3355,8 @@ def room3():
                         is_correct
                     )
 
+                    trigger_jumpscare(is_correct)
+
                     if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
@@ -3431,6 +3440,8 @@ def room3():
                         is_correct
                     )
 
+                    trigger_jumpscare(is_correct)
+
                     if is_correct:
                         st.session_state.feedback = "correct"
                         st.session_state.notification = "✓ CORRECT ANSWER!"
@@ -3512,6 +3523,8 @@ def room3():
                         "8(2x+3)^3",
                         is_correct
                     )
+
+                    trigger_jumpscare(is_correct)
 
                     if is_correct:
                         st.session_state.feedback = "correct"
@@ -3608,6 +3621,8 @@ def room3():
         '<div class="gold-line"></div>',
         unsafe_allow_html=True
     )
+
+    display_jumpscare()
 
 
 def room4():
@@ -4025,6 +4040,8 @@ def room4():
                         is_correct
                     )
 
+                    trigger_jumpscare(is_correct)
+
                     if is_correct:
 
                         st.session_state.feedback = "correct"
@@ -4115,6 +4132,8 @@ def room4():
                         "5^u ln(5)",
                         is_correct
                     )
+
+                    trigger_jumpscare(is_correct)
 
                     if is_correct:
 
@@ -4209,6 +4228,8 @@ def room4():
                         "e^x tan(x)+e^x sec^2(x)",
                         is_correct
                     )
+
+                    trigger_jumpscare(is_correct)
 
                     if is_correct:
 
@@ -4323,6 +4344,8 @@ def room4():
         '<div class="gold-line"></div>',
         unsafe_allow_html=True
     )
+
+    display_jumpscare()
 
 # ==========================================
 # ENDING PAGE
