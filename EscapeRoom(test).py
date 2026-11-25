@@ -18,7 +18,7 @@ defaults = {
     "lives": 3,
     "hints": 2,
     "show_jumpscare": False,
-    "jumpscare_video": "jumpscare.mp4",
+    "jumpscare_video": "jumpscare.mp3",
     "time_limit": 1200,
     "start_time": None,
     "question_number": 0,
@@ -893,40 +893,56 @@ def trigger_jumpscare(answer_correct):
     st.session_state.show_jumpscare = random.random() < chance
 
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
 
-        with open("jumpscare.png", "rb") as image_file:
+        # LOAD JUMPSCARE IMAGE
+        with open("jumpscare.jpg", "rb") as image_file:
             image_data = base64.b64encode(
                 image_file.read()
             ).decode("utf-8")
 
-        st.markdown(
-            f"""
+        # LOAD JUMPSCARE SOUND
+        with open("jumpscare.mp3", "rb") as audio_file:
+            audio_data = base64.b64encode(
+                audio_file.read()
+            ).decode("utf-8")
+
+        # FULL-SCREEN IMAGE + SOUND
+        st.html(f"""
             <div style="
                 position: fixed;
                 inset: 0;
-                z-index: 999999;
-                background: rgba(0,0,0,0.95);
+                width: 100vw;
+                height: 100vh;
+                background: black;
+                z-index: 2147483647;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                overflow: hidden;
             ">
+
                 <img
                     src="data:image/png;base64,{image_data}"
                     style="
                         width: 100%;
                         height: 100%;
-                        object-fit: contain;
+                        object-fit: cover;
                     "
                 >
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
 
-        st.audio("jumpscare.mp4", autoplay=True)
+                <audio autoplay>
+                    <source
+                        src="data:audio/mpeg;base64,{audio_data}"
+                        type="audio/mpeg"
+                    >
+                </audio>
+
+            </div>
+        """)
 
         st.session_state.show_jumpscare = False
         
