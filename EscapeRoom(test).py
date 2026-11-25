@@ -4885,84 +4885,91 @@ def display_secret_file():
 
     st.write("")
 
+    
     # DOCUMENT DESIGN
-    st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #e8dfc8, #d4c6a5);
-            color: #302719;
-            padding: 35px;
-            border: 5px double #6b5738;
-            border-radius: 4px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-        ">
-            <div style="
-                text-align: center;
-                font-family: Georgia;
-                letter-spacing: 4px;
-                font-size: 13px;
-                color: #713d32;
-                font-weight: bold;
-            ">
-                CONFIDENTIAL — RESTRICTED ACCESS
-            </div>
 
-            <hr style="border: 1px solid #8b7857;">
+    document_html = f"""
+<div style="
+    background: linear-gradient(135deg, #e8dfc8, #d4c6a5);
+    color: #302719;
+    padding: 35px;
+    border: 5px double #6b5738;
+    border-radius: 4px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+">
 
-            <div style="
-                text-align: center;
-                font-family: Georgia;
-                font-size: 30px;
-                font-weight: bold;
-                letter-spacing: 2px;
-            ">
-                """ + file_data["number"] + """
-            </div>
+    <div style="
+        text-align: center;
+        font-family: Georgia;
+        letter-spacing: 4px;
+        font-size: 13px;
+        color: #713d32;
+        font-weight: bold;
+    ">
+        CONFIDENTIAL — RESTRICTED ACCESS
+    </div>
 
-            <div style="
-                text-align: center;
-                font-family: Georgia;
-                font-size: 22px;
-                margin-top: 10px;
-            ">
-                """ + file_data["title"] + """
-            </div>
+    <hr style="border: 1px solid #8b7857;">
 
-            <hr style="border: 1px solid #8b7857;">
+    <div style="
+        text-align: center;
+        font-family: Georgia;
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 2px;
+    ">
+        {file_data["number"]}
+    </div>
 
-            <div style="
-                font-family: Georgia;
-                font-size: 15px;
-                line-height: 1.8;
-            ">
-                <b>DATE:</b> """ + file_data["date"] + """<br>
-                <b>LOCATION:</b> """ + file_data["location"] + """
-            </div>
+    <div style="
+        text-align: center;
+        font-family: Georgia;
+        font-size: 22px;
+        margin-top: 10px;
+    ">
+        {file_data["title"]}
+    </div>
 
-            <hr style="border: 1px solid #8b7857;">
+    <hr style="border: 1px solid #8b7857;">
 
-            <div style="
-                font-family: Georgia;
-                font-size: 17px;
-                line-height: 1.9;
-                white-space: pre-line;
-                text-align: justify;
-            ">
-                """ + file_data["content"] + """
-            </div>
+    <div style="
+        font-family: Georgia;
+        font-size: 15px;
+        line-height: 1.8;
+    ">
+        <b>DATE:</b> {file_data["date"]}<br>
+        <b>LOCATION:</b> {file_data["location"]}
+    </div>
 
-            <hr style="border: 1px solid #8b7857;">
+    <hr style="border: 1px solid #8b7857;">
 
-            <div style="
-                text-align: center;
-                color: #713d32;
-                font-size: 12px;
-                letter-spacing: 3px;
-                font-weight: bold;
-            ">
-                END OF DOCUMENT
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+    <div style="
+        font-family: Georgia;
+        font-size: 17px;
+        line-height: 1.9;
+        white-space: pre-line;
+        text-align: justify;
+    ">
+        {file_data["content"]}
+    </div>
+
+    <hr style="border: 1px solid #8b7857;">
+
+    <div style="
+        text-align: center;
+        color: #713d32;
+        font-size: 12px;
+        letter-spacing: 3px;
+        font-weight: bold;
+    ">
+        END OF DOCUMENT
+    </div>
+
+</div>
+"""
+
+    st.markdown(document_html, unsafe_allow_html=True)
+
 
     st.write("")
 
