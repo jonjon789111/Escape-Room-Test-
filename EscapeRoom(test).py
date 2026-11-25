@@ -4968,7 +4968,11 @@ def display_secret_file():
 </div>
 """
 
-    st.markdown(document_html, unsafe_allow_html=True)
+    components.html(
+    document_html,
+    height=750,
+    scrolling=True
+)
 
 
     st.write("")
