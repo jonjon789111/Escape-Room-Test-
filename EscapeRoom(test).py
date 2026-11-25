@@ -1100,12 +1100,17 @@ def progress_bar():
 # HOMEPAGE
 # ==========================================
 
+
 def home_page():
 
     design()
 
     st.write("")
     st.write("")
+
+    # ==========================================
+    # MAIN TITLE
+    # ==========================================
 
     st.markdown("""
         <div class="main-title">THE LOCKED CLASSROOM</div>
@@ -1116,10 +1121,15 @@ def home_page():
         <div class="gold-line"></div>
     """, unsafe_allow_html=True)
 
+    # ==========================================
+    # OBJECTIVE
+    # ==========================================
+
     left, center, right = st.columns([1, 5, 1])
 
     with center:
         with st.container(border=True):
+
             st.markdown(
                 '<div class="section-title" style="text-align:center">OBJECTIVE</div>',
                 unsafe_allow_html=True
@@ -1137,6 +1147,62 @@ def home_page():
 
     st.write("")
 
+    # ==========================================
+    # TRIGGER WARNING
+    # ==========================================
+
+    st.markdown("""
+        <div style="
+            max-width:750px;
+            margin:auto;
+            padding:16px 22px;
+            background:rgba(80, 20, 20, 0.35);
+            border:1px solid rgba(180, 65, 65, 0.65);
+            border-radius:10px;
+            text-align:center;
+        ">
+
+            <div style="
+                color:#D98B80;
+                font-family:'Cinzel',serif;
+                font-size:17px;
+                letter-spacing:2px;
+                font-weight:bold;
+                margin-bottom:10px;
+            ">
+                ⚠ CONTENT WARNING
+            </div>
+
+            <div style="
+                color:#D8C9B5;
+                font-size:14px;
+                line-height:1.7;
+            ">
+                This game contains sudden visual jumpscares,
+                unexpected horror imagery, and loud sound effects.
+                Players sensitive to sudden scares, flashing visuals,
+                or loud sounds should take caution before playing.
+            </div>
+
+            <div style="
+                color:#D98B80;
+                font-size:12px;
+                letter-spacing:1.5px;
+                margin-top:10px;
+                font-weight:bold;
+            ">
+                PLAYER DISCRETION IS ADVISED.
+            </div>
+
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    # ==========================================
+    # MAIN BUTTONS
+    # ==========================================
+
     left, play, gap, instructions, right = st.columns(
         [1.5, 2.5, 0.3, 2.5, 1.5]
     )
@@ -1151,13 +1217,16 @@ def home_page():
             st.session_state.page = "instructions"
             st.rerun()
 
+    # ==========================================
+    # FOOTER
+    # ==========================================
+
     st.markdown(
         '<div class="subtitle" style="font-size:17px;margin-top:40px">'
         'THINK CAREFULLY. SOLVE WISELY. ESCAPE.'
         '</div>',
         unsafe_allow_html=True
     )
-
 
 # ==========================================
 # STORY PAGE
@@ -1295,9 +1364,7 @@ def story_page():
     if st.button("← BACK TO MENU", use_container_width=True):
         st.session_state.page = "home"
         st.rerun()
-
-
-
+        
 # ==========================================
 # INSTRUCTIONS PAGE
 # ==========================================
