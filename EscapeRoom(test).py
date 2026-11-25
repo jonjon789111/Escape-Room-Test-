@@ -5,34 +5,89 @@ import random
 import streamlit.components.v1 as components
 
 SECRET_FILE_DATA = {
+
     "file_001": {
         "number": "FILE 001",
         "title": "The Incident Report",
         "date": "October 14, 1998",
         "location": "The Blackboard",
         "content": """
-An incident was reported inside the classroom several
-years ago.
+SUBJECT: Disappearance of Student Elias Navarro
 
-Following the event, the room was permanently closed.
+An incident occurred inside Classroom 204 on the evening
+of October 14, 1998.
 
-All records concerning the incident were ordered
-to be kept confidential.
+Elias Navarro, a student enrolled at the school, was
+reported missing after an unauthorized after-class activity.
+
+According to the initial report, Elias was last seen
+entering Classroom 204 with his assigned teacher.
+
+However, when school personnel arrived, the classroom
+was empty.
+
+No signs of forced entry or departure were found.
+
+In the following days, several students and employees
+reported hearing footsteps, knocking, and a voice coming
+from the locked classroom.
+
+Some claimed to have seen a student standing near the
+blackboard, despite the room being unoccupied.
+
+Due to repeated reports and concerns regarding student
+safety, Classroom 204 was permanently closed.
+
+All records concerning the incident were classified.
+
+HANDWRITTEN NOTE:
+
+"We were told to forget what happened.
+But someone is still in that room."
 """
     },
 
     "file_002": {
         "number": "FILE 002",
-        "title": "The Teacher's Record",
+        "title": "The Teacher's Personal Record",
         "date": "October 18, 1998",
         "location": "The Teacher's Desk",
         "content": """
-The assigned teacher had been keeping records of
-unusual occurrences inside the classroom.
+AUTHOR: Ms. Amelia Reyes
 
-Several entries were removed from the original logbook.
+I can no longer pretend that nothing happened.
 
-No explanation was provided for their disappearance.
+Elias was not supposed to participate in the activity
+that evening. I was instructed to supervise an experiment
+involving an unusual device installed inside Classroom 204.
+
+The administration claimed it was part of a private
+academic study.
+
+During the experiment, the lights went out. The device
+stopped functioning, and Elias disappeared before I
+could reach him.
+
+I reported everything, but my statement was never
+included in the official investigation.
+
+Since then, I have repeatedly seen Elias inside
+the classroom.
+
+He appears near the blackboard, beside the teacher's
+desk, and sometimes directly in front of me.
+
+He does not speak.
+
+He simply stares.
+
+I believe he is trying to show me something.
+
+HANDWRITTEN NOTE:
+
+"If anyone finds this record, please don't assume
+he's trying to hurt you. He wants someone to know
+what happened."
 """
     },
 
@@ -40,15 +95,43 @@ No explanation was provided for their disappearance.
         "number": "FILE 003",
         "title": "The Investigation Notes",
         "date": "October 22, 1998",
-        "location": "The Storage Cabinet",
+        "location": "The Library",
         "content": """
-The investigation revealed that the classroom had
-been used for an undisclosed experiment.
+INVESTIGATION STATUS: TERMINATED
 
-The remaining notes suggest that the incident
-was not accidental.
+Further examination of Classroom 204 revealed that
+the experiment was not part of any officially approved
+school program.
 
-Further details remain classified.
+The device installed inside the classroom was designed
+to investigate unusual electromagnetic activity.
+
+According to recovered documents, the experiment was
+intended to produce and observe a temporary energy field.
+
+However, the equipment malfunctioned during the evening
+of October 14.
+
+Witness statements indicate that the classroom
+experienced a sudden power failure immediately before
+Elias disappeared.
+
+The investigation also uncovered evidence that the
+administration had ordered the removal of several
+documents concerning the experiment.
+
+Ms. Amelia Reyes was instructed not to discuss the
+incident with students, parents, or external investigators.
+
+No explanation was provided regarding Elias's whereabouts.
+
+The investigation was terminated under administrative
+orders.
+
+HANDWRITTEN NOTE:
+
+"The equipment was shut down.
+So why does the classroom still show signs of activity?"
 """
     },
 
@@ -58,17 +141,51 @@ Further details remain classified.
         "date": "October 30, 1998",
         "location": "The Exit Door",
         "content": """
-The classroom was sealed following the incident.
+FINAL FINDINGS — CLASSROOM 204
 
-The investigation was officially terminated, and
-all related documents were ordered destroyed.
+The recovered technical records indicate that the
+experiment created an unstable energy field inside
+the classroom.
 
-However, one final record was never recovered.
+During the malfunction, Elias was caught within the field.
 
-Its contents may explain why the classroom
-was never meant to be opened again.
+The device was immediately shut down, but Elias was
+never recovered.
+
+The remaining records suggest that the experiment
+caused an unexplained phenomenon: a residual presence
+associated with Elias remained inside Classroom 204.
+
+This explains the repeated sightings reported by
+school personnel following the incident.
+
+The figure appearing inside the classroom is believed
+to be Elias himself.
+
+His appearances are frequently associated with the
+locations of the missing experiment records.
+
+The administration subsequently ordered the destruction
+of all remaining equipment and documents.
+
+Classroom 204 was sealed permanently.
+
+Ms. Amelia Reyes was transferred to another institution
+and instructed never to discuss the incident again.
+
+FINAL HANDWRITTEN STATEMENT — MS. AMELIA REYES
+
+"I watched him disappear, and I did nothing."
+
+"I thought closing the classroom would end everything."
+
+"But he never left."
+
+"He's still waiting for someone to find out
+what we did to him."
 """
     }
+
 }
 
 # ==========================================
@@ -2085,19 +2202,19 @@ def room1():
                 st.caption("● AVAILABLE")
 
     
-        # ==========================================
+                # ==========================================
         # SECRET FILE — ROOM 1
         # ==========================================
 
-        st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
-
         st.markdown(
-            "### 📁 UNIDENTIFIED DOCUMENT",
+            '<div class="gold-line"></div>',
             unsafe_allow_html=True
         )
 
+        st.markdown("### 📁 UNIDENTIFIED DOCUMENT")
+
         st.caption(
-            "An old document appears to have been left near the blackboard."
+            "An old incident report appears to have been left near the blackboard."
         )
 
         if st.button(
@@ -2105,7 +2222,6 @@ def room1():
             key="discover_file_001",
             use_container_width=True
         ):
-
             st.session_state.current_secret_file = "file_001"
             st.session_state.page = "secret_file"
             st.rerun()
