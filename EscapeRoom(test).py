@@ -896,8 +896,6 @@ def trigger_jumpscare(answer_correct):
         random.random() < chance
     )
 
-
-
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
@@ -962,6 +960,7 @@ def display_jumpscare():
         components.html(html_code, height=0)
 
         st.session_state.show_jumpscare = False
+        st.rerun()
         
 def start_presenter_room(room):
 
