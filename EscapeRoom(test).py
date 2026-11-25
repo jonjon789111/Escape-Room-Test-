@@ -833,8 +833,13 @@ def reset_game():
 
     # ROOM-SPECIFIC STATES
     st.session_state.room2_object = None
+
     st.session_state.room3_object = None
     st.session_state.room3_completed = []
+
+    st.session_state.room4_object = None
+    st.session_state.room4_completed = []
+    st.session_state.room4_notice = ""
 
     # ROOM PROGRESS
     st.session_state.room1_cleared = False
