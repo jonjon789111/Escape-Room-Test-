@@ -239,6 +239,32 @@ for key, value in defaults.items():
         st.session_state[key] = value
 
 # ==========================================
+# BACKGROUND MUSIC
+# ==========================================
+
+def background_music():
+
+    with open("background.mp3", "rb") as audio_file:
+        audio_data = base64.b64encode(
+            audio_file.read()
+        ).decode("utf-8")
+
+    audio_html = f"""
+        <audio autoplay loop>
+            <source
+                src="data:audio/mpeg;base64,{audio_data}"
+                type="audio/mpeg"
+            >
+        </audio>
+    """
+
+    components.html(
+        audio_html,
+        height=0,
+        width=0
+    )
+
+# ==========================================
 # SHARED DESIGN
 # ==========================================
 
@@ -746,6 +772,8 @@ def design():
 
     </style>
     """, unsafe_allow_html=True)
+
+    background_music()
 
 def floating_notification():
 
