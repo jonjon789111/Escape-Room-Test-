@@ -60,7 +60,7 @@ def design():
         "room1": "room1_bg.jpg",
         "room2": "room2_bg.webp",
         "room3": "room3_bg.jpg",
-        "room4": "room4_bg.png"
+        "room4": "room4_bg.avif"
     }
 
     current_page = st.session_state.get("page", "home")
