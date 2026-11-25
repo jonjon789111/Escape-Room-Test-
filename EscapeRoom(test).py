@@ -880,6 +880,7 @@ def reset_game():
     for key in answer_keys:
         st.session_state.pop(key, None)
 
+
 # ==========================================
 # JUMPSCARE SYSTEM
 # ==========================================
@@ -899,9 +900,51 @@ def display_jumpscare():
 
     if st.session_state.show_jumpscare:
 
-        st.image(
-            "jumpscare.jpg",
-            use_container_width=True
+        # LOAD JPG
+        with open("jumpscare.jpg", "rb") as image_file:
+            image_data = base64.b64encode(
+                image_file.read()
+            ).decode("utf-8")
+
+        # LOAD MP3
+        with open("jumpscare.mp3", "rb") as audio_file:
+            audio_data = base64.b64encode(
+                audio_file.read()
+            ).decode("utf-8")
+
+        # FULLSCREEN OVERLAY
+        st.markdown(
+            f"""
+            <style>
+                .jumpscare-overlay {{
+                    position: fixed;
+                    inset: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    z-index: 99999999;
+                    background: black;
+                }}
+
+                .jumpscare-overlay img {{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }}
+            </style>
+
+            <div class="jumpscare-overlay">
+                <img src="data:image/jpeg;base64,{image_data}">
+            </div>
+
+            <audio autoplay
+                   controls="false"
+                   style="display:none;">
+                <source
+                    src="data:audio/mpeg;base64,{audio_data}"
+                    type="audio/mpeg">
+            </audio>
+            """,
+            unsafe_allow_html=True
         )
 
         st.session_state.show_jumpscare = False
@@ -1503,33 +1546,7 @@ def instructions_page():
         ):
             st.session_state.page="story"
             st.rerun()
-
-# ==========================================
-# JUMPSCARE SYSTEM
-# ==========================================
-
-def trigger_jumpscare(answer_correct):
-
-    if answer_correct:
-        chance = 0.15
-    else:
-        chance = 0.65
-
-    st.session_state.show_jumpscare = random.random() < chance
-
-
-def display_jumpscare():
-
-    if st.session_state.show_jumpscare:
-
-        st.video(
-            st.session_state.jumpscare_video,
-            autoplay=True,
-            muted=False
-        )
-
-        st.session_state.show_jumpscare = False
-
+            
 # ==========================================
 # ROOM 1 — THE BLACKBOARD
 # ==========================================
@@ -1537,8 +1554,6 @@ def display_jumpscare():
 def room1():
 
     design()
-    
-    st.image("jumpscare.jpg", caption="Jumpscare Image Test")
     
     if st.session_state.get("room1_cleared", False):
 
