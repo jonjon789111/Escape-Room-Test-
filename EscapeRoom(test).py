@@ -896,6 +896,7 @@ def trigger_jumpscare(answer_correct):
         random.random() < chance
     )
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
@@ -912,11 +913,16 @@ def display_jumpscare():
                 audio_file.read()
             ).decode("utf-8")
 
+        # CREATE A UNIQUE ID FOR EVERY JUMPSCARE
+        unique_id = str(time.time_ns())
+
         html_code = """
         <script>
             const parentDoc = window.parent.document;
 
             const overlay = parentDoc.createElement("div");
+
+            overlay.id = "jumpscare-TOKEN";
 
             overlay.style.position = "fixed";
             overlay.style.inset = "0";
@@ -926,6 +932,7 @@ def display_jumpscare():
             overlay.style.background = "black";
 
             const img = parentDoc.createElement("img");
+
             img.src = "IMAGE_DATA";
             img.style.width = "100%";
             img.style.height = "100%";
@@ -943,9 +950,12 @@ def display_jumpscare():
             setTimeout(() => {
                 overlay.remove();
                 audio.pause();
+                audio.currentTime = 0;
             }, 4000);
         </script>
         """
+
+        html_code = html_code.replace("TOKEN", unique_id)
 
         html_code = html_code.replace(
             "IMAGE_DATA",
@@ -960,7 +970,6 @@ def display_jumpscare():
         components.html(html_code, height=0)
 
         st.session_state.show_jumpscare = False
-        
         
 def start_presenter_room(room):
 
