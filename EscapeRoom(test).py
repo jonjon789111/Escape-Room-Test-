@@ -253,7 +253,13 @@ def background_music():
     audio_html = """
     <script>
 
-        const parentDoc = window.parent.document;
+        const backgroundMusic = parentDoc.getElementById("background-music");
+
+        console.log("Background music found:", backgroundMusic);
+        
+        if (backgroundMusic) {
+            backgroundMusic.pause();
+        }
 
         let bgMusic = parentDoc.getElementById("background-music");
 
