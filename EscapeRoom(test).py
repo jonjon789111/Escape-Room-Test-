@@ -884,33 +884,26 @@ def reset_game():
 # ==========================================
 
 def trigger_jumpscare(answer_correct):
-
-    if answer_correct:
-        chance = 0.15
-    else:
-        chance = 1.0
-
-    st.session_state.show_jumpscare = random.random() < chance
-
+    st.session_state.show_jumpscare = True
 
 
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
 
-        # LOAD JUMPSCARE IMAGE
+        # LOAD JUMPSCARE JPG IMAGE
         with open("jumpscare.jpg", "rb") as image_file:
             image_data = base64.b64encode(
                 image_file.read()
             ).decode("utf-8")
 
-        # LOAD JUMPSCARE SOUND
+        # LOAD JUMPSCARE MP3 SOUND
         with open("jumpscare.mp3", "rb") as audio_file:
             audio_data = base64.b64encode(
                 audio_file.read()
             ).decode("utf-8")
 
-        # FULL-SCREEN IMAGE + SOUND
+        # FULL-SCREEN JUMPSCARE
         st.html(f"""
             <div style="
                 position: fixed;
@@ -926,8 +919,10 @@ def display_jumpscare():
             ">
 
                 <img
-                    src="data:image/png;base64,{image_data}"
+                    src="data:image/jpeg;base64,{image_data}"
                     style="
+                        position: absolute;
+                        inset: 0;
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
