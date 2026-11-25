@@ -895,77 +895,13 @@ def trigger_jumpscare(answer_correct):
         random.random() < chance
     )
 
-
-
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
 
-        # LOAD JPG IMAGE
-        with open("jumpscare.jpg", "rb") as image_file:
-            image_data = base64.b64encode(
-                image_file.read()
-            ).decode("utf-8")
-
-        # LOAD MP3 AUDIO
-        with open("jumpscare.mp3", "rb") as audio_file:
-            audio_data = base64.b64encode(
-                audio_file.read()
-            ).decode("utf-8")
-
-        components.html(
-            f"""
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>
-                    html, body {{
-                        margin: 0;
-                        padding: 0;
-                        width: 100%;
-                        height: 100%;
-                        overflow: hidden;
-                        background: black;
-                    }}
-
-                    #jumpscare {{
-                        position: fixed;
-                        inset: 0;
-                        width: 100vw;
-                        height: 100vh;
-                        z-index: 999999;
-                        background: black;
-                    }}
-
-                    #jumpscare img {{
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }}
-
-                    audio {{
-                        display: none !important;
-                    }}
-                </style>
-            </head>
-
-            <body>
-
-                <div id="jumpscare">
-                    <img src="data:image/jpeg;base64,{image_data}">
-                </div>
-
-                <audio autoplay>
-                    <source
-                        src="data:audio/mpeg;base64,{audio_data}"
-                        type="audio/mpeg">
-                </audio>
-
-            </body>
-            </html>
-            """,
-            height=700,
-            scrolling=False
+        st.image(
+            "jumpscare.jpg",
+            use_container_width=True
         )
 
         st.session_state.show_jumpscare = False
