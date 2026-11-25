@@ -960,7 +960,7 @@ def display_jumpscare():
         components.html(html_code, height=0)
 
         st.session_state.show_jumpscare = False
-        st.rerun()
+        
         
 def start_presenter_room(room):
 
