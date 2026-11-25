@@ -4,6 +4,73 @@ import base64
 import random
 import streamlit.components.v1 as components
 
+SECRET_FILE_DATA = {
+    "file_001": {
+        "number": "FILE 001",
+        "title": "The Incident Report",
+        "date": "October 14, 1998",
+        "location": "The Blackboard",
+        "content": """
+An incident was reported inside the classroom several
+years ago.
+
+Following the event, the room was permanently closed.
+
+All records concerning the incident were ordered
+to be kept confidential.
+"""
+    },
+
+    "file_002": {
+        "number": "FILE 002",
+        "title": "The Teacher's Record",
+        "date": "October 18, 1998",
+        "location": "The Teacher's Desk",
+        "content": """
+The assigned teacher had been keeping records of
+unusual occurrences inside the classroom.
+
+Several entries were removed from the original logbook.
+
+No explanation was provided for their disappearance.
+"""
+    },
+
+    "file_003": {
+        "number": "FILE 003",
+        "title": "The Investigation Notes",
+        "date": "October 22, 1998",
+        "location": "The Storage Cabinet",
+        "content": """
+The investigation revealed that the classroom had
+been used for an undisclosed experiment.
+
+The remaining notes suggest that the incident
+was not accidental.
+
+Further details remain classified.
+"""
+    },
+
+    "file_004": {
+        "number": "FILE 004",
+        "title": "The Final Report",
+        "date": "October 30, 1998",
+        "location": "The Exit Door",
+        "content": """
+The classroom was sealed following the incident.
+
+The investigation was officially terminated, and
+all related documents were ordered destroyed.
+
+However, one final record was never recovered.
+
+Its contents may explain why the classroom
+was never meant to be opened again.
+"""
+    }
+}
+
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
@@ -33,6 +100,10 @@ defaults = {
 
     # KEY COLLECTION
     "keys_collected": [],
+
+    # SECRET FILES
+    "secret_files": [],
+    "current_secret_file": None,
 
     # GAME STATUS
     "game_over": False,
@@ -851,6 +922,10 @@ def reset_game():
 
     # KEY COLLECTION
     st.session_state.keys_collected = []
+
+    # SECRET FILES
+    st.session_state.secret_files = []
+    st.session_state.current_secret_file = None
 
     # GAME STATUS
     st.session_state.game_over = False
@@ -2008,6 +2083,32 @@ def room1():
                 st.caption("🔒 LOCKED")
             else:
                 st.caption("● AVAILABLE")
+
+    
+        # ==========================================
+        # SECRET FILE — ROOM 1
+        # ==========================================
+
+        st.markdown('<div class="gold-line"></div>', unsafe_allow_html=True)
+
+        st.markdown(
+            "### 📁 UNIDENTIFIED DOCUMENT",
+            unsafe_allow_html=True
+        )
+
+        st.caption(
+            "An old document appears to have been left near the blackboard."
+        )
+
+        if st.button(
+            "🔍 DISCOVER FILE 001",
+            key="discover_file_001",
+            use_container_width=True
+        ):
+
+            st.session_state.current_secret_file = "file_001"
+            st.session_state.page = "secret_file"
+            st.rerun()
 
     # ==========================================
     # CHALLENGE 1 — BLACKBOARD
@@ -4759,6 +4860,155 @@ def review_answers():
         st.rerun()
 
 # ==========================================
+# SECRET FILE DOCUMENT VIEWER
+# ==========================================
+
+def display_secret_file():
+
+    design()
+
+    file_id = st.session_state.current_secret_file
+
+    # CHECK IF A FILE IS SELECTED
+    if file_id not in SECRET_FILE_DATA:
+        st.warning("No secret file selected.")
+        return
+
+    file_data = SECRET_FILE_DATA[file_id]
+
+    # DOCUMENT HEADER
+    header(
+        "THE LOCKED CLASSROOM",
+        "CONFIDENTIAL RECORD",
+        "Unauthorized access is strictly prohibited."
+    )
+
+    st.write("")
+
+    # DOCUMENT DESIGN
+    st.markdown("""
+        <div style="
+            background: linear-gradient(135deg, #e8dfc8, #d4c6a5);
+            color: #302719;
+            padding: 35px;
+            border: 5px double #6b5738;
+            border-radius: 4px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        ">
+            <div style="
+                text-align: center;
+                font-family: Georgia;
+                letter-spacing: 4px;
+                font-size: 13px;
+                color: #713d32;
+                font-weight: bold;
+            ">
+                CONFIDENTIAL — RESTRICTED ACCESS
+            </div>
+
+            <hr style="border: 1px solid #8b7857;">
+
+            <div style="
+                text-align: center;
+                font-family: Georgia;
+                font-size: 30px;
+                font-weight: bold;
+                letter-spacing: 2px;
+            ">
+                """ + file_data["number"] + """
+            </div>
+
+            <div style="
+                text-align: center;
+                font-family: Georgia;
+                font-size: 22px;
+                margin-top: 10px;
+            ">
+                """ + file_data["title"] + """
+            </div>
+
+            <hr style="border: 1px solid #8b7857;">
+
+            <div style="
+                font-family: Georgia;
+                font-size: 15px;
+                line-height: 1.8;
+            ">
+                <b>DATE:</b> """ + file_data["date"] + """<br>
+                <b>LOCATION:</b> """ + file_data["location"] + """
+            </div>
+
+            <hr style="border: 1px solid #8b7857;">
+
+            <div style="
+                font-family: Georgia;
+                font-size: 17px;
+                line-height: 1.9;
+                white-space: pre-line;
+                text-align: justify;
+            ">
+                """ + file_data["content"] + """
+            </div>
+
+            <hr style="border: 1px solid #8b7857;">
+
+            <div style="
+                text-align: center;
+                color: #713d32;
+                font-size: 12px;
+                letter-spacing: 3px;
+                font-weight: bold;
+            ">
+                END OF DOCUMENT
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    # COLLECTION STATUS
+    if file_id in st.session_state.secret_files:
+
+        st.success("FILE ALREADY COLLECTED")
+
+    else:
+
+        if st.button(
+            "COLLECT FILE",
+            type="primary",
+            use_container_width=True,
+            key="collect_" + file_id
+        ):
+
+            st.session_state.secret_files.append(file_id)
+
+            st.session_state.notification = "SECRET FILE COLLECTED!"
+            st.session_state.notification_type = "success"
+
+            st.rerun()
+
+    st.write("")
+
+    # CLOSE DOCUMENT
+    if st.button(
+        "CLOSE DOCUMENT",
+        use_container_width=True,
+        key="close_" + file_id
+    ):
+
+        return_pages = {
+            "file_001": "room1",
+            "file_002": "room2",
+            "file_003": "room3",
+            "file_004": "room4"
+        }
+
+        st.session_state.page = return_pages[file_id]
+        st.session_state.current_secret_file = None
+
+        st.rerun()
+
+# ==========================================
 # PAGE NAVIGATION
 # ==========================================
 presenter_mode()
@@ -4792,3 +5042,6 @@ elif st.session_state.page == "achievements":
     
 elif st.session_state.page == "review":
     review_answers()
+
+elif st.session_state.page == "secret_file":
+    display_secret_file()
