@@ -897,13 +897,39 @@ def display_jumpscare():
 
     if st.session_state.show_jumpscare:
 
-        st.video(
-            st.session_state.jumpscare_video,
-            autoplay=True,
-            muted=False
+        with open("jumpscare.png", "rb") as image_file:
+            image_data = base64.b64encode(
+                image_file.read()
+            ).decode("utf-8")
+
+        st.markdown(
+            f"""
+            <div style="
+                position: fixed;
+                inset: 0;
+                z-index: 999999;
+                background: rgba(0,0,0,0.95);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            ">
+                <img
+                    src="data:image/png;base64,{image_data}"
+                    style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    "
+                >
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
+        st.audio("jumpscare.mp4", autoplay=True)
+
         st.session_state.show_jumpscare = False
+        
 def start_presenter_room(room):
 
     reset_game()
