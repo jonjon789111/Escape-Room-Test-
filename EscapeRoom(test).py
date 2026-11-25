@@ -242,6 +242,7 @@ for key, value in defaults.items():
 # BACKGROUND MUSIC
 # ==========================================
 
+
 def background_music():
 
     with open("background.mp3", "rb") as audio_file:
@@ -249,7 +250,7 @@ def background_music():
             audio_file.read()
         ).decode("utf-8")
 
-    audio_html = f"""
+    audio_html = """
     <script>
 
         const parentDoc = window.parent.document;
@@ -261,7 +262,7 @@ def background_music():
             bgMusic = parentDoc.createElement("audio");
 
             bgMusic.id = "background-music";
-            bgMusic.src = "data:audio/mpeg;base64,{audio_data}";
+            bgMusic.src = "data:audio/mpeg;base64,AUDIO_DATA";
 
             bgMusic.loop = true;
             bgMusic.volume = 0.25;
@@ -276,6 +277,11 @@ def background_music():
 
     </script>
     """
+
+    audio_html = audio_html.replace(
+        "AUDIO_DATA",
+        audio_data
+    )
 
     components.html(
         audio_html,
