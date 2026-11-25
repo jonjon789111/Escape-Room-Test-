@@ -243,6 +243,7 @@ for key, value in defaults.items():
 # ==========================================
 
 
+
 def background_music():
 
     with open("background.mp3", "rb") as audio_file:
@@ -263,14 +264,15 @@ def background_music():
 
             bgMusic.id = "background-music";
             bgMusic.src = "data:audio/mpeg;base64,AUDIO_DATA";
-
             bgMusic.loop = true;
             bgMusic.volume = 0.25;
 
             parentDoc.body.appendChild(bgMusic);
+        }
 
+        if (bgMusic.paused) {
             bgMusic.play().catch(error => {
-                console.log("Background music playback blocked:", error);
+                console.log("Background music error:", error);
             });
         }
 
@@ -282,12 +284,7 @@ def background_music():
         audio_data
     )
 
-    components.html(
-        audio_html,
-        height=0,
-        width=0
-    )
-
+    components.html(audio_html, height=0)
 # ==========================================
 # SHARED DESIGN
 # ==========================================
