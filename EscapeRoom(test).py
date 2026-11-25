@@ -896,59 +896,63 @@ def trigger_jumpscare(answer_correct):
         random.random() < chance
     )
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
 
-        # LOAD JPG
+        # LOAD IMAGE
         with open("jumpscare.jpg", "rb") as image_file:
             image_data = base64.b64encode(
                 image_file.read()
             ).decode("utf-8")
 
-        # LOAD MP3
+        # LOAD SOUND
         with open("jumpscare.mp3", "rb") as audio_file:
             audio_data = base64.b64encode(
                 audio_file.read()
             ).decode("utf-8")
 
-        # FULLSCREEN OVERLAY
-        st.markdown(
-            f"""
-            <style>
-                .jumpscare-overlay {{
-                    position: fixed;
-                    inset: 0;
-                    width: 100vw;
-                    height: 100vh;
-                    z-index: 99999999;
-                    background: black;
-                }}
+        # DISPLAY FOR 2 SECONDS
+        components.html(f"""
+            <script>
+                const parentDoc = window.parent.document;
 
-                .jumpscare-overlay img {{
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }}
-            </style>
+                const overlay = parentDoc.createElement("div");
 
-            <div class="jumpscare-overlay">
-                <img src="data:image/jpeg;base64,{image_data}">
-            </div>
+                overlay.style.position = "fixed";
+                overlay.style.inset = "0";
+                overlay.style.width = "100vw";
+                overlay.style.height = "100vh";
+                overlay.style.zIndex = "999999999";
+                overlay.style.background = "black";
 
-            <audio autoplay
-                   controls="false"
-                   style="display:none;">
-                <source
-                    src="data:audio/mpeg;base64,{audio_data}"
-                    type="audio/mpeg">
-            </audio>
-            """,
-            unsafe_allow_html=True
-        )
+                const img = parentDoc.createElement("img");
+                img.src = "data:image/jpeg;base64,{image_data}";
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "cover";
+
+                overlay.appendChild(img);
+                parentDoc.body.appendChild(overlay);
+
+                const audio = new Audio(
+                    "data:audio/mpeg;base64,{audio_data}"
+                );
+
+                audio.play().catch(error => {
+                    console.log("Audio playback blocked:", error);
+                });
+
+                setTimeout(() => {
+                    overlay.remove();
+                    audio.pause();
+                }, 2000);
+            </script>
+        """, height=0)
 
         st.session_state.show_jumpscare = False
-        
+
 def start_presenter_room(room):
 
     reset_game()
