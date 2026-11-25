@@ -253,13 +253,7 @@ def background_music():
     audio_html = """
     <script>
 
-        const backgroundMusic = parentDoc.getElementById("background-music");
-
-        console.log("Background music found:", backgroundMusic);
-        
-        if (backgroundMusic) {
-            backgroundMusic.pause();
-        }
+        const parentDoc = window.parent.document;
 
         let bgMusic = parentDoc.getElementById("background-music");
 
@@ -272,7 +266,6 @@ def background_music():
 
             bgMusic.loop = true;
             bgMusic.volume = 0.25;
-            bgMusic.autoplay = true;
 
             parentDoc.body.appendChild(bgMusic);
 
@@ -1146,6 +1139,7 @@ def trigger_jumpscare(answer_correct):
     )
 
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
@@ -1162,13 +1156,21 @@ def display_jumpscare():
                 audio_file.read()
             ).decode("utf-8")
 
-        # CREATE A UNIQUE ID FOR EVERY JUMPSCARE
         unique_id = str(time.time_ns())
 
         html_code = """
         <script>
+
             const parentDoc = window.parent.document;
 
+            // FIND AND PAUSE BACKGROUND MUSIC
+            const backgroundMusic = parentDoc.getElementById("background-music");
+
+            if (backgroundMusic) {
+                backgroundMusic.pause();
+            }
+
+            // CREATE JUMPSCARE OVERLAY
             const overlay = parentDoc.createElement("div");
 
             overlay.id = "jumpscare-TOKEN";
@@ -1190,27 +1192,30 @@ def display_jumpscare():
             overlay.appendChild(img);
             parentDoc.body.appendChild(overlay);
 
+            // PLAY JUMPSCARE SOUND
             const audio = new Audio("AUDIO_DATA");
 
             audio.play().catch(error => {
                 console.log("Audio playback blocked:", error);
             });
 
+            // END JUMPSCARE AFTER 4 SECONDS
             setTimeout(() => {
 
-                // REMOVE JUMPSCARE IMAGE
                 overlay.remove();
-            
-                // STOP JUMPSCARE SOUND
+
                 audio.pause();
                 audio.currentTime = 0;
-            
-                // RESTORE BACKGROUND MUSIC
+
+                // RESUME BACKGROUND MUSIC
                 if (backgroundMusic) {
-                    backgroundMusic.muted = false;
+                    backgroundMusic.play().catch(error => {
+                        console.log("Could not resume background music:", error);
+                    });
                 }
-            
+
             }, 4000);
+
         </script>
         """
 
@@ -1229,7 +1234,7 @@ def display_jumpscare():
         components.html(html_code, height=0)
 
         st.session_state.show_jumpscare = False
-        
+
 def start_presenter_room(room):
 
     reset_game()
