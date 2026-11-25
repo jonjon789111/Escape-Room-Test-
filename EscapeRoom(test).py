@@ -4261,6 +4261,31 @@ def room4():
             unsafe_allow_html=True
         )
 
+            # ==========================================
+        # SECRET FILE — ROOM 4
+        # ==========================================
+
+        st.markdown(
+            '<div class="gold-line"></div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown("### 📁 FINAL CLASSIFIED DOCUMENT")
+
+        st.caption(
+            "A sealed report has been left beside the exit door. "
+            "Its contents appear to concern the incident in Classroom 204."
+        )
+
+        if st.button(
+            "🔍 DISCOVER FILE 004",
+            key="discover_file_004",
+            use_container_width=True
+        ):
+            st.session_state.current_secret_file = "file_004"
+            st.session_state.page = "secret_file"
+            st.rerun()
+
     # ==========================================
     # CHALLENGE 1 — TRIGONOMETRIC
     # ==========================================
