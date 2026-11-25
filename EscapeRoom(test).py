@@ -1151,54 +1151,35 @@ def home_page():
     # TRIGGER WARNING
     # ==========================================
 
-    st.markdown("""
-    <div style="
-        max-width:750px;
-        margin:auto;
-        padding:16px 22px;
-        background:rgba(80, 20, 20, 0.35);
-        border:1px solid rgba(180, 65, 65, 0.65);
-        border-radius:10px;
-        text-align:center;
-    ">
-    
-        <div style="
-            color:#D98B80;
-            font-family:'Cinzel',serif;
-            font-size:17px;
-            letter-spacing:2px;
-            font-weight:bold;
-            margin-bottom:10px;
-        ">
-            ⚠ CONTENT WARNING
-        </div>
-    
-        <div style="
-            color:#D8C9B5;
-            font-size:14px;
-            line-height:1.7;
-        ">
-            This game contains sudden visual jumpscares,
-            unexpected horror imagery, and loud sound effects.
-            Players sensitive to sudden scares, flashing visuals,
-            or loud sounds should take caution before playing.
-        </div>
-    
-        <div style="
-            color:#D98B80;
-            font-size:12px;
-            letter-spacing:1.5px;
-            margin-top:10px;
-            font-weight:bold;
-        ">
-            PLAYER DISCRETION IS ADVISED.
-        </div>
-    
-    </div>
-    """, unsafe_allow_html=True)
+        # ==========================================
+    # TRIGGER WARNING
+    # ==========================================
 
     st.write("")
 
+    with st.container(border=True):
+
+        st.markdown(
+            "<h4 style='text-align:center; color:#D98B80;'>"
+            "⚠️ CONTENT WARNING"
+            "</h4>",
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            "This game contains sudden visual jumpscares, "
+            "unexpected horror imagery, and loud sound effects."
+        )
+
+        st.markdown(
+            "Players sensitive to sudden scares, flashing visuals, "
+            "or loud sounds should take caution before playing."
+        )
+
+        st.caption("PLAYER DISCRETION IS ADVISED.")
+
+    st.write("")
+    
     # ==========================================
     # MAIN BUTTONS
     # ==========================================
