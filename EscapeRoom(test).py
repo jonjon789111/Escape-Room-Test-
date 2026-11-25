@@ -884,8 +884,15 @@ def reset_game():
 # ==========================================
 
 def trigger_jumpscare(answer_correct):
-    st.session_state.show_jumpscare = True
 
+    if answer_correct:
+        chance = 0.15
+    else:
+        chance = 1.0
+
+    st.session_state.show_jumpscare = (
+        random.random() < chance
+    )
 
 def display_jumpscare():
 
