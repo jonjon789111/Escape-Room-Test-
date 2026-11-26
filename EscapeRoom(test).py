@@ -1156,8 +1156,6 @@ def trigger_jumpscare(answer_correct):
         random.random() < chance
     )
 
-
-
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
