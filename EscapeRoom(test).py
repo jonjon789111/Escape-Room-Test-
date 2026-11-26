@@ -1156,6 +1156,7 @@ def trigger_jumpscare(answer_correct):
         random.random() < chance
     )
 
+
 def display_jumpscare():
 
     if st.session_state.show_jumpscare:
@@ -1179,58 +1180,76 @@ def display_jumpscare():
 
             const parentDoc = window.parent.document;
 
-            // FIND AND PAUSE BACKGROUND MUSIC
-            const backgroundMusic = parentDoc.getElementById("background-music");
+            // PAUSE BACKGROUND MUSIC
+            const backgroundMusic =
+                parentDoc.getElementById("background-music");
 
             if (backgroundMusic) {
                 backgroundMusic.pause();
             }
 
-            // CREATE JUMPSCARE OVERLAY
-            const overlay = parentDoc.createElement("div");
-
-            overlay.id = "jumpscare-TOKEN";
-
-            overlay.style.position = "fixed";
-            overlay.style.inset = "0";
-            overlay.style.width = "100vw";
-            overlay.style.height = "100vh";
-            overlay.style.zIndex = "999999999";
-            overlay.style.background = "black";
-
-            const img = parentDoc.createElement("img");
-
-            img.src = "IMAGE_DATA";
-            img.style.width = "100%";
-            img.style.height = "100%";
-            img.style.objectFit = "cover";
-
-            overlay.appendChild(img);
-            parentDoc.body.appendChild(overlay);
-
-            // PLAY JUMPSCARE SOUND
+            // PRELOAD JUMPSCARE SOUND
             const audio = new Audio("AUDIO_DATA");
 
-            audio.play().catch(error => {
-                console.log("Audio playback blocked:", error);
-            });
+            audio.preload = "auto";
+            audio.volume = 1;
 
-            // END JUMPSCARE AFTER 4 SECONDS
-            setTimeout(() => {
+            // PRELOAD IMAGE
+            const img = new Image();
 
-                overlay.remove();
+            img.src = "IMAGE_DATA";
 
-                audio.pause();
-                audio.currentTime = 0;
+            img.onload = function() {
 
-                // RESUME BACKGROUND MUSIC
-                if (backgroundMusic) {
-                    backgroundMusic.play().catch(error => {
-                        console.log("Could not resume background music:", error);
-                    });
-                }
+                // CREATE OVERLAY AFTER IMAGE LOADS
+                const overlay = parentDoc.createElement("div");
 
-            }, 4000);
+                overlay.id = "jumpscare-TOKEN";
+
+                overlay.style.position = "fixed";
+                overlay.style.inset = "0";
+                overlay.style.width = "100vw";
+                overlay.style.height = "100vh";
+                overlay.style.zIndex = "999999999";
+                overlay.style.background = "black";
+
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "cover";
+
+                overlay.appendChild(img);
+                parentDoc.body.appendChild(overlay);
+
+                // PLAY SOUND
+                audio.play().catch(error => {
+                    console.log("Jumpscare audio error:", error);
+                });
+
+                // END AFTER 4 SECONDS
+                setTimeout(() => {
+
+                    overlay.remove();
+
+                    audio.pause();
+                    audio.currentTime = 0;
+
+                    // RESTORE BACKGROUND MUSIC
+                    if (backgroundMusic &&
+                        MUSIC_ENABLED) {
+
+                        backgroundMusic.play().catch(error => {
+                            console.log("Background music error:", error);
+                        });
+
+                    }
+
+                }, 4000);
+
+            };
+
+            img.onerror = function() {
+                console.log("Jumpscare image failed to load.");
+            };
 
         </script>
         """
@@ -1247,9 +1266,15 @@ def display_jumpscare():
             "data:audio/mpeg;base64," + audio_data
         )
 
+        html_code = html_code.replace(
+            "MUSIC_ENABLED",
+            str(st.session_state.music_enabled).lower()
+        )
+
         components.html(html_code, height=0)
 
         st.session_state.show_jumpscare = False
+
 
 def start_presenter_room(room):
 
